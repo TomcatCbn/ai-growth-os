@@ -50,7 +50,7 @@ from runtime.twin import (
     project_tendencies,
     project_twin,
 )
-from runtime.twin.family import build_family_model
+from runtime.twin.family import build_family_account, build_family_model
 
 ROOT = Path(__file__).resolve().parent.parent
 ARTIFACT = "knowledge/artifact/growth-artifact-0.1.json"
@@ -258,6 +258,7 @@ class ChildEngine:
         partner = project_partner_state(self.child_id, events)
         family = build_family_model(
             self.child_id, self.profile.get("family"), self.state["interests"])
+        family_account = build_family_account(self.child, self.profile.get("family"))
         arc = self.manager.active
         if arc:
             topic = self.topics_by_id.get(arc["primary_goal"]["topic_id"], {})
@@ -271,7 +272,7 @@ class ChildEngine:
             "arc": arc, "log": self.log[-15:][::-1],
             "insight": insight,
             "twin": twin, "tendencies": tendencies, "partner": partner,
-            "family": family,
+            "family": family, "family_account": family_account,
             "metrics": relationship_metrics(events),
             "n_events": len(self.store.events_for(self.child_id)),
         }
