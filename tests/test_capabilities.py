@@ -31,7 +31,7 @@ def test_topic_derived_weighted_mean():
         "mt_a": {"mastery": 0.8, "confidence": 0.5, "evidence_count": 3},
         "mt_b": {"mastery": 0.2, "confidence": 0.3, "evidence_count": 1},
     }
-    view = derive_capabilities(mastery, {}, CAP_MAP, age=5)
+    view = derive_capabilities(mastery, {}, CAP_MAP)
     # Σ(mastery × relevance × age_fit) / Σ(relevance × age_fit)
     expected = (0.8 * 0.8 * 0.9 + 0.2 * 0.2 * 1.0) / (0.8 * 0.9 + 0.2 * 1.0)
     assert abs(view["capability.pattern_recognition"]["score"] - round(expected, 4)) < 1e-9
@@ -40,7 +40,7 @@ def test_topic_derived_weighted_mean():
 
 def test_direct_only_when_no_topic_anchor():
     direct = {"capability.persistence": {"level": 0.6, "confidence": 0.4, "evidence_count": 2}}
-    view = derive_capabilities({}, direct, CAP_MAP, age=5)
+    view = derive_capabilities({}, direct, CAP_MAP)
     assert view["capability.persistence"]["score"] == 0.6
     assert view["capability.persistence"]["topic_derived"] is None
 
@@ -48,7 +48,7 @@ def test_direct_only_when_no_topic_anchor():
 def test_fusion_weights_by_evidence_count():
     mastery = {"mt_a": {"mastery": 0.8, "confidence": 0.5, "evidence_count": 3}}
     direct = {"capability.persistence": {"level": 0.2, "confidence": 0.4, "evidence_count": 1}}
-    view = derive_capabilities(mastery, direct, CAP_MAP, age=5)
+    view = derive_capabilities(mastery, direct, CAP_MAP)
     # topic-derived for persistence: 0.8 (single edge); fused = (3×0.8 + 1×0.2)/4
     assert view["capability.persistence"]["score"] == round((3 * 0.8 + 1 * 0.2) / 4, 4)
 

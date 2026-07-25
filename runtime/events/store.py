@@ -46,6 +46,16 @@ CREATE TABLE IF NOT EXISTS snapshots (
     last_event_seq INTEGER NOT NULL,
     created_at TEXT NOT NULL
 );
+-- Safety Memory (ADR-008): guard actions live in their own stream, separate
+-- from content events, so access control can differ.
+CREATE TABLE IF NOT EXISTS safety_events (
+    seq INTEGER PRIMARY KEY AUTOINCREMENT,
+    event_id TEXT NOT NULL,
+    event_type TEXT NOT NULL,
+    child_id TEXT NOT NULL,
+    payload TEXT NOT NULL,
+    created_at TEXT NOT NULL
+);
 """
 
 
@@ -87,7 +97,7 @@ class EventStore:
         with self._lock:
             self._insert_event(ev)
             if flags:
-                self._insert_event(Event(
+                self._insert_safety_event(Event(
                     event_id=f"ev_{uuid.uuid4().hex[:12]}",
                     event_type="safety.input_screened",
                     child_id=child_id,
@@ -97,9 +107,39 @@ class EventStore:
             self._db.commit()
         return ev
 
+    def append_safety(self, event_type: str, child_id: str, payload: dict[str, Any]) -> Event:
+        """Safety Memory entry (output rejections, guard actions). Separate
+        stream from the growth record (ADR-008)."""
+        ev = Event(
+            event_id=f"ev_{uuid.uuid4().hex[:12]}",
+            event_type=event_type,
+            child_id=child_id,
+            payload=payload,
+            created_at=_now(),
+        )
+        with self._lock:
+            self._insert_safety_event(ev)
+            self._db.commit()
+        return ev
+
+    def safety_events_for(self, child_id: str) -> list[Event]:
+        rows = self._db.execute(
+            "SELECT event_id, event_type, child_id, payload, created_at"
+            " FROM safety_events WHERE child_id = ? ORDER BY seq",
+            (child_id,),
+        ).fetchall()
+        return [Event(r[0], r[1], r[2], json.loads(r[3]), r[4]) for r in rows]
+
     def _insert_event(self, ev: Event) -> None:
         self._db.execute(
             "INSERT INTO events (event_id, event_type, child_id, payload, created_at)"
+            " VALUES (?, ?, ?, ?, ?)",
+            (ev.event_id, ev.event_type, ev.child_id, json.dumps(ev.payload), ev.created_at),
+        )
+
+    def _insert_safety_event(self, ev: Event) -> None:
+        self._db.execute(
+            "INSERT INTO safety_events (event_id, event_type, child_id, payload, created_at)"
             " VALUES (?, ?, ?, ?, ?)",
             (ev.event_id, ev.event_type, ev.child_id, json.dumps(ev.payload), ev.created_at),
         )
@@ -133,6 +173,21 @@ class EventStore:
             )
             self._db.commit()
         return trace_id
+
+    def decision_traces(self, child_id: str) -> list[dict[str, Any]]:
+        """Public accessor for decision traces — tests and audits must not
+        reach into _db."""
+        rows = self._db.execute(
+            "SELECT trace_id, component, input_snapshot, output, rationale, model, created_at"
+            " FROM decision_trace WHERE child_id = ? ORDER BY created_at",
+            (child_id,),
+        ).fetchall()
+        return [
+            {"trace_id": r[0], "component": r[1], "input_snapshot": json.loads(r[2]),
+             "output": json.loads(r[3]), "rationale": r[4], "model": r[5],
+             "created_at": r[6]}
+            for r in rows
+        ]
 
     def events_for(self, child_id: str) -> list[Event]:
         rows = self._db.execute(

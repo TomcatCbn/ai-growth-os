@@ -50,6 +50,13 @@ class MissionManager:
         self.active = None
         return arc
 
+    def has_next_chapter(self) -> bool:
+        if self.active is None:
+            return False
+        chapters = self.active["chapters"]
+        current = next((i for i, c in enumerate(chapters) if c["status"] == "active"), None)
+        return current is not None and current < len(chapters) - 1
+
     def advance_chapter(self) -> dict:
         """Mark the active chapter done and activate the next one. Returns the
         newly active chapter. Raises if the arc is already on its last chapter."""
@@ -82,13 +89,17 @@ class MissionManager:
 
         Consumes: mission.activated (payload.arc = full arc),
         mission.chapter_advanced, mission.closed. The manager is a pure
-        projection — the same events always rebuild the same runtime state."""
+        projection — the same events always rebuild the same runtime state.
+        Replayed arcs are contract-validated: a corrupt event log fails
+        loudly, not silently."""
         mgr = cls()
         for ev in events:
             etype = ev.get("event_type")
             payload = ev.get("payload", {})
             if etype == "mission.activated":
-                mgr.active = dict(payload["arc"])
+                arc = dict(payload["arc"])
+                validate("mission-arc", arc)
+                mgr.active = arc
                 mgr.activated_at = payload.get("activated_at") or ev.get("created_at")
             elif etype == "mission.chapter_advanced" and mgr.active is not None:
                 chapter_id = payload.get("chapter_id")
@@ -101,9 +112,6 @@ class MissionManager:
                                 prev["status"] = "done"
                         break
             elif etype == "mission.closed" and mgr.active is not None:
-                mgr.active["status"] = payload.get("status", "completed")
-                mgr.active["hypothesis_verdict"] = payload.get("verdict")
-                mgr.active["closed_at"] = ev.get("created_at")
                 mgr.active = None
                 mgr.activated_at = None
         return mgr

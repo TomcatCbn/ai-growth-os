@@ -144,14 +144,16 @@ class ParentCoach:
         return trends
 
     def _suggestion(self, capabilities: dict[str, dict]) -> dict:
-        """One low-cost activity for the highest-priority weakest capability."""
-        best_cap, best_key = None, -1.0
+        """One low-cost activity for the highest-priority weakest capability.
+        Unobserved capabilities get a neutral prior (0.5), so a capability the
+        child actually struggled with outranks a never-observed one."""
+        best_cap, best_priority = None, -1.0
         for cap, prios in self._priority_by_cap.items():
             prio = max(prios.values()) if prios else 0.0
-            score = capabilities.get(cap, {}).get("score", 0.3)
-            key = prio * (1.0 - score)
-            if key > best_key:
-                best_cap, best_key = cap, key
+            score = capabilities.get(cap, {}).get("score", 0.5)
+            priority = prio * (1.0 - score)
+            if priority > best_priority:
+                best_cap, best_priority = cap, priority
         name = self._i18n.capability_name(best_cap) if best_cap else "探索"
         domain = self._domain_by_cap.get(best_cap, "cognitive")
         return {

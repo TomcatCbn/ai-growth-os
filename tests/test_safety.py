@@ -22,8 +22,10 @@ def test_append_screens_nested_pii():
 def test_screening_is_logged_as_safety_event():
     store = EventStore()
     store.append("evidence.submitted", "c1", {"raw_text": "电话13812345678"})
-    types = [e.event_type for e in store.events_for("c1")]
-    assert "safety.input_screened" in types
+    # Safety Memory is a SEPARATE stream (ADR-008), not the growth record.
+    assert "safety.input_screened" not in [e.event_type for e in store.events_for("c1")]
+    assert "safety.input_screened" in [
+        e.event_type for e in store.safety_events_for("c1")]
 
 
 def test_clean_payload_leaves_no_safety_event():
@@ -31,13 +33,15 @@ def test_clean_payload_leaves_no_safety_event():
     store.append("evidence.submitted", "c1", {"raw_text": "孩子发现了红黄规律"})
     types = [e.event_type for e in store.events_for("c1")]
     assert types == ["evidence.submitted"]
+    assert store.safety_events_for("c1") == []
 
 
 def test_trace_snapshots_are_screened():
     store = EventStore()
-    store.trace("test", input_snapshot={"user": "联系13812345678"}, output={"content": "ok"})
-    row = store._db.execute("SELECT input_snapshot FROM decision_trace").fetchone()
-    assert "13812345678" not in row[0]
+    store.trace("test", input_snapshot={"user": "联系13812345678"},
+                output={"content": "ok"}, child_id="c1")
+    traces = store.decision_traces("c1")
+    assert "13812345678" not in str(traces[0]["input_snapshot"])
 
 
 def test_screen_payload_is_idempotent():

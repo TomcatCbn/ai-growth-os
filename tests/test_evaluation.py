@@ -3,14 +3,13 @@ and the four-virtual-children acceptance assertions (Phase 0 gate)."""
 
 from __future__ import annotations
 
-import sys
+import json
 from pathlib import Path
 
 import pytest
 import yaml
 
 ROOT = Path(__file__).resolve().parent.parent
-sys.path.insert(0, str(ROOT))
 
 from evaluation.runner import PRECISION_GATE, RECALL_GATE, mock_extractor, score_extraction
 from runtime.safety.guards import InputGuard, OutputGuard
@@ -108,10 +107,10 @@ def test_children_follow_distinguishable_paths(engines):
 
 def test_plans_carry_capability_targets(engines):
     for cid, engine in engines.items():
-        rows = engine.store._db.execute(
-            "SELECT output FROM decision_trace WHERE child_id = ?", (cid,)).fetchall()
-        import json
-        plans = [json.loads(r[0]) for r in rows if "selected_topic_id" in r[0]]
+        plans = [
+            t["output"] for t in engine.store.decision_traces(cid)
+            if "selected_topic_id" in t["output"].get("content", "")
+        ]
         assert plans, cid
         for p in plans:
             content = json.loads(p["content"])

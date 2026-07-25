@@ -34,13 +34,13 @@ class GuardResult:
     flags: list[str] = field(default_factory=list)
 
 
-def _walk_strings(obj, fn):
+def _walk_strings(obj, transform):
     if isinstance(obj, str):
-        return fn(obj)
+        return transform(obj)
     if isinstance(obj, list):
-        return [_walk_strings(x, fn) for x in obj]
+        return [_walk_strings(x, transform) for x in obj]
     if isinstance(obj, dict):
-        return {k: _walk_strings(v, fn) for k, v in obj.items()}
+        return {k: _walk_strings(v, transform) for k, v in obj.items()}
     return obj
 
 
@@ -60,12 +60,12 @@ class InputGuard:
         cannot reach the event log even if a caller forgets to screen."""
         flags: list[str] = []
 
-        def fn(s: str) -> str:
+        def screen_str(s: str) -> str:
             r = self.screen(s)
             flags.extend(r.flags)
             return r.text
 
-        return _walk_strings(payload, fn), sorted(set(flags))
+        return _walk_strings(payload, screen_str), sorted(set(flags))
 
 
 class OutputGuard:

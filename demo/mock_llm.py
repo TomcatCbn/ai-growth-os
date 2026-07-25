@@ -74,7 +74,8 @@ class MockLLMProvider:
         interests = payload["child_state"].get("interests", {})
         caps = payload.get("capabilities", {})
         # Growth memory: a refuted/inconclusive arc on a topic pushes the
-        # baseline toward a different strategy (ADR-012).
+        # baseline toward a different strategy (ADR-012). Confirmed arcs get a
+        # mild "move on" nudge — the topic was just exercised; variety wins.
         verdict_penalty = {"refuted": 1.0, "inconclusive": 0.4, "confirmed": 0.3}
         penalties: dict[str, float] = {}
         for arc in payload.get("growth_memory", {}).get("closed_arcs", []):

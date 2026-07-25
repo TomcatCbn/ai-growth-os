@@ -54,13 +54,15 @@ def derive_capabilities(
     topic_mastery: dict[str, dict],
     capability_direct: dict[str, dict],
     cap_map: dict[str, list[dict]],
-    *,
-    age: float = 5,
 ) -> dict[str, dict[str, Any]]:
     """Fuse topic-derived evidence (primary) with direct evidence (secondary).
 
     Returns cap_id -> {score, confidence, topic_derived, direct,
     topic_evidence_count, direct_evidence_count} — every number traceable.
+
+    Note: the map's age_fit is currently a scalar per edge; ADR-004's
+    age-banded age_fit arrives when the map data carries it (no dead
+    parameters here until then).
     """
     weighted_sum: dict[str, float] = {}
     weight_total: dict[str, float] = {}
