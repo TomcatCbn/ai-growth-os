@@ -27,6 +27,7 @@ from runtime.state.capabilities import (  # noqa: E402
     derive_capabilities, development_priorities, load_capability_map, topic_capabilities,
 )
 from runtime.trace.trace import TrackedProvider  # noqa: E402
+from runtime.coach import ParentCoach  # noqa: E402
 from knowledge.i18n import I18n  # noqa: E402
 from demo.run_loop import CHECKIN_SIGNAL, generate_arc, load_targets  # noqa: E402
 
@@ -194,6 +195,13 @@ class ChildEngine:
                                  key=lambda kv: -kv[1]["mastery"])
         ]
         interests = sorted(self.state["interests"].items(), key=lambda kv: -kv[1])[:6]
+        coach = ParentCoach(self.taxonomy, self.i18n, self.out_guard, topic_names={
+            tid: self.i18n.topic_name(tid, t["name"])
+            for tid, t in self.topics_by_id.items()})
+        insight = coach.build_insight(
+            child_id=self.child_id,
+            events=[vars(e) for e in self.store.events_for(self.child_id)],
+            capabilities=derived)
         arc = self.manager.active
         if arc:
             topic = self.topics_by_id.get(arc["primary_goal"]["topic_id"], {})
@@ -203,5 +211,6 @@ class ChildEngine:
             "child": self.child, "provider": self.provider_name,
             "caps": caps, "topics": topics, "interests": interests,
             "arc": arc, "log": self.log[-15:][::-1],
+            "insight": insight,
             "n_events": len(self.store.events_for(self.child_id)),
         }

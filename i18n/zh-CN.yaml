@@ -11,6 +11,7 @@ locale: zh-CN
 
 capabilities:
   capability.pattern_recognition: { name: 规律识别, definition: 发现、延续并创造规律 }
+  capability.curiosity: { name: 好奇探究, definition: 主动提问、探究事物原理 }
   capability.classification: { name: 分类归纳, definition: 按属性分类，能自创分类标准 }
   capability.causal_reasoning: { name: 因果推理, definition: 建立事件间的因果联系并预测结果 }
   capability.observation: { name: 观察力, definition: 注意到细节、差异和变化 }

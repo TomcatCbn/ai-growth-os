@@ -37,6 +37,7 @@ from runtime.state.capabilities import (  # noqa: E402
     derive_capabilities, development_priorities, load_capability_map, topic_capabilities,
 )
 from runtime.trace.trace import TrackedProvider  # noqa: E402
+from runtime.coach import ParentCoach  # noqa: E402
 from knowledge.i18n import I18n  # noqa: E402
 
 CHECKIN_SIGNAL = {"completed": 0.8, "partial": 0.5, "not_completed": 0.2}
@@ -250,6 +251,21 @@ def main() -> None:
               f"(topic={rec['topic_derived']}, direct={rec['direct']}) "
               f"conf={rec['confidence']:.2f}")
     print(f"  events={len(store.events_for(child_id))}")
+
+    # Close the family loop: Evidence → Insight → Parent Coach → Family Action.
+    coach = ParentCoach(taxonomy, i18n, out_guard, topic_names={
+        tid: i18n.topic_name(tid, t["name"]) for tid, t in topics_by_id.items()})
+    insight = coach.build_insight(
+        child_id=child_id, events=[vars(e) for e in store.events_for(child_id)],
+        capabilities=caps)
+    store.append("parent.insight_generated", child_id, {"insight": insight})
+    print("\n--- parent insight ---")
+    for m in insight["moments"]:
+        print(f"  ✦ {m['title']}")
+    for t in insight["trends"][:4]:
+        name = i18n.capability_name(t["capability_id"])
+        print(f"  {t['direction']:<6} {name}: {t['interpretation']}")
+    print(f"  建议  {insight['suggestion']['title']}：{insight['suggestion']['home_activity']}")
 
 
 if __name__ == "__main__":
