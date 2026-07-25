@@ -11,8 +11,8 @@ import json
 from typing import Any
 
 from ..contracts import validate_signals
-from ..trace.trace import TrackedProvider
 from ..llm.base import LLMRequest
+from ..trace.trace import TrackedProvider
 
 SYSTEM = """You extract growth signals from parent observations of a 4-6 year old.
 Rules:

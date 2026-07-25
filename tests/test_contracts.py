@@ -2,15 +2,16 @@
 
 from __future__ import annotations
 
+import json
+
 import pytest
 
 from runtime.contracts import ContractViolation, validate, validate_signals
+from runtime.events.store import EventStore
+from runtime.llm.base import LLMRequest, LLMResponse
 from runtime.mission.manager import MissionManager
 from runtime.planner.planner import FrontierViolation, GrowthPlanner
-from runtime.llm.base import LLMRequest, LLMResponse
-from runtime.events.store import EventStore
 from runtime.trace.trace import TrackedProvider
-import json
 
 
 def _valid_plan() -> dict:

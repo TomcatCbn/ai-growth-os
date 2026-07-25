@@ -27,3 +27,8 @@ class I18n:
         """Observation checklist text. Falls back to canonical English when
         the human-polished zh is not yet available (ADR-005 §4)."""
         return self._topics.get(topic_id, {}).get("evidence", fallback)
+
+    def has_topic_zh(self, topic_id: str) -> bool:
+        """False means parent-facing text for this topic falls back to
+        English — a coverage gap that must be visible, never silent."""
+        return topic_id in self._topics

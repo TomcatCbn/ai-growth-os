@@ -10,10 +10,10 @@ import yaml
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from runtime.contracts import validate
-from runtime.coach import ParentCoach
-from runtime.events.store import EventStore
 from knowledge.i18n import I18n
+from runtime.coach import ParentCoach
+from runtime.contracts import validate
+from runtime.events.store import EventStore
 
 TAXONOMY = yaml.safe_load((ROOT / "world-model" / "capability-taxonomy.yaml").read_text())
 

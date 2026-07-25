@@ -17,7 +17,7 @@ from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-from demo.engine import ChildEngine  # noqa: E402
+from demo.engine import ChildEngine
 
 PROFILES = {
     "vc_curious": "demo/virtual_children/curious_low_persistence.yaml",

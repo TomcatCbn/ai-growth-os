@@ -25,20 +25,23 @@ import yaml
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from runtime.events.store import EventStore  # noqa: E402
-from runtime.evidence.extractor import EvidenceExtractor  # noqa: E402
-from runtime.mission.manager import MissionManager  # noqa: E402
-from runtime.planner.frontier import compute_frontier  # noqa: E402
-from runtime.planner.planner import GrowthPlanner  # noqa: E402
-from runtime.safety.guards import InputGuard, OutputGuard  # noqa: E402
-from runtime.state.memory import growth_memory_from_events  # noqa: E402
-from runtime.state.reducer import reduce_events  # noqa: E402
-from runtime.state.capabilities import (  # noqa: E402
-    derive_capabilities, development_priorities, load_capability_map, topic_capabilities,
+from knowledge.i18n import I18n
+from runtime.coach import ParentCoach
+from runtime.events.store import EventStore
+from runtime.evidence.extractor import EvidenceExtractor
+from runtime.mission.manager import MissionManager
+from runtime.planner.frontier import compute_frontier
+from runtime.planner.planner import GrowthPlanner
+from runtime.safety.guards import InputGuard, OutputGuard
+from runtime.state.capabilities import (
+    derive_capabilities,
+    development_priorities,
+    load_capability_map,
+    topic_capabilities,
 )
-from runtime.trace.trace import TrackedProvider  # noqa: E402
-from runtime.coach import ParentCoach  # noqa: E402
-from knowledge.i18n import I18n  # noqa: E402
+from runtime.state.memory import growth_memory_from_events
+from runtime.state.reducer import reduce_events
+from runtime.trace.trace import TrackedProvider
 
 CHECKIN_SIGNAL = {"completed": 0.8, "partial": 0.5, "not_completed": 0.2}
 
@@ -220,6 +223,8 @@ def main() -> None:
             theme = max(state.get("interests", {"冒险": 1}), key=state.get("interests", {}).get)
             theme = theme.split(".")[-1]
             arc = generate_arc(topic, theme, child_id, child["name"], i18n)
+            if not i18n.has_topic_zh(topic["id"]):
+                print(f"         ⚠ i18n gap: {topic['name']} checklist falls back to English")
             content_check = out_guard.review_arc(arc)
             rationale_check = out_guard.review(plan["rationale"], audience="parent")
             if not (content_check.passed and rationale_check.passed):

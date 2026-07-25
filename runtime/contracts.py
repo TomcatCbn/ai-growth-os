@@ -10,7 +10,7 @@ Hard failure on violation: a contract breach is a bug, never a warning.
 from __future__ import annotations
 
 import json
-from functools import lru_cache
+from functools import cache
 from pathlib import Path
 from typing import Any
 
@@ -23,7 +23,7 @@ class ContractViolation(Exception):
     pass
 
 
-@lru_cache(maxsize=None)
+@cache
 def _validator(name: str) -> Draft7Validator:
     path = SCHEMA_DIR / f"{name}.schema.json"
     schema = json.loads(path.read_text())

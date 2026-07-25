@@ -23,7 +23,6 @@ def compute_frontier(
 
     topics/dependencies follow the os-taxonomy schema (ADR-001).
     """
-    by_id = {t["id"]: t for t in topics}
     hard_prereqs: dict[str, list[str]] = {}
     soft_prereqs: dict[str, list[str]] = {}
     for d in dependencies:

@@ -62,7 +62,6 @@ def derive_capabilities(
     Returns cap_id -> {score, confidence, topic_derived, direct,
     topic_evidence_count, direct_evidence_count} — every number traceable.
     """
-    band = age_band(age)
     weighted_sum: dict[str, float] = {}
     weight_total: dict[str, float] = {}
     topic_counts: dict[str, int] = {}

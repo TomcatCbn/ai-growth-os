@@ -16,7 +16,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-from runtime.llm.base import LLMRequest, LLMResponse  # noqa: E402
+from runtime.llm.base import LLMRequest, LLMResponse
 
 # Keywords are deliberately distinctive per capability — collisions would
 # make the offline evaluation baseline meaningless (false-positive discipline).

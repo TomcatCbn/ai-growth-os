@@ -15,21 +15,24 @@ import yaml
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from runtime.events.store import EventStore  # noqa: E402
-from runtime.evidence.extractor import EvidenceExtractor  # noqa: E402
-from runtime.mission.manager import MissionManager  # noqa: E402
-from runtime.planner.frontier import compute_frontier  # noqa: E402
-from runtime.planner.planner import GrowthPlanner  # noqa: E402
-from runtime.safety.guards import InputGuard, OutputGuard  # noqa: E402
-from runtime.state.memory import growth_memory_from_events  # noqa: E402
-from runtime.state.reducer import reduce_events  # noqa: E402
-from runtime.state.capabilities import (  # noqa: E402
-    derive_capabilities, development_priorities, load_capability_map, topic_capabilities,
+from demo.run_loop import CHECKIN_SIGNAL, generate_arc, load_targets
+from knowledge.i18n import I18n
+from runtime.coach import ParentCoach
+from runtime.events.store import EventStore
+from runtime.evidence.extractor import EvidenceExtractor
+from runtime.mission.manager import MissionManager
+from runtime.planner.frontier import compute_frontier
+from runtime.planner.planner import GrowthPlanner
+from runtime.safety.guards import InputGuard, OutputGuard
+from runtime.state.capabilities import (
+    derive_capabilities,
+    development_priorities,
+    load_capability_map,
+    topic_capabilities,
 )
-from runtime.trace.trace import TrackedProvider  # noqa: E402
-from runtime.coach import ParentCoach  # noqa: E402
-from knowledge.i18n import I18n  # noqa: E402
-from demo.run_loop import CHECKIN_SIGNAL, generate_arc, load_targets  # noqa: E402
+from runtime.state.memory import growth_memory_from_events
+from runtime.state.reducer import reduce_events
+from runtime.trace.trace import TrackedProvider
 
 ARTIFACT = "knowledge/artifact/growth-artifact-0.1.json"
 TAXONOMY = "world-model/capability-taxonomy.yaml"

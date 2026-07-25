@@ -8,12 +8,12 @@ from __future__ import annotations
 
 import json
 import uuid
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import Any
 
 from ..contracts import validate
-from ..trace.trace import TrackedProvider
 from ..llm.base import LLMRequest
+from ..trace.trace import TrackedProvider
 
 TRIGGERS = ("evidence_submitted", "mission_stalled", "parent_request", "cold_start")
 
@@ -99,6 +99,6 @@ class GrowthPlanner:
         plan["trigger"] = trigger
         plan["frontier_snapshot"] = sorted(frontier_ids)
         plan["decision_trace_id"] = trace_id
-        plan["created_at"] = datetime.now(timezone.utc).isoformat()
+        plan["created_at"] = datetime.now(UTC).isoformat()
         validate("growth-plan", plan)
         return plan, trace_id

@@ -8,7 +8,7 @@ activate / advance chapter / close / detect stall. Never writes growth goals
 from __future__ import annotations
 
 import uuid
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 from ..contracts import validate
 
@@ -31,11 +31,11 @@ class MissionManager:
             raise RuntimeError(f"mission {self.active['arc_id']} still active — close it first")
         arc["arc_id"] = arc.get("arc_id") or f"arc_{uuid.uuid4().hex[:10]}"
         arc["status"] = "active"
-        arc.setdefault("created_at", datetime.now(timezone.utc).isoformat())
+        arc.setdefault("created_at", datetime.now(UTC).isoformat())
         arc["chapters"][0]["status"] = "active"
         validate("mission-arc", arc)
         self.active = arc
-        self.activated_at = datetime.now(timezone.utc).isoformat()
+        self.activated_at = datetime.now(UTC).isoformat()
         return arc
 
     def close(self, checkin_status: str) -> dict:
@@ -46,7 +46,7 @@ class MissionManager:
         arc = self.active
         arc["status"] = "completed" if checkin_status == "completed" else "abandoned"
         arc["hypothesis_verdict"] = _VERDICT[checkin_status]
-        arc["closed_at"] = datetime.now(timezone.utc).isoformat()
+        arc["closed_at"] = datetime.now(UTC).isoformat()
         self.active = None
         return arc
 
@@ -66,7 +66,7 @@ class MissionManager:
     def is_stalled(self, now: datetime | None = None) -> bool:
         if self.active is None or self.activated_at is None:
             return False
-        now = now or datetime.now(timezone.utc)
+        now = now or datetime.now(UTC)
         activated = datetime.fromisoformat(self.activated_at)
         return (now - activated).days >= STALL_DAYS
 
@@ -76,7 +76,7 @@ class MissionManager:
         return {"active": self.active, "activated_at": self.activated_at}
 
     @classmethod
-    def from_events(cls, events: list[dict]) -> "MissionManager":
+    def from_events(cls, events: list[dict]) -> MissionManager:
         """Replay mission lifecycle events into runtime state (ADR-002 §5:
         everything is recoverable from the event log).
 

@@ -4,7 +4,9 @@ discipline, and planner consumption of development_priority."""
 from __future__ import annotations
 
 from runtime.state.capabilities import (
-    derive_capabilities, development_priorities, topic_capabilities,
+    derive_capabilities,
+    development_priorities,
+    topic_capabilities,
 )
 
 CAP_MAP = {

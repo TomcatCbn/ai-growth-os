@@ -14,8 +14,7 @@ More Evidence.
 from __future__ import annotations
 
 import uuid
-from datetime import datetime, timezone
-from typing import Any
+from datetime import UTC, datetime
 
 from ..contracts import validate
 from ..safety.guards import OutputGuard
@@ -68,7 +67,7 @@ class ParentCoach:
         moments = self._moments(signal_events)
         trends = self._trends(signal_events)
         suggestion = self._suggestion(capabilities)
-        now = datetime.now(timezone.utc).isoformat()
+        now = datetime.now(UTC).isoformat()
         insight = {
             "insight_id": f"ins_{uuid.uuid4().hex[:10]}",
             "child_id": child_id,
