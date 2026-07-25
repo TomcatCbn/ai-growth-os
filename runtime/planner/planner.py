@@ -7,10 +7,15 @@ selected_topic_id ∈ frontier_snapshot — otherwise hard failure.
 from __future__ import annotations
 
 import json
+import uuid
+from datetime import datetime, timezone
 from typing import Any
 
+from ..contracts import validate
 from ..trace.trace import TrackedProvider
 from ..llm.base import LLMRequest
+
+TRIGGERS = ("evidence_submitted", "mission_stalled", "parent_request", "cold_start")
 
 SYSTEM = """You are the Growth Planner of AI Growth OS, a companion for children aged 4-6.
 You receive: the child's state, recent evidence, and a FRONTIER of candidate topics
@@ -58,8 +63,12 @@ class GrowthPlanner:
         frontier: list[dict],
         recent_evidence: list[dict],
         growth_memory: dict | None = None,
+        trigger: str = "evidence_submitted",
     ) -> tuple[dict, str]:
-        """Returns (plan, trace_id). Raises FrontierViolation on illegal pick."""
+        """Returns (plan, trace_id). Raises FrontierViolation on illegal pick,
+        ContractViolation if the completed plan breaches the contract."""
+        if trigger not in TRIGGERS:
+            raise ValueError(f"unknown plan trigger: {trigger}")
         user = json.dumps(
             {
                 "child_state": child_state,

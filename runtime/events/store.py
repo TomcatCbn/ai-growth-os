@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import json
 import sqlite3
+import threading
 import uuid
 from dataclasses import dataclass
 from datetime import datetime, timezone
@@ -61,7 +62,10 @@ class Event:
 
 class EventStore:
     def __init__(self, path: str | Path = ":memory:"):
-        self._db = sqlite3.connect(str(path))
+        # check_same_thread=False: web servers (FastAPI threadpool) call from
+        # worker threads; a lock serializes writes instead.
+        self._lock = threading.Lock()
+        self._db = sqlite3.connect(str(path), check_same_thread=False)
         self._db.executescript(SCHEMA)
 
     def append(self, event_type: str, child_id: str, payload: dict[str, Any]) -> Event:
@@ -73,12 +77,13 @@ class EventStore:
             payload=payload,
             created_at=_now(),
         )
-        self._db.execute(
-            "INSERT INTO events (event_id, event_type, child_id, payload, created_at)"
-            " VALUES (?, ?, ?, ?, ?)",
-            (ev.event_id, ev.event_type, ev.child_id, json.dumps(ev.payload), ev.created_at),
-        )
-        self._db.commit()
+        with self._lock:
+            self._db.execute(
+                "INSERT INTO events (event_id, event_type, child_id, payload, created_at)"
+                " VALUES (?, ?, ?, ?, ?)",
+                (ev.event_id, ev.event_type, ev.child_id, json.dumps(ev.payload), ev.created_at),
+            )
+            self._db.commit()
         return ev
 
     def trace(
@@ -94,16 +99,17 @@ class EventStore:
         output_tokens: int = 0,
     ) -> str:
         trace_id = f"tr_{uuid.uuid4().hex[:12]}"
-        self._db.execute(
-            "INSERT INTO decision_trace (trace_id, component, child_id, input_snapshot,"
-            " output, rationale, model, input_tokens, output_tokens, created_at)"
-            " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-            (
-                trace_id, component, child_id, json.dumps(input_snapshot),
-                json.dumps(output), rationale, model, input_tokens, output_tokens, _now(),
-            ),
-        )
-        self._db.commit()
+        with self._lock:
+            self._db.execute(
+                "INSERT INTO decision_trace (trace_id, component, child_id, input_snapshot,"
+                " output, rationale, model, input_tokens, output_tokens, created_at)"
+                " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                (
+                    trace_id, component, child_id, json.dumps(input_snapshot),
+                    json.dumps(output), rationale, model, input_tokens, output_tokens, _now(),
+                ),
+            )
+            self._db.commit()
         return trace_id
 
     def events_for(self, child_id: str) -> list[Event]:
@@ -117,11 +123,12 @@ class EventStore:
         ]
 
     def save_snapshot(self, child_id: str, state: dict[str, Any], last_event_seq: int) -> None:
-        self._db.execute(
-            "INSERT INTO snapshots (child_id, state, last_event_seq, created_at)"
-            " VALUES (?, ?, ?, ?)"
-            " ON CONFLICT(child_id) DO UPDATE SET state=excluded.state,"
-            " last_event_seq=excluded.last_event_seq, created_at=excluded.created_at",
-            (child_id, json.dumps(state), last_event_seq, _now()),
-        )
-        self._db.commit()
+        with self._lock:
+            self._db.execute(
+                "INSERT INTO snapshots (child_id, state, last_event_seq, created_at)"
+                " VALUES (?, ?, ?, ?)"
+                " ON CONFLICT(child_id) DO UPDATE SET state=excluded.state,"
+                " last_event_seq=excluded.last_event_seq, created_at=excluded.created_at",
+                (child_id, json.dumps(state), last_event_seq, _now()),
+            )
+            self._db.commit()

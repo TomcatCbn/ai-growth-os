@@ -1,0 +1,166 @@
+"""ChildEngine — reusable runtime for one virtual child.
+
+Extracts the loop body from run_loop.py so both the CLI demo and the web
+app drive the identical pipeline (guard → extract → events → reduce →
+frontier → plan → arc). Offline via MockLLMProvider; --live swaps provider.
+"""
+
+from __future__ import annotations
+
+import json
+import sys
+from pathlib import Path
+
+import yaml
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
+from runtime.events.store import EventStore  # noqa: E402
+from runtime.evidence.extractor import EvidenceExtractor  # noqa: E402
+from runtime.mission.manager import MissionManager  # noqa: E402
+from runtime.planner.frontier import compute_frontier  # noqa: E402
+from runtime.planner.planner import GrowthPlanner  # noqa: E402
+from runtime.safety.guards import InputGuard, OutputGuard  # noqa: E402
+from runtime.state.reducer import reduce_events  # noqa: E402
+from runtime.trace.trace import TrackedProvider  # noqa: E402
+from knowledge.i18n import I18n  # noqa: E402
+from demo.run_loop import CHECKIN_SIGNAL, generate_arc, load_targets  # noqa: E402
+
+ARTIFACT = "knowledge/artifact/growth-artifact-0.1.json"
+TAXONOMY = "world-model/capability-taxonomy.yaml"
+
+
+class ChildEngine:
+    def __init__(self, profile_path: str, live: bool = False):
+        root = Path(__file__).resolve().parent.parent
+        self.profile = yaml.safe_load((root / profile_path).read_text())
+        self.artifact = json.loads((root / ARTIFACT).read_text())
+        self.taxonomy = yaml.safe_load((root / TAXONOMY).read_text())
+
+        child = self.profile["profile"]
+        self.child = child
+        self.child_id = child["child_id"]
+        self.age = child["age"]
+        self.state = dict(child["initial_state"])
+        self.state.setdefault("interests", {})
+        self.topics_by_id = {t["id"]: t for t in self.artifact["topics"]}
+
+        self.store = EventStore()
+        if live:
+            from runtime.llm.claude import ClaudeProvider
+            provider = ClaudeProvider()
+        else:
+            from demo.mock_llm import MockLLMProvider
+            provider = MockLLMProvider()
+        self.provider_name = provider.model
+        llm = TrackedProvider(provider, self.store, component="child-engine")
+        self.extractor = EvidenceExtractor(llm)
+        self.planner = GrowthPlanner(llm)
+        self.manager = MissionManager()
+        self.in_guard, self.out_guard = InputGuard(), OutputGuard()
+        self.targets = load_targets(self.artifact, self.taxonomy)
+        self.i18n = I18n()
+        self.day = 0
+        self.log: list[str] = []
+
+        for entry in self.profile.get("evidence_timeline", []):
+            self.process(entry)
+
+    # -- core loop ----------------------------------------------------------
+
+    def process(self, entry: dict) -> None:
+        self.day = max(self.day, entry.get("day", self.day + 1))
+        day = entry.get("day", self.day)
+        guarded = self.in_guard.screen(entry["raw_text"])
+        self.store.append("evidence.submitted", self.child_id, {
+            "day": day, "channel": entry["channel"], "raw_text": guarded.text,
+            "guard_flags": guarded.flags,
+        })
+        signals = []
+
+        if entry["channel"] == "mission_checkin" and self.manager.active:
+            arc = self.manager.active
+            signals.append({
+                "target_type": "topic",
+                "target_id": arc["primary_goal"]["topic_id"],
+                "signal_strength": CHECKIN_SIGNAL[entry["checkin_status"]],
+                "confidence": 0.7,
+                "quote": guarded.text,
+            })
+            closed = self.manager.close(entry["checkin_status"])
+            self.store.append("mission.closed", self.child_id, {
+                "arc_id": closed["arc_id"], "verdict": closed["hypothesis_verdict"]})
+            self.log.append(f"day {day}｜打卡「{entry['checkin_status']}」→ 冒险结束（假设{closed['hypothesis_verdict']}）")
+        else:
+            signals, _ = self.extractor.extract(
+                child_id=self.child_id, raw_text=guarded.text, candidate_targets=self.targets)
+            kinds = "、".join(self.i18n.capability_name(s["target_id"]) for s in signals) or "无信号"
+            self.log.append(f"day {day}｜{entry['channel']} → {kinds}")
+
+        self.store.append("evidence.signals_extracted", self.child_id,
+                          {"day": day, "signals": signals})
+
+        events = [vars(e) for e in self.store.events_for(self.child_id)]
+        self.state.update(reduce_events(events))
+
+        if self.manager.active is None:
+            self._plan_and_activate(events, day)
+
+        self.store.save_snapshot(self.child_id, self.state, len(events))
+
+    def _plan_and_activate(self, events: list[dict], day: int) -> None:
+        frontier = compute_frontier(
+            self.artifact["topics"], self.artifact["dependencies"],
+            self.state.get("topic_mastery", {}), age=self.age)
+        plan, _ = self.planner.plan(
+            child_id=self.child_id, child_state=self.state,
+            frontier=frontier, recent_evidence=events[-10:])
+        topic = self.topics_by_id[plan["selected_topic_id"]]
+        theme = max(self.state["interests"], key=self.state["interests"].get).split(".")[-1]
+        arc = generate_arc(topic, theme, self.child["name"], self.i18n)
+        check = self.out_guard.review(
+            " ".join(c["narration"] for c in arc["chapters"]), audience="child")
+        if not check.passed:
+            self.store.append("safety.output_rejected", self.child_id, {"flags": check.flags})
+            self.log.append(f"day {day}｜⚠ 安全护栏拦截了任务生成：{check.flags}")
+            return
+        self.manager.activate(arc)
+        self.store.append("mission.activated", self.child_id, {
+            "arc_id": arc["arc_id"], "topic": topic["id"], "theme": theme,
+            "plan_trace": plan["decision_trace_id"]})
+        tname = self.i18n.topic_name(topic["id"], topic["name"])
+        self.log.append(f"day {day}｜▶ 新冒险「{theme}·{tname}」（候选池 {len(frontier)}）")
+
+    def submit(self, channel: str, raw_text: str, checkin_status: str | None = None) -> None:
+        entry = {"day": self.day + 1, "channel": channel, "raw_text": raw_text}
+        if channel == "mission_checkin":
+            entry["checkin_status"] = checkin_status or "completed"
+        self.process(entry)
+
+    # -- view ----------------------------------------------------------------
+
+    def view(self) -> dict:
+        caps = [
+            {"name": self.i18n.capability_name(cid), "level": r["level"],
+             "conf": r["confidence"], "n": r["evidence_count"]}
+            for cid, r in sorted(self.state.get("capability_direct", {}).items(),
+                                 key=lambda kv: -kv[1]["level"])
+        ]
+        topics = [
+            {"name": self.i18n.topic_name(tid, self.topics_by_id.get(tid, {}).get("name", tid)),
+             "mastery": r["mastery"], "n": r["evidence_count"]}
+            for tid, r in sorted(self.state.get("topic_mastery", {}).items(),
+                                 key=lambda kv: -kv[1]["mastery"])
+        ]
+        interests = sorted(self.state["interests"].items(), key=lambda kv: -kv[1])[:6]
+        arc = self.manager.active
+        if arc:
+            topic = self.topics_by_id.get(arc["primary_goal"]["topic_id"], {})
+            arc = dict(arc)
+            arc["goal_name"] = self.i18n.topic_name(topic.get("id", ""), topic.get("name", ""))
+        return {
+            "child": self.child, "provider": self.provider_name,
+            "caps": caps, "topics": topics, "interests": interests,
+            "arc": arc, "log": self.log[-15:][::-1],
+            "n_events": len(self.store.events_for(self.child_id)),
+        }
