@@ -78,3 +78,7 @@
 - 2026-07-26 Phase 1 完成：ADR-013 落地（T1/T2/T3 定调 + Q24=C 记录）；child-twin / tendency / growth-pattern / partner-state / family-model 五个契约 + 14 个契约测试。68 测试全绿，ruff 干净。无路线偏离。
 - 2026-07-26 Phase 2 完成：runtime/twin 投影 + 确定性 tendencies（证据链 + stale 纪律）；趋势计算收敛为共享 runtime/state/trends.py（coach/twin 共用）。75 测试全绿。无路线偏离。
 - 2026-07-26 Phase 3 完成：growth-patterns.yaml 5 模式数据化（探索/建造/帮助/挑战/故事），select_pattern 按能力契合−近期使用选模式，generate_arc 实例化；四个孩子已呈现模式多样性。81 测试全绿。无路线偏离。
+- 2026-07-26 Phase 4 完成：Partner 关系投影（trust、story_progress、callbacks、relationship_memory 带溯源）；未用回调织入 hook 叙述（"还记得我们的…吗"）并记 partner.callback_used 事件。87 测试全绿。无路线偏离。
+- 2026-07-26 Phase 5 完成：Mission Score 四权重（engagement 40 / growth 30 / family 20 / novelty 10）进 mock 与 prompt；family-model + 兴趣桥（princess·数学）；朵朵全部 arc 收敛到数学主题。92 测试全绿。无路线偏离。
+- 2026-07-26 Phase 6 完成：runtime-json.schema.json（五段式 session：greeting 30s → choice 60s → adventure 240s → memory 30s → farewell 30s）+ 确定性发射器。客户端不在本仓库。98 测试全绿。无路线偏离。
+- 2026-07-26 Phase 7 完成：关系指标投影（主动回来、回调使用、孩子发起、trust）；明确不做完成率/学习时长。101 测试全绿，评估门槛 PASS，四个孩子全部 OK。无路线偏离。
