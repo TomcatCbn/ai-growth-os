@@ -75,3 +75,4 @@
 
 ## 执行日志
 - 2026-07-26 Phase 1 开始：ADR-013 + 5 个 schema + 契约测试。
+- 2026-07-26 Phase 1 完成：ADR-013 落地（T1/T2/T3 定调 + Q24=C 记录）；child-twin / tendency / growth-pattern / partner-state / family-model 五个契约 + 14 个契约测试。68 测试全绿，ruff 干净。无路线偏离。
