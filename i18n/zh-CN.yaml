@@ -1,0 +1,103 @@
+# i18n layer (ADR-005): canonical knowledge stays English; this file is
+# additive, keyed by stable id, never mutating upstream.
+#
+# Coverage policy (Phase 0):
+#   - capabilities: ALL 28 (names + definitions)
+#   - topics: name_zh + evidence_zh for the highest-centrality starter set;
+#     evidence_zh is HUMAN-POLISHED (it becomes the parent observation
+#     checklist — the fulcrum of evidence quality, ADR-002)
+version: "0.1"
+locale: zh-CN
+
+capabilities:
+  capability.pattern_recognition: { name: 规律识别, definition: 发现、延续并创造规律 }
+  capability.classification: { name: 分类归纳, definition: 按属性分类，能自创分类标准 }
+  capability.causal_reasoning: { name: 因果推理, definition: 建立事件间的因果联系并预测结果 }
+  capability.observation: { name: 观察力, definition: 注意到细节、差异和变化 }
+  capability.numeracy_sense: { name: 数感, definition: 超越机械数数的数量直觉 }
+  capability.spatial_reasoning: { name: 空间认知, definition: 心理旋转、空间关系与拼组 }
+  capability.storytelling: { name: 叙事表达, definition: 构建有结构的叙事 }
+  capability.verbal_explanation: { name: 解释说明, definition: 解释自己的想法和理由 }
+  capability.vocabulary_use: { name: 词汇运用, definition: 恰当使用新词和精确词汇 }
+  capability.listening_comprehension: { name: 倾听理解, definition: 理解多步骤口头指令 }
+  capability.dialogue_turn_taking: { name: 对话轮替, definition: 维持有来有回的对话 }
+  capability.emotion_regulation: { name: 情绪调节, definition: 从挫折中恢复，能说出感受 }
+  capability.empathy: { name: 共情理解, definition: 察觉并回应他人的情绪 }
+  capability.social_negotiation: { name: 社交协商, definition: 用语言和提议解决冲突 }
+  capability.self_confidence: { name: 自我效能, definition: 愿意尝试新的或有难度的事 }
+  capability.cooperation: { name: 合作参与, definition: 为共同目标贡献力量 }
+  capability.imaginative_play: { name: 想象游戏, definition: 创造并维持假装游戏情境 }
+  capability.divergent_ideas: { name: 发散联想, definition: 想出多种或不寻常的用途 }
+  capability.artistic_expression: { name: 艺术表现, definition: 通过艺术媒介表达想法 }
+  capability.creative_combination: { name: 创意组合, definition: 以新颖方式组合事物 }
+  capability.persistence: { name: 坚持性, definition: 在困难和失败中持续努力 }
+  capability.focused_attention: { name: 专注力, definition: 在非偏好的任务上保持注意 }
+  capability.planning: { name: 计划性, definition: 行动前规划步骤顺序 }
+  capability.impulse_control: { name: 冲动控制, definition: 能等待、克制、遵守轮流规则 }
+  capability.working_memory: { name: 工作记忆, definition: 短时间内记住并使用信息 }
+  capability.fine_motor: { name: 精细动作, definition: 精确的手部控制 }
+  capability.gross_motor: { name: 大肌肉运动, definition: 全身协调性动作 }
+  capability.hand_eye_coordination: { name: 手眼协调, definition: 视觉引导下的动作控制 }
+  capability.body_control_rhythm: { name: 身体节奏, definition: 随节奏运动并保持平衡 }
+
+topics:
+  mt_WcfaSfVT33:
+    name: 一一对应数数
+    evidence:
+      - 数数时能用手指逐个点过每件物品，每个只点一次
+      - 点数一组物品时不漏数、不重复数
+  mt_dmNvjroCPT:
+    name: 总数是多少
+    evidence:
+      - 数完一组物品后，能直接用最后说出的数回答"一共有几个"
+      - 不需要从头重新数一遍来回答总数
+  mt_WBfj79OqXz:
+    name: 坐姿与握笔
+    evidence:
+      - 能用三指或接近三指的握法舒适地握笔
+      - 涂画几分钟后握笔姿势仍然稳定
+  mt_zuKAX6lcYR:
+    name: 减法就是拿走
+    evidence:
+      - 能用实物演示"拿走"的过程，并说出还剩几个
+      - 遇到"吃掉/给出"的情景能联想到减法
+  mt_fR0UtsSREU:
+    name: 读写20以内的数
+    evidence:
+      - 看到 0–20 的任意数字能正确读出来
+      - 听到一个数能写出对应的数字
+  mt_oAK9GXSfqV:
+    name: 书写数字0-9
+    evidence:
+      - 能清楚写出 0-9，起笔位置正确
+      - 写出来的数字别人能认得
+  mt_OvyoRo47K-:
+    name: 加法就是合起来
+    evidence:
+      - 能用实物演示"合在一起"，并说出总数
+      - 能把两组物品合并后数出一共多少
+  mt_M5PPDJStGm:
+    name: 唱数到100
+    evidence:
+      - 能按顺序背诵 1–100，不跳数、不重复
+      - 能从中间某个数接着往下数
+  mt_LpSuPgL31x:
+    name: 除法就是平均分
+    evidence:
+      - 能把 10 个物品平均分到 2 个盘子里，并说出每盘几个
+      - 发现分不均时能说"没办法平均分"
+  mt_xmmgAzxe5j:
+    name: 十几的数
+    evidence:
+      - 能用物品把 14 摆成"一捆十和四个一"
+      - 看到 14 能说出它是由一个十和四个一组成的
+  mt_r0VXbfAmsH:
+    name: 一个十就是十个一
+    evidence:
+      - 能把 10 根小棒捆成一捆，并解释为什么这一捆就是"一个十"
+      - 数整十时能按"十"为单位来数
+  mt_THl9GLxwoL:
+    name: 两位数的两个数字
+    evidence:
+      - 能解释 47 里的 4 表示 4 个十（40），7 表示 7 个一
+      - 听到"3个十和5个一"能说出是 35

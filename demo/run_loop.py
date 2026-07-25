@@ -33,6 +33,7 @@ from runtime.planner.planner import GrowthPlanner  # noqa: E402
 from runtime.safety.guards import InputGuard, OutputGuard  # noqa: E402
 from runtime.state.reducer import reduce_events  # noqa: E402
 from runtime.trace.trace import TrackedProvider  # noqa: E402
+from knowledge.i18n import I18n  # noqa: E402
 
 CHECKIN_SIGNAL = {"completed": 0.8, "partial": 0.5, "not_completed": 0.2}
 
@@ -59,7 +60,11 @@ def load_targets(artifact: dict, taxonomy: dict) -> list[dict]:
     return targets
 
 
-def generate_arc(topic: dict, theme: str, child_name: str) -> dict:
+def generate_arc(topic: dict, theme: str, child_name: str, i18n: I18n) -> dict:
+    # Observation checklist: human-polished zh where available (ADR-005 §4),
+    # canonical English otherwise.
+    checklist = i18n.topic_evidence_zh(topic["id"], topic.get("evidence", []))[:3]
+    topic_name = i18n.topic_name(topic["id"], topic["name"])
     chapters = []
     for i, (title, narration, task, ret) in enumerate(ARC_TEMPLATES, start=1):
         chapters.append(
@@ -70,7 +75,7 @@ def generate_arc(topic: dict, theme: str, child_name: str) -> dict:
                 "narration": narration.format(theme=theme),
                 "real_world_task": task,
                 "return_prompt": ret,
-                "observation_checklist": topic.get("evidence", [])[:3],
+                "observation_checklist": checklist,
                 "difficulty": i,
                 "interaction_mode": "parent_card",
                 "default_modality": "voice_story",
@@ -83,9 +88,9 @@ def generate_arc(topic: dict, theme: str, child_name: str) -> dict:
         "primary_goal": {"topic_id": topic["id"], "capability_ids": []},
         "supporting_goals": [],
         "growth_hypothesis": {
-            "statement": f"通过{theme}主题冒险，孩子将在「{topic['name']}」上展现可见进步。",
+            "statement": f"通过{theme}主题冒险，孩子将在「{topic_name}」上展现可见进步。",
             "expected_mastery_delta": 0.2,
-            "key_signal": (topic.get("evidence") or ["观察孩子是否主动迁移到新情境"])[0],
+            "key_signal": checklist[0] if checklist else "观察孩子是否主动迁移到新情境",
         },
         "interest_theme": theme,
         "chapters": chapters,
@@ -123,6 +128,7 @@ def main() -> None:
     manager = MissionManager()
     in_guard, out_guard = InputGuard(), OutputGuard()
     targets = load_targets(artifact, taxonomy)
+    i18n = I18n()
 
     print(f"=== {child['name']} ({child_id}, age {age}) | provider={provider.model} ===\n")
 
@@ -173,7 +179,7 @@ def main() -> None:
             topic = topics_by_id[plan["selected_topic_id"]]
             theme = max(state.get("interests", {"冒险": 1}), key=state.get("interests", {}).get)
             theme = theme.split(".")[-1]
-            arc = generate_arc(topic, theme, child["name"])
+            arc = generate_arc(topic, theme, child["name"], i18n)
             content_check = out_guard.review(
                 " ".join(c["narration"] for c in arc["chapters"]), audience="child")
             if not content_check.passed:
