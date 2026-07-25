@@ -1,0 +1,54 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "PartnerState",
+  "description": "The Doudou Rabbit relationship state with one child (ADR-013; blueprint: Partner Relationship Memory). A projection over the event log. Powers story callbacks ('还记得昨天的小星星吗') and trust-aware narration. Feeds prompts; never moves numeric state (ADR-012 boundary).",
+  "type": "object",
+  "required": ["child_id", "partner_id", "trust_level", "story_progress", "updated_at"],
+  "properties": {
+    "child_id": { "type": "string" },
+    "partner_id": { "type": "string", "description": "e.g. 'doudou_rabbit'. Single fixed partner; other roles are guests (blueprint Q3: C)." },
+    "trust_level": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "description": "Derived from engagement signals (return rate, initiated interactions, callback responses). A projection, recomputable."
+    },
+    "story_progress": {
+      "type": "object",
+      "required": ["completed_arcs"],
+      "properties": {
+        "completed_arcs": { "type": "array", "items": { "type": "string" } },
+        "current_thread": { "type": "string", "description": "The ongoing shared storyline (zh), if any." }
+      }
+    },
+    "callbacks_available": {
+      "type": "array",
+      "description": "Memorable moments eligible for story callbacks.",
+      "items": {
+        "type": "object",
+        "required": ["moment", "source_event_id", "used"],
+        "properties": {
+          "moment": { "type": "string", "description": "The shared memory in child-facing phrasing (zh), e.g. '小星星'." },
+          "source_event_id": { "type": "string" },
+          "used": { "type": "boolean" }
+        }
+      }
+    },
+    "relationship_memory": {
+      "type": "array",
+      "description": "Curated relationship facts (ADR-012 Growth Memory discipline).",
+      "items": {
+        "type": "object",
+        "required": ["entry", "confidence", "supporting_event_ids", "last_reinforced_at"],
+        "properties": {
+          "entry": { "type": "string", "description": "e.g. '给豆豆兔取了名字' (zh)." },
+          "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+          "supporting_event_ids": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+          "last_reinforced_at": { "type": "string", "format": "date-time" },
+          "stale": { "type": "boolean" }
+        }
+      }
+    },
+    "updated_at": { "type": "string", "format": "date-time" }
+  }
+}

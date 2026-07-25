@@ -1,0 +1,120 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ChildDigitalTwin",
+  "description": "The system's cumulative understanding of the child (ADR-013). A PROJECTION over the event log — never a raw pocket (ADR-004). Raw views reference Reducer output; insight entries carry confidence + provenance and decay without reinforcement. Observation first, interpretation second: no personality labels, no conclusions without evidence chain.",
+  "type": "object",
+  "required": ["child_id", "generated_at", "identity"],
+  "properties": {
+    "child_id": { "type": "string" },
+    "generated_at": { "type": "string", "format": "date-time" },
+    "identity": {
+      "type": "object",
+      "required": ["name", "age", "stage"],
+      "properties": {
+        "name": { "type": "string" },
+        "age": { "type": "number", "minimum": 3, "maximum": 12 },
+        "stage": { "type": "string", "enum": ["early_childhood", "middle_childhood"] }
+      }
+    },
+    "interests": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/weighted_entry" }
+    },
+    "capabilities": {
+      "type": "object",
+      "description": "Read-through reference to the derived capability view (ADR-004), annotated with trend. Numbers here are projections, never independently stored truth.",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["score", "trend", "confidence"],
+        "properties": {
+          "score": { "type": "number", "minimum": 0, "maximum": 1 },
+          "trend": { "type": "string", "enum": ["up", "steady", "down"] },
+          "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+          "supporting_event_ids": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "motivation": {
+      "type": "object",
+      "description": "What currently moves the child (insight layer).",
+      "properties": {
+        "drivers": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/insight_entry" }
+        }
+      }
+    },
+    "learning_pattern": {
+      "type": "object",
+      "description": "How the child tends to learn (insight layer): e.g. 'retries verbal tasks, gives up physical ones'.",
+      "properties": {
+        "observations": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/insight_entry" }
+        }
+      }
+    },
+    "relationship": {
+      "type": "object",
+      "description": "Partner relationship summary; the full partner state lives in partner-state.schema.json.",
+      "properties": {
+        "partner_id": { "type": "string" },
+        "trust_level": { "type": "number", "minimum": 0, "maximum": 1 },
+        "story_progress": { "type": "string", "description": "Where the shared story currently stands (zh)." }
+      }
+    },
+    "family_goals": {
+      "type": "array",
+      "description": "Parent-stated goals; translated into adventures via the interest bridge, never imposed directly.",
+      "items": {
+        "type": "object",
+        "required": ["title", "created_at"],
+        "properties": {
+          "title": { "type": "string" },
+          "created_at": { "type": "string", "format": "date-time" }
+        }
+      }
+    },
+    "growth_priorities": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Capability ids the family/system currently prioritizes."
+    },
+    "constraints": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Hard limits (health, schedule, parental rules). Safety > child autonomy > growth goals > parent expectations."
+    }
+  },
+  "definitions": {
+    "weighted_entry": {
+      "type": "object",
+      "required": ["name", "score", "confidence"],
+      "properties": {
+        "name": { "type": "string" },
+        "score": { "type": "number", "minimum": 0, "maximum": 1 },
+        "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+        "supporting_event_ids": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "insight_entry": {
+      "type": "object",
+      "required": ["statement", "confidence", "supporting_event_ids", "last_reinforced_at"],
+      "properties": {
+        "statement": { "type": "string" },
+        "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+        "supporting_event_ids": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string" },
+          "description": "Provenance is mandatory (ADR-012/013): no bare claims."
+        },
+        "last_reinforced_at": { "type": "string", "format": "date-time" },
+        "stale": {
+          "type": "boolean",
+          "description": "Set when Event History contradicts this entry. History wins."
+        }
+      }
+    }
+  }
+}

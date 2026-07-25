@@ -1,0 +1,48 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "GrowthPattern",
+  "description": "A growth pattern template (blueprint: Growth Pattern Library — the 'how children grow' layer between Capability Graph and arcs). MVP patterns: discovery / build / help / challenge / story_creation. An arc = pattern template × topic × child interests (blueprint Q18: template library + AI personalization). Patterns are DATA, not code.",
+  "type": "object",
+  "required": ["pattern_id", "name_zh", "description", "chapter_skeleton", "key_signals", "version"],
+  "properties": {
+    "pattern_id": {
+      "type": "string",
+      "enum": ["discovery", "build", "help", "challenge", "story_creation"]
+    },
+    "name_zh": { "type": "string" },
+    "description": { "type": "string" },
+    "chapter_skeleton": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 4,
+      "description": "Ordered chapter roles with difficulty gradient; instantiated into arc chapters (mission-arc.schema.json).",
+      "items": {
+        "type": "object",
+        "required": ["role", "difficulty", "task_pattern"],
+        "properties": {
+          "role": {
+            "type": "string",
+            "enum": ["hook", "practice", "creation", "reflection"],
+            "description": "hook: narrative entry; practice: guided task; creation: child produces something (transfer test); reflection: retelling."
+          },
+          "difficulty": { "type": "integer", "minimum": 1, "maximum": 5 },
+          "task_pattern": { "type": "string", "description": "Offline activity template (zh), may contain {theme}/{topic} placeholders." }
+        }
+      }
+    },
+    "key_signals": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string" },
+      "description": "Observables that confirm the pattern worked for this child (feeds growth_hypothesis.key_signal)."
+    },
+    "suitable_for": {
+      "type": "object",
+      "properties": {
+        "interests": { "type": "array", "items": { "type": "string" } },
+        "capabilities": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "version": { "type": "string" }
+  }
+}

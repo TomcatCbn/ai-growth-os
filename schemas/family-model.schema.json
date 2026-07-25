@@ -1,0 +1,39 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "FamilyModel",
+  "description": "The family's values and goals for the child (blueprint: Family Model — values/goals/observations, never 'control'). Parent goals reach the child ONLY via the interest bridge: goal + child interest → adventure theme (e.g. English goal + loves animals → '豆豆兔动物园管理员'). Priority order: safety > child autonomy > growth goals > parent expectations.",
+  "type": "object",
+  "required": ["child_id", "goals", "updated_at"],
+  "properties": {
+    "child_id": { "type": "string" },
+    "values": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Family-stated values (zh), e.g. '户外运动优先'."
+    },
+    "goals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["goal_id", "title", "status", "created_at"],
+        "properties": {
+          "goal_id": { "type": "string" },
+          "title": { "type": "string", "description": "Parent-stated goal (zh)." },
+          "raw_text": { "type": "string", "description": "The parent's own words (PII-screened)." },
+          "translated_theme": {
+            "type": "string",
+            "description": "Interest-bridge output: the adventure theme this goal was translated into (zh). Empty until bridged."
+          },
+          "status": { "type": "string", "enum": ["active", "paused", "done"] },
+          "created_at": { "type": "string", "format": "date-time" }
+        }
+      }
+    },
+    "constraints": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Hard family rules (zh), e.g. '每次不超过10分钟'. Highest priority after safety."
+    },
+    "updated_at": { "type": "string", "format": "date-time" }
+  }
+}
