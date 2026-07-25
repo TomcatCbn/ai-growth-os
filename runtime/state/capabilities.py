@@ -21,12 +21,28 @@ import yaml
 DEFAULT_MAP = Path(__file__).resolve().parent.parent.parent / "world-model" / "topic-capability-map.yaml"
 
 
+class UnadjudicatedAssetError(Exception):
+    pass
+
+
 def age_band(age: float) -> str:
     return str(min(6, max(4, int(age))))
 
 
-def load_capability_map(path: str | Path = DEFAULT_MAP) -> dict[str, list[dict[str, Any]]]:
+def load_capability_map(
+    path: str | Path = DEFAULT_MAP, *, allow_mock: bool = False
+) -> dict[str, list[dict[str, Any]]]:
+    """Load the topic→capability map. Mock/heuristic maps are domain-model
+    risks, not tech debt (ADR-004 §2-3): they are rejected unless the caller
+    explicitly opts in (demo/baseline use only)."""
     doc = yaml.safe_load(Path(path).read_text())
+    version = str(doc.get("version", ""))
+    if "mock" in version and not allow_mock:
+        raise UnadjudicatedAssetError(
+            f"{path} is version '{version}' — heuristic mock, not expert-adjudicated. "
+            "Formal runtime must use a spot-checked map (--live + spot-check); "
+            "pass allow_mock=True only for demo/baseline runs."
+        )
     return doc["edges"]
 
 

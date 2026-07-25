@@ -134,7 +134,8 @@ def main() -> None:
     manager = MissionManager()
     in_guard, out_guard = InputGuard(), OutputGuard()
     targets = load_targets(artifact, taxonomy)
-    cap_map = load_capability_map(args.capmap)
+    cap_map = load_capability_map(args.capmap, allow_mock=True)
+    print(f"(capability map: {args.capmap} — demo/baseline use, not adjudicated)")
     i18n = I18n()
 
     # Restart recovery: growth state AND runtime state replay from the event

@@ -1,6 +1,9 @@
-# Capability Taxonomy (canonical) — adjudicated from capability-charter.md v0.1
+# Capability Taxonomy (canonical) — drafted from capability-charter.md v0.1
 # per ADR-004 §2 workflow. Charter legislation rules apply to all future edits.
+# HONEST STATUS: the charter is still DRAFT for expert adjudication and no
+# adjudication record exists yet — do not treat this taxonomy as adjudicated.
 version: "0.1"
+status: draft-pending-adjudication
 charter: world-model/capability-charter.md
 age_bands: [4, 5, 6]
 

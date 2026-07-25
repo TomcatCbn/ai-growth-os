@@ -64,7 +64,7 @@ class ChildEngine:
         self.manager = MissionManager()
         self.in_guard, self.out_guard = InputGuard(), OutputGuard()
         self.targets = load_targets(self.artifact, self.taxonomy)
-        self.cap_map = load_capability_map(root / CAPMAP)
+        self.cap_map = load_capability_map(root / CAPMAP, allow_mock=True)
         self.i18n = I18n()
         self.day = 0
         self.log: list[str] = []

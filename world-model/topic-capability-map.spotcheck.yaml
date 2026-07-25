@@ -1,3 +1,5 @@
+# status: pending-review — 20% sample from topic-capability-map.yaml (mock);
+# human spot-check required before the map may enter formal runtime.
 mt_n6GhzDPllD:
 - capability: capability.vocabulary_use
   relevance: 0.6
