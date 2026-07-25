@@ -12,16 +12,11 @@ from typing import Any
 
 from ..contracts import validate_signals
 from ..llm.base import LLMRequest
+from ..llm.prompts import EXTRACTOR as EXTRACTOR_PROMPT_VERSION
+from ..llm.prompts import load_prompt
 from ..trace.trace import TrackedProvider
 
-SYSTEM = """You extract growth signals from parent observations of a 4-6 year old.
-Rules:
-- Only extract what the text directly supports; every signal needs a verbatim quote.
-- If the text is chit-chat / logistics with no growth signal, return an empty list.
-- Prefer topic targets; use capability targets ONLY when no honest topic anchor exists
-  (e.g. pure persistence observations).
-- signal_strength: how strong the demonstrated behavior is (0-1).
-- confidence: how certain you are the observation implies it (0-1)."""
+SYSTEM = load_prompt(EXTRACTOR_PROMPT_VERSION)
 
 RESPONSE_SCHEMA: dict[str, Any] = {
     "type": "object",
@@ -61,6 +56,7 @@ class EvidenceExtractor:
         resp, trace_id = self._llm.complete(
             LLMRequest(system=SYSTEM, user=user, response_schema=RESPONSE_SCHEMA),
             child_id=child_id,
+            context={"prompt_version": EXTRACTOR_PROMPT_VERSION},
         )
         signals = json.loads(resp.content)["signals"]
         validate_signals(signals)

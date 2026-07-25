@@ -1,0 +1,48 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CharacterBible",
+  "description": "The Doudou Rabbit character specification (blueprint: a character BIBLE, not a prompt). AI personalizes stories and dialogue; AI never changes who Doudou IS. Same character, same voice, same personality — identity drift is a safety bug.",
+  "type": "object",
+  "required": ["character_id", "version", "visual_rules", "personality_rules", "language_style", "forbidden_behavior"],
+  "properties": {
+    "character_id": { "type": "string" },
+    "version": { "type": "string" },
+    "visual_rules": {
+      "type": "object",
+      "required": ["species", "colors", "signature_items"],
+      "properties": {
+        "species": { "type": "string" },
+        "colors": { "type": "array", "items": { "type": "string" } },
+        "signature_items": { "type": "array", "items": { "type": "string" } },
+        "proportions": { "type": "string" }
+      }
+    },
+    "personality_rules": {
+      "type": "object",
+      "required": ["core_traits", "emotional_range"],
+      "properties": {
+        "core_traits": { "type": "array", "items": { "type": "string" } },
+        "emotional_range": {
+          "type": "array",
+          "items": { "type": "string", "enum": ["happy", "excited", "comfort", "curious", "sleepy"] }
+        },
+        "quirks": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "language_style": {
+      "type": "object",
+      "required": ["signature_phrases", "avoid_phrases"],
+      "properties": {
+        "signature_phrases": { "type": "array", "items": { "type": "string" } },
+        "avoid_phrases": { "type": "array", "items": { "type": "string" } },
+        "sentence_length": { "type": "string" }
+      }
+    },
+    "forbidden_behavior": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string" },
+      "description": "Never: criticize, compare, guilt-loop, test, scare. Enforced by the Output Guard."
+    }
+  }
+}
