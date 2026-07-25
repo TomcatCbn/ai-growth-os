@@ -18,6 +18,7 @@ from datetime import UTC, datetime
 
 from ..contracts import validate
 from ..safety.guards import OutputGuard
+from ..state.trends import capability_trends
 
 # Comparison/diagnosis phrasing is banned in parent-facing insight text.
 _BANNED_PATTERNS = ["比其他孩子", "同龄", "落后", "超前", "诊断", "排名"]
@@ -116,30 +117,16 @@ class ParentCoach:
 
     def _trends(self, signal_events: list[dict]) -> list[dict]:
         """Direction per capability, vs. the child's own past only."""
-        per_cap: dict[str, list[tuple[float, str]]] = {}
-        for e in signal_events:
-            for s in e["payload"].get("signals", []):
-                if s["target_type"] != "capability":
-                    continue
-                per_cap.setdefault(s["target_id"], []).append(
-                    (s["signal_strength"], e["event_id"]))
         trends = []
-        for cap, entries in sorted(per_cap.items()):
-            strengths = [x[0] for x in entries]
-            if len(strengths) >= 2:
-                half = max(1, len(strengths) // 2)
-                diff = (sum(strengths[-half:]) / half) - (sum(strengths[:half]) / half)
-                direction = "up" if diff > 0.1 else "down" if diff < -0.1 else "steady"
-            else:
-                direction = "steady"
+        for cap, t in capability_trends(signal_events).items():
             name = self._i18n.capability_name(cap)
             reading = {"up": "最近的信号比之前更强", "steady": "表现平稳",
-                       "down": "最近出现得少了，值得留意"}[direction]
+                       "down": "最近出现得少了，值得留意"}[t["direction"]]
             trends.append({
                 "capability_id": cap,
-                "direction": direction,
+                "direction": t["direction"],
                 "interpretation": f"「{name}」{reading}（只和孩子自己前段比）。",
-                "evidence_refs": [eid for _, eid in entries],
+                "evidence_refs": t["evidence_refs"],
             })
         return trends
 

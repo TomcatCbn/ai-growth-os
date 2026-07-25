@@ -37,6 +37,7 @@ from runtime.state.capabilities import (
 from runtime.state.memory import growth_memory_from_events
 from runtime.state.reducer import reduce_events
 from runtime.trace.trace import TrackedProvider
+from runtime.twin import project_tendencies, project_twin
 
 ROOT = Path(__file__).resolve().parent.parent
 ARTIFACT = "knowledge/artifact/growth-artifact-0.1.json"
@@ -221,10 +222,12 @@ class ChildEngine:
         coach = ParentCoach(self.taxonomy, self.i18n, self.out_guard, topic_names={
             tid: self.i18n.topic_name(tid, t["name"])
             for tid, t in self.topics_by_id.items()})
+        events = [vars(e) for e in self.store.events_for(self.child_id)]
         insight = coach.build_insight(
-            child_id=self.child_id,
-            events=[vars(e) for e in self.store.events_for(self.child_id)],
-            capabilities=derived)
+            child_id=self.child_id, events=events, capabilities=derived)
+        twin = project_twin(
+            child=self.child, events=events, state=self.state, capabilities=derived)
+        tendencies = project_tendencies(events)
         arc = self.manager.active
         if arc:
             topic = self.topics_by_id.get(arc["primary_goal"]["topic_id"], {})
@@ -237,5 +240,6 @@ class ChildEngine:
             "caps": caps, "topics": topics, "interests": interests,
             "arc": arc, "log": self.log[-15:][::-1],
             "insight": insight,
+            "twin": twin, "tendencies": tendencies,
             "n_events": len(self.store.events_for(self.child_id)),
         }
