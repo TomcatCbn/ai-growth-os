@@ -1,0 +1,67 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "StoryRuntimeSession",
+  "description": "The client-facing session contract (blueprint: the client is a Story Runtime, not a game engine — it consumes Runtime JSON). One chapter of an arc = one 5-10 minute session in five segments: greeting (30s) → choice (1min) → adventure (3-5min) → memory (30s) → farewell (30s). The Orchestrator may adapt scenes and actions; the observation checklist is immutable (ADR-007).",
+  "type": "object",
+  "required": ["session_id", "child_id", "arc_id", "chapter_id", "segments", "created_at"],
+  "properties": {
+    "session_id": { "type": "string" },
+    "child_id": { "type": "string" },
+    "arc_id": { "type": "string" },
+    "chapter_id": { "type": "string" },
+    "segments": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "items": {
+        "type": "object",
+        "required": ["kind", "duration_seconds", "scene"],
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": ["greeting", "choice", "adventure", "memory", "farewell"]
+          },
+          "duration_seconds": { "type": "integer", "minimum": 10 },
+          "scene": {
+            "type": "object",
+            "required": ["scene_id", "narration", "assets", "actions"],
+            "properties": {
+              "scene_id": { "type": "string" },
+              "narration": { "type": "string", "description": "Partner voice line (zh). Child-facing: must have passed the Output Guard." },
+              "assets": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["asset_id", "kind", "ref"],
+                  "properties": {
+                    "asset_id": { "type": "string" },
+                    "kind": { "type": "string", "enum": ["video", "animation", "audio", "image"] },
+                    "ref": { "type": "string", "description": "Asset-pool reference (blueprint: ~20 base partner videos + AI-composed scenes)." }
+                  }
+                }
+              },
+              "actions": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["action_id", "type", "prompt"],
+                  "properties": {
+                    "action_id": { "type": "string" },
+                    "type": { "type": "string", "enum": ["choose_one", "drag_object", "voice_answer"] },
+                    "prompt": { "type": "string" },
+                    "options": {
+                      "type": "array",
+                      "items": { "type": "string" },
+                      "description": "For choose_one. Runtime interaction results become Evidence Events."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "created_at": { "type": "string", "format": "date-time" }
+  }
+}
