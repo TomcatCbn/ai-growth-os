@@ -1,0 +1,207 @@
+# Capability Taxonomy (canonical) — adjudicated from capability-charter.md v0.1
+# per ADR-004 §2 workflow. Charter legislation rules apply to all future edits.
+version: "0.1"
+charter: world-model/capability-charter.md
+age_bands: [4, 5, 6]
+
+# development_priority: importance of the capability AT that age band (0-1).
+# Consumed by the Planner's frontier ranking (ADR-003/004 §3).
+
+domains:
+  cognitive:
+    name_zh: 认知
+    capabilities:
+      - id: capability.pattern_recognition
+        name_zh: 规律识别
+        definition: Detects, extends, and creates regularities
+        typical_behaviors: 发现红黄红黄规律并预测下一个
+        boundary: 背诵口诀不算，必须迁移到新情境
+        priority: { "4": 0.7, "5": 0.8, "6": 0.8 }
+      - id: capability.classification
+        name_zh: 分类归纳
+        definition: Groups by attributes, invents own criteria
+        typical_behaviors: 按自创标准给玩具分类
+        boundary: 按成人指令分类不算
+        priority: { "4": 0.6, "5": 0.7, "6": 0.7 }
+      - id: capability.causal_reasoning
+        name_zh: 因果推理
+        definition: Links events, predicts outcomes
+        typical_behaviors: 因为没浇水所以花蔫了
+        boundary: 背下来的常识不算
+        priority: { "4": 0.5, "5": 0.7, "6": 0.8 }
+      - id: capability.observation
+        name_zh: 观察力
+        definition: Notices details, differences, changes
+        typical_behaviors: 发现两幅图的不同之处
+        boundary: 扫一眼的看到不算
+        priority: { "4": 0.9, "5": 0.8, "6": 0.7 }
+      - id: capability.numeracy_sense
+        name_zh: 数感
+        definition: Quantity intuition beyond rote counting
+        typical_behaviors: 一眼看出3个和5个谁多
+        boundary: 机械数数到100不算
+        priority: { "4": 0.5, "5": 0.7, "6": 0.8 }
+      - id: capability.spatial_reasoning
+        name_zh: 空间认知
+        definition: Mental rotation, maps, assembly
+        typical_behaviors: 拼图时预判哪块放哪
+        boundary: 反复试错拼对不算
+        priority: { "4": 0.6, "5": 0.7, "6": 0.7 }
+
+  language:
+    name_zh: 语言
+    capabilities:
+      - id: capability.storytelling
+        name_zh: 叙事表达
+        definition: Constructs narratives with structure
+        typical_behaviors: 讲故事有开头结尾
+        boundary: 复述听过的故事打折扣
+        priority: { "4": 0.7, "5": 0.8, "6": 0.8 }
+      - id: capability.verbal_explanation
+        name_zh: 解释说明
+        definition: Explains own thinking and reasons
+        typical_behaviors: 我先找角因为这样快
+        boundary: 描述动作不等于解释理由
+        priority: { "4": 0.6, "5": 0.7, "6": 0.8 }
+      - id: capability.vocabulary_use
+        name_zh: 词汇运用
+        definition: Uses new/precise words appropriately
+        typical_behaviors: 正确使用新学词汇
+        boundary: 会背不会用不算
+        priority: { "4": 0.7, "5": 0.7, "6": 0.7 }
+      - id: capability.listening_comprehension
+        name_zh: 倾听理解
+        definition: Follows multi-step spoken input
+        typical_behaviors: 听懂三步指令并执行
+        boundary: 单步指令不算
+        priority: { "4": 0.8, "5": 0.8, "6": 0.7 }
+      - id: capability.dialogue_turn_taking
+        name_zh: 对话轮替
+        definition: Sustains reciprocal conversation
+        typical_behaviors: 一问一答持续多个来回
+        boundary: 单方面输出不算
+        priority: { "4": 0.8, "5": 0.7, "6": 0.7 }
+
+  social_emotional:
+    name_zh: 社会情感
+    capabilities:
+      - id: capability.emotion_regulation
+        name_zh: 情绪调节
+        definition: Recovers from frustration, names feelings
+        typical_behaviors: 积木倒了不哭，说我再试试
+        boundary: 成人安抚后平静不算
+        priority: { "4": 0.9, "5": 0.9, "6": 0.8 }
+      - id: capability.empathy
+        name_zh: 共情理解
+        definition: Reads and responds to others' feelings
+        typical_behaviors: 发现同伴难过并安慰
+        boundary: 礼貌用语不算
+        priority: { "4": 0.6, "5": 0.7, "6": 0.8 }
+      - id: capability.social_negotiation
+        name_zh: 社交协商
+        definition: Resolves conflict with words/proposals
+        typical_behaviors: 我们轮流玩好不好
+        boundary: 找大人裁决不算
+        priority: { "4": 0.6, "5": 0.7, "6": 0.8 }
+      - id: capability.self_confidence
+        name_zh: 自我效能
+        definition: Willingness to attempt new/hard things
+        typical_behaviors: 主动尝试没玩过的材料
+        boundary: 熟悉领域的自信不算
+        priority: { "4": 0.7, "5": 0.8, "6": 0.8 }
+      - id: capability.cooperation
+        name_zh: 合作参与
+        definition: Contributes to joint goals
+        typical_behaviors: 分工搭一座城堡
+        boundary: 各玩各的平行游戏不算
+        priority: { "4": 0.6, "5": 0.7, "6": 0.8 }
+
+  creativity:
+    name_zh: 创造力
+    capabilities:
+      - id: capability.imaginative_play
+        name_zh: 想象游戏
+        definition: Creates and sustains pretend scenarios
+        typical_behaviors: 给积木赋予角色和情节
+        boundary: 模仿动画片情节打折扣
+        priority: { "4": 0.9, "5": 0.9, "6": 0.8 }
+      - id: capability.divergent_ideas
+        name_zh: 发散联想
+        definition: Generates multiple/unusual uses
+        typical_behaviors: 纸杯的十种玩法
+        boundary: 一种答案不算
+        priority: { "4": 0.6, "5": 0.7, "6": 0.8 }
+      - id: capability.artistic_expression
+        name_zh: 艺术表现
+        definition: Expresses ideas through art media
+        typical_behaviors: 画画讲故事、自编曲调
+        boundary: 填色书不算
+        priority: { "4": 0.8, "5": 0.8, "6": 0.7 }
+      - id: capability.creative_combination
+        name_zh: 创意组合
+        definition: Combines things in novel ways
+        typical_behaviors: 把两种玩具合成新玩法
+        boundary: 成人示范后模仿不算
+        priority: { "4": 0.6, "5": 0.7, "6": 0.7 }
+
+  executive_function:
+    name_zh: 执行功能
+    capabilities:
+      - id: capability.persistence
+        name_zh: 坚持性
+        definition: Sustains effort through difficulty/failure
+        typical_behaviors: 倒了四次继续搭
+        boundary: 喜欢的事上的投入需区分兴趣驱动
+        priority: { "4": 0.7, "5": 0.8, "6": 0.9 }
+      - id: capability.focused_attention
+        name_zh: 专注力
+        definition: Maintains attention on non-preferred tasks
+        typical_behaviors: 完成需要耐心的任务
+        boundary: 看电视不算（被动注意）
+        priority: { "4": 0.7, "5": 0.8, "6": 0.9 }
+      - id: capability.planning
+        name_zh: 计划性
+        definition: Sequences steps before acting
+        typical_behaviors: 我先搭底座再搭上面
+        boundary: 成人给步骤不算
+        priority: { "4": 0.5, "5": 0.7, "6": 0.8 }
+      - id: capability.impulse_control
+        name_zh: 冲动控制
+        definition: Waits, inhibits, follows turn rules
+        typical_behaviors: 游戏中等待轮到自己
+        boundary: 被成人按住不算
+        priority: { "4": 0.8, "5": 0.8, "6": 0.8 }
+      - id: capability.working_memory
+        name_zh: 工作记忆
+        definition: Holds and uses info over short spans
+        typical_behaviors: 记住游戏规则三条
+        boundary: 单条规则不算
+        priority: { "4": 0.6, "5": 0.7, "6": 0.8 }
+
+  physical:
+    name_zh: 身体发展
+    capabilities:
+      - id: capability.fine_motor
+        name_zh: 精细动作
+        definition: Precise hand control
+        typical_behaviors: 串珠、使用剪刀
+        boundary: 大动作代替不算
+        priority: { "4": 0.8, "5": 0.7, "6": 0.6 }
+      - id: capability.gross_motor
+        name_zh: 大肌肉运动
+        definition: Whole-body coordination
+        typical_behaviors: 单脚跳、攀爬
+        boundary: ""
+        priority: { "4": 0.9, "5": 0.8, "6": 0.7 }
+      - id: capability.hand_eye_coordination
+        name_zh: 手眼协调
+        definition: Guides movement by vision
+        typical_behaviors: 接球、描线
+        boundary: ""
+        priority: { "4": 0.8, "5": 0.7, "6": 0.6 }
+      - id: capability.body_control_rhythm
+        name_zh: 身体节奏
+        definition: Moves with rhythm and balance
+        typical_behaviors: 随音乐打拍、走平衡木
+        boundary: ""
+        priority: { "4": 0.7, "5": 0.6, "6": 0.5 }

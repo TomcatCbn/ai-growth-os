@@ -46,13 +46,19 @@ def reduce_events(events: list[dict]) -> dict:
     Skeleton: expects events of type 'evidence.signals_extracted' with payload
     {'signals': [...]} matching schemas/evidence.schema.json. Returns the two
     raw pockets of ADR-004 — derived capability views are computed elsewhere.
+
+    Anti-noise rule (Q18): repeated signals on the SAME target within the same
+    day are decayed by REPEAT_DECAY^n — duplicate submissions and same-day
+    contradictory check-ins cannot inflate mastery.
     """
     topic_mastery: dict[str, dict] = {}
     capability_direct: dict[str, dict] = {}
+    same_day_hits: dict[tuple[str, object], int] = {}
 
     for ev in events:
         if ev.get("event_type") != "evidence.signals_extracted":
             continue
+        day = ev["payload"].get("day")
         for sig in ev["payload"].get("signals", []):
             pocket = topic_mastery if sig["target_type"] == "topic" else capability_direct
             rec = pocket.setdefault(
@@ -61,10 +67,16 @@ def reduce_events(events: list[dict]) -> dict:
                  "confidence": 0.0, "evidence_count": 0},
             )
             key = "mastery" if sig["target_type"] == "topic" else "level"
+
+            hit_key = (sig["target_id"], day)
+            n = same_day_hits.get(hit_key, 0)
+            same_day_hits[hit_key] = n + 1
+            confidence = sig["confidence"] * (REPEAT_DECAY ** n)
+
             rec[key] = ema_update(
                 rec[key],
                 sig["signal_strength"],
-                confidence=sig["confidence"],
+                confidence=confidence,
                 evidence_strength=sig.get("evidence_strength", 1.0),
                 direct_channel=(sig["target_type"] == "capability"),
             )

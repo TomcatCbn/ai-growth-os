@@ -1,0 +1,102 @@
+"""Deterministic mock LLM provider — runs the full demo loop offline.
+
+Implements the LLMProvider protocol, so the loop exercises the REAL
+components (extractor contract, planner frontier check, decision trace).
+Swapping to Claude is a one-line change (ADR-010 provider abstraction).
+
+Extraction: Chinese keyword → capability heuristics (mechanics, not quality).
+Planning: centrality + interest-label overlap ranking (the rule-based
+baseline of ADR-003 §5 — the thing the real LLM must beat).
+"""
+
+from __future__ import annotations
+
+import json
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+from runtime.llm.base import LLMRequest, LLMResponse  # noqa: E402
+
+CAP_KEYWORDS = {
+    "pattern_recognition": ["规律", "排队", "排好", "红黄", "发现"],
+    "verbal_explanation": ["解释", "因为", "为什么"],
+    "persistence": ["重新", "终于", "再试", "继续", "坚持"],
+    "storytelling": ["故事", "讲了", "编了"],
+    "imaginative_play": ["假装", "角色", "玩偶", "情节"],
+    "numeracy_sense": ["数", "几个", "多少"],
+    "observation": ["看了", "发现", "注意到"],
+    "emotion_regulation": ["没有哭", "不哭"],
+    "social_negotiation": ["轮流", "一起"],
+    "curiosity": ["为什么", "问了"],
+    "focused_attention": ["二十分钟", "很久", "蹲着"],
+}
+
+
+class MockLLMProvider:
+    model = "mock-deterministic-v1"
+
+    def complete(self, request: LLMRequest) -> LLMResponse:
+        if "Growth Planner" in request.system:
+            content = self._plan(request.user)
+        else:
+            content = self._extract(request.user)
+        return LLMResponse(content=content, model=self.model)
+
+    def _extract(self, user: str) -> str:
+        payload = json.loads(user)
+        text = payload["observation"]
+        known = {t["id"] for t in payload["known_targets"]}
+        signals = []
+        sentences = [s for s in text.replace("。", "。").split("。") if s]
+        for cap_id in known:
+            cap = cap_id.split(".")[-1]
+            for kw in CAP_KEYWORDS.get(cap, []):
+                if kw in text:
+                    quote = next((s for s in sentences if kw in s), kw)
+                    signals.append(
+                        {
+                            "target_type": "capability" if cap_id.startswith("capability.") else "topic",
+                            "target_id": cap_id,
+                            "signal_strength": 0.7,
+                            "confidence": 0.7,
+                            "quote": quote,
+                        }
+                    )
+                    break
+        return json.dumps({"signals": signals}, ensure_ascii=False)
+
+    def _plan(self, user: str) -> str:
+        payload = json.loads(user)
+        frontier = payload["frontier"]
+        interests = payload["child_state"].get("interests", {})
+        # interest label words that might appear in English topic names
+        interest_words = set()
+        for label, w in interests.items():
+            if w >= 0.6:
+                interest_words.update(label.split("."))
+
+        def score(c):
+            name = (c.get("name") or "").lower()
+            overlap = sum(1 for w in interest_words if w in name)
+            return c.get("centrality", 0.0) + 0.5 * overlap
+
+        ranked = sorted(frontier, key=score, reverse=True)[:5]
+        candidates = [
+            {
+                "topic_id": c["topic_id"],
+                "rank": i + 1,
+                "capability_targets": [],
+                "rationale": f"rule baseline: centrality={c.get('centrality', 0):.2f}, interest overlap",
+            }
+            for i, c in enumerate(ranked)
+        ]
+        selected = candidates[0]["topic_id"] if candidates else None
+        return json.dumps(
+            {
+                "candidates": candidates,
+                "selected_topic_id": selected,
+                "rationale": "Mock rule baseline: highest centrality + interest overlap within frontier.",
+            },
+            ensure_ascii=False,
+        )
