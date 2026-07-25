@@ -22,9 +22,12 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from demo.arc import (
     CHECKIN_SIGNAL,
     generate_arc,
+    load_adventure_templates,
     load_patterns,
     load_targets,
+    pace_adjustment,
     select_pattern,
+    select_template,
 )
 from knowledge.i18n import I18n
 from runtime.coach import ParentCoach
@@ -97,6 +100,7 @@ class ChildEngine:
         self.targets = load_targets(self.artifact, self.taxonomy)
         self.cap_map = load_capability_map(ROOT / capmap, allow_mock=True)
         self.patterns = load_patterns()
+        self.adventure_templates = load_adventure_templates()
         self.i18n = I18n()
         self.day = 0
         self.log: list[str] = []
@@ -195,11 +199,14 @@ class ChildEngine:
             family_goals=family["goals"])
         topic = self.topics_by_id[plan["selected_topic_id"]]
         theme = max(self.state["interests"], key=self.state["interests"].get).split(".")[-1]
-        pattern = select_pattern(self.patterns, topic_capabilities(topic["id"], self.cap_map), events)
+        pattern = select_pattern(
+            self.patterns, topic_capabilities(topic["id"], self.cap_map),
+            events, pace=pace_adjustment(events))
+        template = select_template(self.adventure_templates, pattern["pattern_id"], events)
         partner_state = project_partner_state(self.child_id, events)
         callback = next_callback(partner_state)
         arc = generate_arc(topic, theme, self.child_id, self.child["name"],
-                           self.i18n, pattern, callback=callback)
+                           self.i18n, pattern, callback=callback, template=template)
         if not self.i18n.has_topic_zh(topic["id"]):
             self._emit(f"day {day}｜⚠ i18n 缺口：{topic['name']} 的观察清单回退为英文")
         check = self.out_guard.review_arc(arc)
@@ -213,6 +220,7 @@ class ChildEngine:
         self.store.append("mission.activated", self.child_id, {
             "arc_id": arc["arc_id"], "topic": topic["id"], "theme": theme,
             "pattern_id": pattern["pattern_id"],
+            "template_id": template["template_id"] if template else None,
             "plan_trace": plan["decision_trace_id"],
             "arc": arc, "activated_at": self.manager.activated_at})
         if callback:
@@ -221,7 +229,8 @@ class ChildEngine:
                 "source_event_id": callback["source_event_id"],
                 "arc_id": arc["arc_id"]})
         tname = self.i18n.topic_name(topic["id"], topic["name"])
-        self._emit(f"day {day}｜▶ 新冒险「{theme}·{tname}」模式={pattern['name_zh']}（候选池 {len(frontier)}）")
+        tname_tpl = f"·{template['name_zh']}" if template else ""
+        self._emit(f"day {day}｜▶ 新冒险「{theme}·{tname}{tname_tpl}」模式={pattern['name_zh']}（候选池 {len(frontier)}）")
 
     def submit(self, channel: str, raw_text: str, checkin_status: str | None = None) -> None:
         entry = {"day": self.day + 1, "channel": channel, "raw_text": raw_text}

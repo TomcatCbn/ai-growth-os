@@ -1,0 +1,65 @@
+# Adventure Template Library (blueprint Review v4.0: MVP 10 templates).
+# 探索×3 / 创造×2 / 社交×2 / 情绪×2 / 数学思维×1.
+# Templates are human-designed skeletons; AI personalizes variables only.
+version: "0.1"
+templates:
+  - template_id: find_secret
+    name_zh: 寻找秘密
+    pattern_id: discovery
+    goal_capability: capability.observation
+    structure: [发现线索, 跟踪线索, 揭开秘密, 分享发现]
+    theme_slots: [secret_object, hiding_place]
+  - template_id: discover_new_place
+    name_zh: 发现新地方
+    pattern_id: discovery
+    goal_capability: capability.curiosity
+    structure: [听说传说, 鼓起勇气出发, 抵达新地方, 讲述见闻]
+    theme_slots: [place, guide]
+  - template_id: collect_clues
+    name_zh: 收集线索
+    pattern_id: discovery
+    goal_capability: capability.causal_reasoning
+    structure: [接到委托, 逐个收集, 拼出答案, 验证猜想]
+    theme_slots: [mystery, clue_items]
+  - template_id: build_home
+    name_zh: 建造小屋
+    pattern_id: build
+    goal_capability: capability.creative_combination
+    structure: [讨论设计, 动手搭建, 倒塌修复, 完成庆祝]
+    theme_slots: [building, materials]
+  - template_id: design_gift
+    name_zh: 设计礼物
+    pattern_id: build
+    goal_capability: capability.artistic_expression
+    structure: [为谁设计, 挑选材料, 制作改进, 送出礼物]
+    theme_slots: [recipient, gift_type]
+  - template_id: help_friend
+    name_zh: 帮助朋友
+    pattern_id: help
+    goal_capability: capability.empathy
+    structure: [发现困难, 寻找办法, 帮助朋友, 回顾感谢]
+    theme_slots: [friend, problem]
+  - template_id: share_story
+    name_zh: 分享故事
+    pattern_id: story_creation
+    goal_capability: capability.storytelling
+    structure: [故事开头, 一起编中段, 完成结尾, 讲给大家]
+    theme_slots: [protagonist, setting]
+  - template_id: face_fear
+    name_zh: 面对害怕
+    pattern_id: challenge
+    goal_capability: capability.emotion_regulation
+    structure: [遇到害怕的事, 说出感受, 小步尝试, 发现自己可以]
+    theme_slots: [fear_object, comfort_item]
+  - template_id: solve_conflict
+    name_zh: 解决冲突
+    pattern_id: help
+    goal_capability: capability.social_negotiation
+    structure: [两个朋友吵架, 倾听双方, 提出办法, 和好游戏]
+    theme_slots: [friend_a, friend_b, dispute]
+  - template_id: forest_patterns
+    name_zh: 森林规律
+    pattern_id: challenge
+    goal_capability: capability.pattern_recognition
+    structure: [发现密码, 破解障碍, 自创规律, 打开大门]
+    theme_slots: [pattern_kind, treasure]

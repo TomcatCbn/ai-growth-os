@@ -1,0 +1,31 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "AdventureTemplate",
+  "description": "A concrete adventure剧本骨架 (blueprint Review v4.0: AI is the DIRECTOR, not the author — templates are human-designed skeletons, AI fills variables). MVP library: 10 templates — discovery×3, build×2, social×2, emotion×2, math×1. Each template binds to one Growth Pattern (which owns the chapter mechanics).",
+  "type": "object",
+  "required": ["template_id", "name_zh", "pattern_id", "goal_capability", "structure", "version"],
+  "properties": {
+    "template_id": { "type": "string" },
+    "name_zh": { "type": "string" },
+    "pattern_id": {
+      "type": "string",
+      "enum": ["discovery", "build", "help", "challenge", "story_creation"]
+    },
+    "goal_capability": {
+      "type": "string",
+      "description": "The capability this adventure primarily develops."
+    },
+    "structure": {
+      "type": "array",
+      "minItems": 2,
+      "items": { "type": "string" },
+      "description": "Plot beats (zh), e.g. ['发现困难', '寻找办法', '帮助朋友', '回顾感谢']."
+    },
+    "theme_slots": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Variable slots the AI may personalize (character/place/problem)."
+    },
+    "version": { "type": "string" }
+  }
+}

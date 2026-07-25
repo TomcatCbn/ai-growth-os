@@ -21,6 +21,7 @@ from runtime.state.memory import growth_memory_from_events
 CHECKIN_SIGNAL = {"completed": 0.8, "partial": 0.5, "not_completed": 0.2}
 
 PATTERNS_PATH = Path(__file__).resolve().parent.parent / "world-model" / "growth-patterns.yaml"
+TEMPLATES_PATH = Path(__file__).resolve().parent.parent / "world-model" / "adventure-templates.yaml"
 
 
 def load_patterns(path: str | Path = PATTERNS_PATH) -> list[dict]:
@@ -32,23 +33,72 @@ def load_patterns(path: str | Path = PATTERNS_PATH) -> list[dict]:
     return patterns
 
 
+def load_adventure_templates(path: str | Path = TEMPLATES_PATH) -> list[dict]:
+    doc = yaml.safe_load(Path(path).read_text())
+    templates = doc["templates"]
+    for t in templates:
+        t.setdefault("version", str(doc.get("version", "0.0")))
+        validate("adventure-template", t)
+    return templates
+
+
+def select_template(
+    templates: list[dict], pattern_id: str, events: list[dict]
+) -> dict | None:
+    """Pick the least-recently-used template for the chosen pattern (AI is
+    the director, not the author — templates are the human-designed shelf)."""
+    recent = [
+        e["payload"].get("template_id")
+        for e in events if e.get("event_type") == "mission.activated"
+    ][-4:]
+    candidates = [t for t in templates if t["pattern_id"] == pattern_id]
+    if not candidates:
+        return None
+    return min(candidates, key=lambda t: recent.count(t["template_id"]))
+
+
+def pace_adjustment(events: list[dict]) -> str:
+    """Pace guardrail (blueprint Q43 rule ④): consecutive failures → ease
+    off; consecutive successes → push. Returns 'ease' | 'push' | 'steady'."""
+    verdicts = [
+        a["verdict"] for a in growth_memory_from_events(events)["closed_arcs"]
+    ][-2:]
+    if len(verdicts) < 2:
+        return "steady"
+    if all(v == "refuted" for v in verdicts):
+        return "ease"
+    if all(v == "confirmed" for v in verdicts):
+        return "push"
+    return "steady"
+
+
 def select_pattern(
     patterns: list[dict],
     topic_capabilities: list[str],
     events: list[dict],
+    pace: str = "steady",
 ) -> dict:
     """Score = capability fit − recency penalty (variety is a mission-score
-    dimension, blueprint: Novelty 10%). Deterministic; ties break by library
-    order."""
+    dimension, blueprint: Novelty 10%). The pace guardrail biases difficulty:
+    'ease' prefers gentler patterns, 'push' prefers harder ones.
+    Deterministic; ties break by library order."""
     recent = [
         e["payload"].get("pattern_id")
         for e in events if e.get("event_type") == "mission.activated"
     ][-3:]
 
-    def score(p: dict) -> int:
+    def max_difficulty(p: dict) -> int:
+        return max(c["difficulty"] for c in p["chapter_skeleton"])
+
+    def score(p: dict) -> float:
         suitable = set(p.get("suitable_for", {}).get("capabilities", []))
         fit = len(suitable & set(topic_capabilities))
-        return fit - 2 * recent.count(p["pattern_id"])
+        s = float(fit - 2 * recent.count(p["pattern_id"]))
+        if pace == "ease":
+            s -= 0.5 * max_difficulty(p)
+        elif pace == "push":
+            s += 0.5 * max_difficulty(p)
+        return s
 
     return max(patterns, key=score)
 
@@ -69,11 +119,13 @@ def generate_arc(
     i18n: I18n,
     pattern: dict,
     callback: dict | None = None,
+    template: dict | None = None,
 ) -> dict:
     """Instantiate a growth pattern into a mission-arc contract object.
 
     callback: an unused partner-state callback moment — woven into the hook
-    narration ("还记得…吗？") so the companion demonstrably remembers."""
+    narration ("还记得…吗？") so the companion demonstrably remembers.
+    template: an AdventureTemplate — the concrete剧本 this arc enacts."""
     checklist = i18n.topic_evidence_zh(topic["id"], topic.get("evidence", []))[:3]
     topic_name = i18n.topic_name(topic["id"], topic["name"])
     chapters = []
@@ -99,6 +151,7 @@ def generate_arc(
         "child_id": child_id,
         "child_name": child_name,
         "pattern_id": pattern["pattern_id"],
+        "adventure_template_id": template["template_id"] if template else None,
         "status": "draft",
         "primary_goal": {"topic_id": topic["id"], "capability_ids": []},
         "supporting_goals": [],
