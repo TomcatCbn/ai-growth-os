@@ -5,7 +5,9 @@ Acceptance gates (final review): precision ≥ 0.8 AND recall ≥ 0.7 —
 precision prioritized: missed signals acceptable, spurious ones dangerous.
 
 Modes:
-  --mock   offline keyword extractor; verifies the harness plumbing only
+  --mock   offline: the REAL EvidenceExtractor driven by MockLLMProvider
+           (keyword baseline). Tests the extraction contract end-to-end;
+           the real LLM must beat this baseline.
   --live   real extractor (runtime.evidence.extractor + Claude). Needs
            ANTHROPIC_API_KEY and a knowledge artifact.
 
@@ -53,28 +55,28 @@ def score_extraction(cases: list[dict], extract) -> Scores:
 # --- extractors -------------------------------------------------------------
 
 def mock_extractor(cases: list[dict]):
-    """Keyword-match oracle: finds expected ids whose capability keywords appear
-    in the text. Proves the harness; meaningless as a quality bar."""
-    keywords = {
-        "pattern_recognition": ["规律", "排队", "角", "排好", "按"],
-        "verbal_explanation": ["解释", "说"],
-        "persistence": ["重新", "终于", "再试"],
-        "storytelling": ["故事", "编了"],
-        "creativity": ["发明", "自己"],
-        "emotion_regulation": ["没有哭"],
-        "social_negotiation": ["轮流"],
-    }
+    """Offline baseline: the real EvidenceExtractor contract (candidate-target
+    scoping, verbatim-quote check) driven by MockLLMProvider keywords."""
+    sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+    from demo.mock_llm import MockLLMProvider
+    from runtime.events.store import EventStore
+    from runtime.evidence.extractor import EvidenceExtractor
+    from runtime.trace.trace import TrackedProvider
+
+    taxonomy = yaml.safe_load(
+        (Path(__file__).resolve().parent.parent / "world-model" / "capability-taxonomy.yaml")
+        .read_text())
+    targets = [
+        {"id": c["id"], "name": c["name_zh"]}
+        for d in taxonomy["domains"].values() for c in d["capabilities"]
+    ]
+    llm = TrackedProvider(MockLLMProvider(), EventStore(), component="eval.mock")
+    extractor = EvidenceExtractor(llm)
 
     def extract(raw_text: str) -> list[str]:
-        expected_ids = {
-            e["target_id"] for c in cases for e in c.get("expected_signals", [])
-        }
-        hits = []
-        for tid in expected_ids:
-            cap = tid.split(".")[-1]
-            if any(k in raw_text for k in keywords.get(cap, [])):
-                hits.append(tid)
-        return hits
+        signals, _ = extractor.extract(
+            child_id="eval", raw_text=raw_text, candidate_targets=targets)
+        return [s["target_id"] for s in signals]
 
     return extract
 

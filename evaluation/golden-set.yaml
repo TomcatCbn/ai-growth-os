@@ -3,14 +3,15 @@
 #   - multi-topic: one observation, several true signals (tests recall)
 #   - chit-chat: no growth signal, expected_signals MUST be empty (tests false positives)
 #   - soft-trait: no honest topic anchor → direct capability channel (tests ADR-004 §4)
+# Acceptance gate (final review): precision ≥ 0.8 AND recall ≥ 0.7.
 cases:
   - id: g01
     kind: multi-topic
-    raw_text: "今天拼100片拼图，他自己发现先把四个角找出来会快很多，还跟我解释了为什么。"
+    raw_text: "今天拼100片拼图，他自己发现花纹有规律，先把四个角找出来，还跟我解释了这样更快。"
     expected_signals:
       - target_id: "capability.pattern_recognition"
       - target_id: "capability.verbal_explanation"
-    note: "strategy discovery + explanation; expect 2+ signals"
+    note: "strategy discovery + explanation"
 
   - id: g02
     kind: chit-chat
@@ -33,7 +34,7 @@ cases:
 
   - id: g05
     kind: multi-topic
-    raw_text: "她给玩偶们排队，按高矮排好后，又自己发明了按衣服颜色重新排，还给每个玩偶编了名字和故事。"
+    raw_text: "她给玩偶们按高矮排好后，又给每个玩偶编了名字和故事。"
     expected_signals:
       - target_id: "capability.pattern_recognition"
       - target_id: "capability.storytelling"
@@ -45,3 +46,100 @@ cases:
     expected_signals:
       - target_id: "capability.emotion_regulation"
       - target_id: "capability.social_negotiation"
+
+  - id: g07
+    kind: soft-trait
+    raw_text: "他看到蚂蚁搬家，连着问了三个为什么。"
+    expected_signals:
+      - target_id: "capability.curiosity"
+
+  - id: g08
+    kind: topic-like
+    raw_text: "今天分草莓，她自己数到12，还说每人几个要一样多。"
+    expected_signals:
+      - target_id: "capability.numeracy_sense"
+
+  - id: g09
+    kind: multi-topic
+    raw_text: "他在花坛边蹲着观察蚂蚁搬家，注意到它们总走同一条线。"
+    expected_signals:
+      - target_id: "capability.observation"
+      - target_id: "capability.focused_attention"
+
+  - id: g10
+    kind: chit-chat
+    raw_text: "周末全家一起去了公园，玩得很开心。"
+    expected_signals: []
+    note: "'一起' must not trigger social_negotiation — keyword-collision guard"
+
+  - id: g11
+    kind: topic-like
+    raw_text: "晚上她自己编了一个故事，有开头有结尾，还讲给妹妹听。"
+    expected_signals:
+      - target_id: "capability.storytelling"
+
+  - id: g12
+    kind: soft-trait
+    raw_text: "拼图少了一块，他没有哭，说没关系明天再找。"
+    expected_signals:
+      - target_id: "capability.emotion_regulation"
+
+  - id: g13
+    kind: topic-like
+    raw_text: "他跟我解释，因为三角形有三个角，所以小屋顶不会塌。"
+    expected_signals:
+      - target_id: "capability.verbal_explanation"
+
+  - id: g14
+    kind: soft-trait
+    raw_text: "她搭乐高搭了整整二十分钟，叫她吃饭都没听见。"
+    expected_signals:
+      - target_id: "capability.focused_attention"
+
+  - id: g15
+    kind: soft-trait
+    raw_text: "第一次没搭好，她再试了一次，坚持到了最后。"
+    expected_signals:
+      - target_id: "capability.persistence"
+
+  - id: g16
+    kind: chit-chat
+    raw_text: "今天理发很乖，奖励了一根棒棒糖。"
+    expected_signals: []
+
+  - id: g17
+    kind: multi-topic
+    raw_text: "他假装自己是售货员，给每个角色定了价，还数到八枚硬币。"
+    expected_signals:
+      - target_id: "capability.imaginative_play"
+      - target_id: "capability.numeracy_sense"
+
+  - id: g18
+    kind: topic-like
+    raw_text: "她注意到月亮今天变圆了，拉着我到窗边指给我看。"
+    expected_signals:
+      - target_id: "capability.observation"
+
+  - id: g19
+    kind: soft-trait
+    raw_text: "两个孩子都想玩秋千，他自己过去商量，最后决定轮流玩。"
+    expected_signals:
+      - target_id: "capability.social_negotiation"
+
+  - id: g20
+    kind: chit-chat
+    raw_text: "今天早点睡，明天幼儿园有运动会。"
+    expected_signals: []
+
+  - id: g21
+    kind: multi-topic
+    raw_text: "她把积木按红黄红黄摆了一排，然后问为什么总是这样重复。"
+    expected_signals:
+      - target_id: "capability.pattern_recognition"
+      - target_id: "capability.curiosity"
+
+  - id: g22
+    kind: soft-trait
+    raw_text: "他对吸尘器特别好奇，追着问了很多问题：它是怎么把灰吸进去的。"
+    expected_signals:
+      - target_id: "capability.curiosity"

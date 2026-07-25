@@ -20,6 +20,12 @@ domains:
         typical_behaviors: 发现红黄红黄规律并预测下一个
         boundary: 背诵口诀不算，必须迁移到新情境
         priority: { "4": 0.7, "5": 0.8, "6": 0.8 }
+      - id: capability.curiosity
+        name_zh: 好奇探究
+        definition: Actively asks questions and probes how things work
+        typical_behaviors: 追着问为什么、拆开看里面是什么
+        boundary: 成人逗出来的提问不算，必须自发
+        priority: { "4": 0.8, "5": 0.8, "6": 0.7 }
       - id: capability.classification
         name_zh: 分类归纳
         definition: Groups by attributes, invents own criteria

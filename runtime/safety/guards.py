@@ -22,7 +22,9 @@ _PII_PATTERNS = [
     re.compile(r"(?<!\d)\d{17}[\dXx](?!\d)"),  # CN ID card
 ]
 
-_RED_LINE_TERMS = ["杀", "血腥", "自杀", "恐怖"]  # placeholder; real list lives in evaluation red-line set
+# Placeholder rule list; the authoritative test corpus is evaluation/red-line.yaml
+# (guilt loops and self-harm terms included — over-blocking is also tested there).
+_RED_LINE_TERMS = ["杀", "血腥", "自杀", "恐怖", "想死", "不喜欢你"]
 
 
 @dataclass

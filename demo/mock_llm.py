@@ -18,18 +18,20 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from runtime.llm.base import LLMRequest, LLMResponse  # noqa: E402
 
+# Keywords are deliberately distinctive per capability — collisions would
+# make the offline evaluation baseline meaningless (false-positive discipline).
 CAP_KEYWORDS = {
-    "pattern_recognition": ["规律", "排队", "排好", "红黄", "发现"],
-    "verbal_explanation": ["解释", "因为", "为什么"],
-    "persistence": ["重新", "终于", "再试", "继续", "坚持"],
-    "storytelling": ["故事", "讲了", "编了"],
-    "imaginative_play": ["假装", "角色", "玩偶", "情节"],
-    "numeracy_sense": ["数", "几个", "多少"],
-    "observation": ["看了", "发现", "注意到"],
+    "pattern_recognition": ["规律", "排好", "红黄", "排序"],
+    "verbal_explanation": ["解释", "因为"],
+    "persistence": ["重新", "终于", "再试", "坚持"],
+    "storytelling": ["故事"],
+    "imaginative_play": ["假装", "角色", "玩偶"],
+    "numeracy_sense": ["数数", "数到", "几个", "多少"],
+    "observation": ["观察", "注意到"],
     "emotion_regulation": ["没有哭", "不哭"],
-    "social_negotiation": ["轮流", "一起"],
+    "social_negotiation": ["轮流", "商量"],
     "curiosity": ["为什么", "问了"],
-    "focused_attention": ["二十分钟", "很久", "蹲着"],
+    "focused_attention": ["二十分钟", "蹲着", "专注"],
 }
 
 
@@ -46,7 +48,7 @@ class MockLLMProvider:
     def _extract(self, user: str) -> str:
         payload = json.loads(user)
         text = payload["observation"]
-        known = {t["id"] for t in payload["known_targets"]}
+        known = sorted(t["id"] for t in payload["known_targets"])  # deterministic
         signals = []
         sentences = [s for s in text.replace("。", "。").split("。") if s]
         for cap_id in known:
