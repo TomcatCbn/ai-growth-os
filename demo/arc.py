@@ -1,28 +1,56 @@
-"""Shared arc templates and target loading for the demo loop.
+"""Growth arc instantiation — pattern library × topic × child interests.
 
-Single home for CHECKIN_SIGNAL / ARC_TEMPLATES / generate_arc / load_targets —
-previously duplicated across run_loop.py and engine.py.
+An arc = GrowthPattern template × topic × child theme (blueprint Q18:
+template library + AI personalization). Patterns are data
+(world-model/growth-patterns.yaml), validated against the growth-pattern
+contract at load. Pattern selection is code (capability fit − recent use),
+never LLM.
 """
 
 from __future__ import annotations
 
+from pathlib import Path
+from typing import Any
+
+import yaml
+
 from knowledge.i18n import I18n
+from runtime.contracts import validate
+from runtime.state.memory import growth_memory_from_events
 
 CHECKIN_SIGNAL = {"completed": 0.8, "partial": 0.5, "not_completed": 0.2}
 
-# Observation-point phrasing is intentionally English here (canonical
-# knowledge stays English, ADR-005); zh polish arrives with the i18n layer.
-ARC_TEMPLATES = [
-    ("发现密码", "豆豆兔在{theme}森林深处发现了一扇锁住的门，门上刻着奇怪的图案。",
-     "和孩子一起在家里找 3 个有规律的图案（窗帘、地砖、瓷砖），说说规律是什么。",
-     "让豆豆兔听听：你们找到了什么图案？它是怎么重复的？"),
-    ("破解障碍", "门上的图案原来是一串密码！豆豆兔需要你帮忙找出下一个图案。",
-     "用积木/彩珠摆一串 ABAB 规律，让孩子接着摆 3 个；再试试 ABB 规律。",
-     "孩子摆的规律是什么？请他教教豆豆兔。"),
-    ("打开大门", "最后一道密码最难——这次要孩子自己设计一串密码保护宝藏！",
-     "请孩子自己创造一串规律（动作、声音或物品都行），家长来猜规律。",
-     "孩子设计的密码是什么？豆豆兔猜对了吗？"),
-]
+PATTERNS_PATH = Path(__file__).resolve().parent.parent / "world-model" / "growth-patterns.yaml"
+
+
+def load_patterns(path: str | Path = PATTERNS_PATH) -> list[dict]:
+    doc = yaml.safe_load(Path(path).read_text())
+    patterns = doc["patterns"]
+    for p in patterns:
+        p.setdefault("version", str(doc.get("version", "0.0")))
+        validate("growth-pattern", p)
+    return patterns
+
+
+def select_pattern(
+    patterns: list[dict],
+    topic_capabilities: list[str],
+    events: list[dict],
+) -> dict:
+    """Score = capability fit − recency penalty (variety is a mission-score
+    dimension, blueprint: Novelty 10%). Deterministic; ties break by library
+    order."""
+    recent = [
+        e["payload"].get("pattern_id")
+        for e in events if e.get("event_type") == "mission.activated"
+    ][-3:]
+
+    def score(p: dict) -> int:
+        suitable = set(p.get("suitable_for", {}).get("capabilities", []))
+        fit = len(suitable & set(topic_capabilities))
+        return fit - 2 * recent.count(p["pattern_id"])
+
+    return max(patterns, key=score)
 
 
 def load_targets(artifact: dict, taxonomy: dict) -> list[dict]:
@@ -33,39 +61,60 @@ def load_targets(artifact: dict, taxonomy: dict) -> list[dict]:
     return targets
 
 
-def generate_arc(topic: dict, theme: str, child_id: str, child_name: str, i18n: I18n) -> dict:
-    # Observation checklist: human-polished zh where available (ADR-005 §4),
-    # canonical English otherwise.
+def generate_arc(
+    topic: dict,
+    theme: str,
+    child_id: str,
+    child_name: str,
+    i18n: I18n,
+    pattern: dict,
+) -> dict:
+    """Instantiate a growth pattern into a mission-arc contract object."""
     checklist = i18n.topic_evidence_zh(topic["id"], topic.get("evidence", []))[:3]
     topic_name = i18n.topic_name(topic["id"], topic["name"])
     chapters = []
-    for i, (title, narration, task, ret) in enumerate(ARC_TEMPLATES, start=1):
-        chapters.append(
-            {
-                "chapter_id": f"ch_{i}",
-                "index": i,
-                "title": title,
-                "narration": narration.format(theme=theme),
-                "real_world_task": task,
-                "return_prompt": ret,
-                "observation_checklist": checklist,
-                "difficulty": i,
-                "interaction_mode": "parent_card",
-                "default_modality": "voice_story",
-                "status": "pending",
-            }
-        )
+    for i, ch in enumerate(pattern["chapter_skeleton"], start=1):
+        chapters.append({
+            "chapter_id": f"ch_{i}",
+            "index": i,
+            "role": ch["role"],
+            "title": ch["title"],
+            "narration": ch["narration"].format(theme=theme),
+            "real_world_task": ch["task_pattern"].format(theme=theme),
+            "return_prompt": ch["return_prompt"],
+            "observation_checklist": checklist,
+            "difficulty": ch["difficulty"],
+            "interaction_mode": "parent_card",
+            "default_modality": "voice_story",
+            "status": "pending",
+        })
     return {
         "child_id": child_id,
         "child_name": child_name,
+        "pattern_id": pattern["pattern_id"],
         "status": "draft",
         "primary_goal": {"topic_id": topic["id"], "capability_ids": []},
         "supporting_goals": [],
         "growth_hypothesis": {
-            "statement": f"通过{theme}主题冒险，孩子将在「{topic_name}」上展现可见进步。",
+            "statement": (
+                f"通过「{pattern['name_zh']}」模式的{theme}主题冒险，"
+                f"孩子将在「{topic_name}」上展现可见进步。"),
             "expected_mastery_delta": 0.2,
-            "key_signal": checklist[0] if checklist else "观察孩子是否主动迁移到新情境",
+            "key_signal": pattern["key_signals"][0],
         },
         "interest_theme": theme,
         "chapters": chapters,
     }
+
+
+def recently_used_patterns(events: list[dict]) -> list[str]:
+    """Pattern ids of closed arcs, oldest first (for novelty accounting)."""
+    return [
+        a.get("pattern_id")
+        for a in growth_memory_from_events(events)["closed_arcs"]
+        if a.get("pattern_id")
+    ]
+
+
+def arc_pattern_summary(arc: dict) -> dict[str, Any]:
+    return {"pattern_id": arc.get("pattern_id"), "theme": arc.get("interest_theme")}

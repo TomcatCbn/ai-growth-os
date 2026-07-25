@@ -1,0 +1,134 @@
+# Growth Pattern Library (ADR-013; blueprint: "怎么成长" layer).
+# Patterns are DATA, not code. An arc = pattern × topic × child interests
+# (blueprint Q18). Validated against schemas/growth-pattern.schema.json at load.
+version: "0.1"
+patterns:
+  - pattern_id: discovery
+    name_zh: 探索发现
+    description: 带着好奇心观察世界，发现细节和变化
+    chapter_skeleton:
+      - role: hook
+        difficulty: 1
+        title: 神秘足迹
+        narration: 豆豆兔在{theme}森林里发现了一串奇怪的足迹，会是谁留下的呢？
+        task_pattern: 和孩子在家里找 3 个以前没注意过的小细节（花纹、形状、声音），说说是什么样的。
+        return_prompt: 让豆豆兔听听：你们发现了什么？它是什么样子的？
+      - role: practice
+        difficulty: 2
+        title: 小小观察家
+        narration: 足迹通向着一棵大树！豆豆兔需要你仔细观察，才能找到下一个线索。
+        task_pattern: 带孩子观察一个具体事物（一片叶子、一只蚂蚁），说出它的 3 个特点。
+        return_prompt: 你观察到了哪三个特点？教教豆豆兔吧。
+      - role: reflection
+        difficulty: 2
+        title: 发现发布会
+        narration: 豆豆兔想把你这周的发现告诉森林里所有的伙伴！
+        task_pattern: 请孩子把这周发现的东西讲给家长听，家长帮忙记录一句最有趣的。
+        return_prompt: 孩子最想告诉大家的发现是什么？
+    key_signals: ["孩子主动指出新细节", "能把发现讲给别人听"]
+    suitable_for:
+      capabilities: [capability.observation, capability.curiosity]
+
+  - pattern_id: build
+    name_zh: 创造建造
+    description: 动手搭建和制作，把想法变成作品
+    chapter_skeleton:
+      - role: hook
+        difficulty: 1
+        title: 豆豆兔的新家
+        narration: 豆豆兔想在{theme}森林盖一座新房子，可是它不知道怎么设计。
+        task_pattern: 和孩子讨论：新家需要什么？用积木或纸盒搭出第一部分。
+        return_prompt: 你们搭了什么？为什么要这样设计？
+      - role: practice
+        difficulty: 2
+        title: 越盖越高
+        narration: 房子盖到一半倒了！豆豆兔需要孩子想办法让它更稳。
+        task_pattern: 鼓励孩子修复或改进作品，试着说出怎么改会更好。
+        return_prompt: 这次哪里不一样了？孩子想出了什么办法？
+      - role: creation
+        difficulty: 3
+        title: 设计师登场
+        narration: 最后，豆豆兔想请孩子设计一座完全属于自己的房子！
+        task_pattern: 孩子独立设计并搭建一个作品，家长只帮忙递材料。
+        return_prompt: 孩子设计的房子是什么样的？最得意的部分是哪里？
+    key_signals: ["作品有自己的设计意图", "失败后愿意改进"]
+    suitable_for:
+      capabilities: [capability.creative_combination, capability.persistence, capability.fine_motor]
+
+  - pattern_id: help
+    name_zh: 帮助伙伴
+    description: 在帮助他人中练习共情与合作
+    chapter_skeleton:
+      - role: hook
+        difficulty: 1
+        title: 谁来帮帮忙
+        narration: "{theme}森林的小松鼠松果丢了，急得团团转，豆豆兔想带孩子去帮忙。"
+        task_pattern: 和孩子聊聊：小松鼠现在是什么心情？我们可以怎么帮它？
+        return_prompt: 孩子觉得小松鼠怎么了？想怎么帮它？
+      - role: practice
+        difficulty: 2
+        title: 一起想办法
+        narration: 找松果需要分工！豆豆兔和孩子一人负责一个地方。
+        task_pattern: 和孩子玩一次需要配合的游戏（一人藏一人找、合作拼图），练习商量分工。
+        return_prompt: 你们是怎么分工的？有没有商量？
+      - role: reflection
+        difficulty: 2
+        title: 谢谢你的帮助
+        narration: 小松鼠找到了松果，想对孩子说谢谢！
+        task_pattern: 请孩子说说：帮助别人的时候，自己心里是什么感觉？
+        return_prompt: 孩子说帮助别人是什么感觉？
+    key_signals: ["主动注意到别人的需要", "用语言商量分工"]
+    suitable_for:
+      capabilities: [capability.empathy, capability.social_negotiation, capability.cooperation]
+
+  - pattern_id: challenge
+    name_zh: 克服挑战
+    description: 在逐步升级的挑战中练习坚持与迁移
+    chapter_skeleton:
+      - role: hook
+        difficulty: 1
+        title: 发现密码
+        narration: 豆豆兔在{theme}森林深处发现了一扇锁住的门，门上刻着奇怪的图案。
+        task_pattern: 和孩子一起在家里找 3 个有规律的图案（窗帘、地砖、瓷砖），说说规律是什么。
+        return_prompt: 让豆豆兔听听：你们找到了什么图案？它是怎么重复的？
+      - role: practice
+        difficulty: 2
+        title: 破解障碍
+        narration: 门上的图案原来是一串密码！豆豆兔需要你帮忙找出下一个图案。
+        task_pattern: 用积木/彩珠摆一串 ABAB 规律，让孩子接着摆 3 个；再试试 ABB 规律。
+        return_prompt: 孩子摆的规律是什么？请他教教豆豆兔。
+      - role: creation
+        difficulty: 3
+        title: 打开大门
+        narration: 最后一道密码最难——这次要孩子自己设计一串密码保护宝藏！
+        task_pattern: 请孩子自己创造一串规律（动作、声音或物品都行），家长来猜规律。
+        return_prompt: 孩子设计的密码是什么？豆豆兔猜对了吗？
+    key_signals: ["孩子主动迁移到新情境", "失败后换一种方法再试"]
+    suitable_for:
+      capabilities: [capability.pattern_recognition, capability.persistence]
+
+  - pattern_id: story_creation
+    name_zh: 故事创作
+    description: 构建有结构的叙事，表达自己的想法
+    chapter_skeleton:
+      - role: hook
+        difficulty: 1
+        title: 缺页的故事书
+        narration: 豆豆兔找到一本{theme}森林的故事书，可是中间缺了好几页！
+        task_pattern: 家长讲一个故事开头，请孩子接着说一句"然后发生了什么"。
+        return_prompt: 孩子接的那一句是什么？
+      - role: practice
+        difficulty: 2
+        title: 你来编一段
+        narration: 故事书里的小主人公遇到了一个难题，只有孩子能帮他编出解决办法！
+        task_pattern: 请孩子给故事编一段解决办法，家长追问"然后呢"。
+        return_prompt: 孩子编的办法是什么？故事接下去呢？
+      - role: creation
+        difficulty: 3
+        title: 小小故事家
+        narration: 豆豆兔想把孩子编的故事画成一本真正的书！
+        task_pattern: 请孩子完整讲一个有开头、有经过、有结尾的故事，家长记录。
+        return_prompt: 孩子讲的故事是什么？有开头和结尾吗？
+    key_signals: ["叙事有结构（开头-经过-结尾）", "加入自己创造的情节"]
+    suitable_for:
+      capabilities: [capability.storytelling, capability.verbal_explanation, capability.imaginative_play]
