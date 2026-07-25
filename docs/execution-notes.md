@@ -82,3 +82,23 @@
 - 2026-07-26 Phase 5 完成：Mission Score 四权重（engagement 40 / growth 30 / family 20 / novelty 10）进 mock 与 prompt；family-model + 兴趣桥（princess·数学）；朵朵全部 arc 收敛到数学主题。92 测试全绿。无路线偏离。
 - 2026-07-26 Phase 6 完成：runtime-json.schema.json（五段式 session：greeting 30s → choice 60s → adventure 240s → memory 30s → farewell 30s）+ 确定性发射器。客户端不在本仓库。98 测试全绿。无路线偏离。
 - 2026-07-26 Phase 7 完成：关系指标投影（主动回来、回调使用、孩子发起、trust）；明确不做完成率/学习时长。101 测试全绿，评估门槛 PASS，四个孩子全部 OK。无路线偏离。
+
+## 第二次重审（对话 v4.5 + 架构评审 v1–v6 + 交付包 v1.1，share 6a64f48e）
+
+新一致：Event Driven、模块化单体、Rule+LLM、固定资产+AI组合、Evidence First、Non-goals — 与现状吻合，无需返工。
+新缺口（按优先级）：
+- **G1** Family 一级对象（family_id、多孩子、Parent Profile；问题35）
+- **G4/P5** Doudou Character Bible + Prompt OS 版本化（评审 v4.0/v5.0）
+- **G2** Adventure Template Library 10 模板（评审 v4.0：探索3/创造2/社交2/情绪2/数学1）
+- **G6** 节奏规则（连续失败降难度/连续成功加挑战；问题43）
+- **G3** Scene DSL 对齐：对话冻结元素级 Node DSL（Dialogue/Choice/Animation/Voice/Reward），与本仓库 runtime-json（5段 session）形状不同 — 需 ADR-014 定夺
+- **G7** Memory importance 评分与生命周期（评审 v3.0）
+- **G8** North Star：D7/D14 Return Rate + Adventure Continuation 定义（问题47）
+- **G9** Project Constitution + AI Developer Rules（交付包 v1.0/1.1）
+
+### 待确认的 Phase 8–12
+- P8 Family 账号模型（family 一级对象 + 多孩子 + Parent 观察入口证据化）
+- P9 Character Bible（content/doudou-bible.yaml，schema 化）+ Prompt OS（版本化 prompt 文件，代码引用版本号）
+- P10 Adventure Template Library（10 模板数据化）+ 节奏规则（失败降难度/成功加挑战，进 Guardrail）
+- P11 ADR-014 Scene DSL 对齐（5段 session 映射为 Node 序列；不另造协议）
+- P12 North Star 指标（D7/D14 回访率定义与投影）+ Memory importance 分层
