@@ -30,6 +30,7 @@ from knowledge.i18n import I18n
 from runtime.coach import ParentCoach
 from runtime.events.store import EventStore
 from runtime.evidence.extractor import EvidenceExtractor
+from runtime.metrics import relationship_metrics
 from runtime.mission.manager import MissionManager
 from runtime.planner.frontier import compute_frontier
 from runtime.planner.planner import GrowthPlanner
@@ -271,5 +272,6 @@ class ChildEngine:
             "insight": insight,
             "twin": twin, "tendencies": tendencies, "partner": partner,
             "family": family,
+            "metrics": relationship_metrics(events),
             "n_events": len(self.store.events_for(self.child_id)),
         }
