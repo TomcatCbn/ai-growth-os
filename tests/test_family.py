@@ -9,7 +9,7 @@ from runtime.events.store import EventStore
 from runtime.llm.base import LLMRequest, LLMResponse
 from runtime.planner.planner import GrowthPlanner
 from runtime.trace.trace import TrackedProvider
-from runtime.twin.family import bridge_goal, build_family_model
+from runtime.twin.family import bridge_goal, build_family_account, build_family_model
 
 
 def test_bridge_goal_uses_top_interest():
@@ -30,6 +30,28 @@ def test_family_model_translates_goals():
     validate("family-model", model)
     assert model["goals"][0]["translated_theme"] == "princess·数学"
     assert model["values"] == ["阅读优先"]
+
+
+def test_family_account_satisfies_contract():
+    account = build_family_account(
+        {"child_id": "c1", "name": "朵朵", "age": 4},
+        {"goals": [{"title": "数学"}], "values": ["阅读优先"]})
+    validate("family-account", account)
+    assert account["children"][0]["focus"] == ["数学"]
+    assert account["parents"][0]["role"] == "primary"
+
+
+def test_family_account_multi_child_ready():
+    account = build_family_account(
+        {"child_id": "c1", "name": "朵朵", "age": 4}, None)
+    account["children"].append({"child_id": "c2", "nickname": "弟弟", "age": 3})
+    validate("family-account", account)
+
+
+def test_family_account_minimal_profile():
+    account = build_family_account({"child_id": "c1", "name": "小豆", "age": 5}, None)
+    validate("family-account", account)
+    assert account["children"][0]["focus"] == []
 
 
 class _CaptureProvider:

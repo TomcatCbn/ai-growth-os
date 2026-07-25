@@ -51,3 +51,30 @@ def build_family_model(
     }
     validate("family-model", model)
     return model
+
+
+def build_family_account(child: dict, profile_family: dict[str, Any] | None) -> dict:
+    """Child profile (+ optional family section) → family-account contract
+    (blueprint Q35). Demo profiles describe one child; the account model is
+    multi-child ready. Parent input reaches the Twin ONLY as observation
+    evidence — this object carries no write path into the Twin."""
+    profile_family = profile_family or {}
+    account = {
+        "family_id": profile_family.get("family_id") or f"fam_{child['child_id']}",
+        "parents": profile_family.get("parents") or [
+            {"parent_id": f"par_{child['child_id']}", "role": "primary"}
+        ],
+        "children": [{
+            "child_id": child["child_id"],
+            "nickname": child["name"],
+            "age": child["age"],
+            "focus": [g["title"] for g in profile_family.get("goals", [])],
+        }],
+        "context": {
+            "values": profile_family.get("values", []),
+            "constraints": profile_family.get("constraints", []),
+        },
+        "created_at": profile_family.get("created_at") or datetime.now(UTC).isoformat(),
+    }
+    validate("family-account", account)
+    return account

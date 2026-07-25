@@ -1,0 +1,50 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "FamilyAccount",
+  "description": "Family as a first-class object (blueprint Q35: the durable identity is the FAMILY, not the 4-6 year old). Family → Parents + Children (each with their own Digital Twin) → partner relationships. Multi-child ready. Iron rule: parents NEVER write the Child Twin directly — parent input enters as observation evidence (Family Evidence), the AI interprets.",
+  "type": "object",
+  "required": ["family_id", "parents", "children", "created_at"],
+  "properties": {
+    "family_id": { "type": "string" },
+    "parents": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["parent_id", "role"],
+        "properties": {
+          "parent_id": { "type": "string" },
+          "role": { "type": "string", "enum": ["primary", "guardian"] },
+          "display_name": { "type": "string" }
+        }
+      }
+    },
+    "children": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["child_id", "nickname", "age"],
+        "properties": {
+          "child_id": { "type": "string" },
+          "nickname": { "type": "string" },
+          "age": { "type": "number", "minimum": 3, "maximum": 12 },
+          "avatar": { "type": "string", "description": "Child-facing entry: pick an avatar, no account concept." },
+          "focus": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Growth attention directions set by parents (zh) — attention, NOT task assignment."
+          }
+        }
+      }
+    },
+    "context": {
+      "type": "object",
+      "properties": {
+        "values": { "type": "array", "items": { "type": "string" } },
+        "constraints": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "created_at": { "type": "string", "format": "date-time" }
+  }
+}
