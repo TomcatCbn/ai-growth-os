@@ -37,7 +37,7 @@ cases:
     expected_signals:
       - target_id: "capability.pattern_recognition"
       - target_id: "capability.storytelling"
-      - target_id: "capability.creativity"
+      - target_id: "capability.imaginative_play"
 
   - id: g06
     kind: soft-trait
