@@ -131,6 +131,15 @@ def main() -> None:
     targets = load_targets(artifact, taxonomy)
     i18n = I18n()
 
+    # Restart recovery: growth state AND runtime state replay from the event
+    # log (ADR-002 §5). No-op on a fresh store.
+    prior = [vars(e) for e in store.events_for(child_id)]
+    if prior:
+        state.update(reduce_events(prior))
+        manager = MissionManager.from_events(prior)
+        print(f"(recovered {len(prior)} events; active mission: "
+              f"{manager.active['arc_id'] if manager.active else 'none'})\n")
+
     print(f"=== {child['name']} ({child_id}, age {age}) | provider={provider.model} ===\n")
 
     for entry in profile["evidence_timeline"]:
@@ -151,11 +160,22 @@ def main() -> None:
                 "confidence": 0.7,
                 "quote": guarded.text,
             })
-            closed = manager.close(entry["checkin_status"])
-            store.append("mission.closed", child_id, {
-                "arc_id": closed["arc_id"], "verdict": closed["hypothesis_verdict"]})
-            print(f"day {day:>2} | check-in {entry['checkin_status']:<13} → mission closed "
-                  f"(verdict: {closed['hypothesis_verdict']})")
+            chapters = arc["chapters"]
+            current = next(i for i, c in enumerate(chapters) if c["status"] == "active")
+            if current == len(chapters) - 1:
+                closed = manager.close(entry["checkin_status"])
+                store.append("mission.closed", child_id, {
+                    "arc_id": closed["arc_id"], "verdict": closed["hypothesis_verdict"],
+                    "status": closed["status"]})
+                print(f"day {day:>2} | check-in {entry['checkin_status']:<13} → mission closed "
+                      f"(verdict: {closed['hypothesis_verdict']})")
+            else:
+                chapter = manager.advance_chapter()
+                store.append("mission.chapter_advanced", child_id, {
+                    "arc_id": arc["arc_id"], "chapter_id": chapter["chapter_id"],
+                    "checkin_status": entry["checkin_status"]})
+                print(f"day {day:>2} | check-in {entry['checkin_status']:<13} "
+                      f"→ chapter {chapter['index']} 「{chapter['title']}」")
         else:
             signals, _ = extractor.extract(
                 child_id=child_id, raw_text=guarded.text, candidate_targets=targets)
@@ -193,11 +213,13 @@ def main() -> None:
             manager.activate(arc)
             store.append("mission.activated", child_id, {
                 "arc_id": arc["arc_id"], "topic": topic["id"], "theme": theme,
-                "plan_trace": plan["decision_trace_id"]})
+                "plan_trace": plan["decision_trace_id"],
+                "arc": arc, "activated_at": manager.activated_at})
             print(f"         ▶ new arc 「{arc['chapters'][0]['title']}」theme={theme} "
                   f"goal={topic['name']} (frontier={len(frontier)})")
 
-        store.save_snapshot(child_id, state, len(events))
+        store.save_snapshot(child_id, {
+            "growth": state, "runtime": manager.snapshot()}, len(events))
 
     print("\n--- final state ---")
     tm = state.get("topic_mastery", {})

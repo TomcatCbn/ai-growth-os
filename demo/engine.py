@@ -63,6 +63,12 @@ class ChildEngine:
         self.day = 0
         self.log: list[str] = []
 
+        # Restart recovery: replay growth + runtime state from the event log.
+        prior = [vars(e) for e in self.store.events_for(self.child_id)]
+        if prior:
+            self.state.update(reduce_events(prior))
+            self.manager = MissionManager.from_events(prior)
+
         for entry in self.profile.get("evidence_timeline", []):
             self.process(entry)
 
@@ -87,10 +93,20 @@ class ChildEngine:
                 "confidence": 0.7,
                 "quote": guarded.text,
             })
-            closed = self.manager.close(entry["checkin_status"])
-            self.store.append("mission.closed", self.child_id, {
-                "arc_id": closed["arc_id"], "verdict": closed["hypothesis_verdict"]})
-            self.log.append(f"day {day}｜打卡「{entry['checkin_status']}」→ 冒险结束（假设{closed['hypothesis_verdict']}）")
+            chapters = arc["chapters"]
+            current = next(i for i, c in enumerate(chapters) if c["status"] == "active")
+            if current == len(chapters) - 1:
+                closed = self.manager.close(entry["checkin_status"])
+                self.store.append("mission.closed", self.child_id, {
+                    "arc_id": closed["arc_id"], "verdict": closed["hypothesis_verdict"],
+                    "status": closed["status"]})
+                self.log.append(f"day {day}｜打卡「{entry['checkin_status']}」→ 冒险结束（假设{closed['hypothesis_verdict']}）")
+            else:
+                chapter = self.manager.advance_chapter()
+                self.store.append("mission.chapter_advanced", self.child_id, {
+                    "arc_id": arc["arc_id"], "chapter_id": chapter["chapter_id"],
+                    "checkin_status": entry["checkin_status"]})
+                self.log.append(f"day {day}｜打卡「{entry['checkin_status']}」→ 进入第 {chapter['index']} 章「{chapter['title']}」")
         else:
             signals, _ = self.extractor.extract(
                 child_id=self.child_id, raw_text=guarded.text, candidate_targets=self.targets)
@@ -106,7 +122,8 @@ class ChildEngine:
         if self.manager.active is None:
             self._plan_and_activate(events, day)
 
-        self.store.save_snapshot(self.child_id, self.state, len(events))
+        self.store.save_snapshot(self.child_id, {
+            "growth": self.state, "runtime": self.manager.snapshot()}, len(events))
 
     def _plan_and_activate(self, events: list[dict], day: int) -> None:
         frontier = compute_frontier(
@@ -131,7 +148,8 @@ class ChildEngine:
         self.manager.activate(arc)
         self.store.append("mission.activated", self.child_id, {
             "arc_id": arc["arc_id"], "topic": topic["id"], "theme": theme,
-            "plan_trace": plan["decision_trace_id"]})
+            "plan_trace": plan["decision_trace_id"],
+            "arc": arc, "activated_at": self.manager.activated_at})
         tname = self.i18n.topic_name(topic["id"], topic["name"])
         self.log.append(f"day {day}｜▶ 新冒险「{theme}·{tname}」（候选池 {len(frontier)}）")
 
