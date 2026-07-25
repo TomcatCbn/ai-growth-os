@@ -1,0 +1,40 @@
+# Virtual child 4 (Q18): the noise child. Adversarial by design.
+# Tests: EMA stability under contradiction; dedup/decay of repeated submissions;
+# extraction discipline on chit-chat; no mastery whiplash (Δ ≤ 0.2).
+profile:
+  child_id: vc_noise
+  name: 闹闹
+  age: 5
+  stage: early_childhood
+  initial_state:
+    interests:
+      dinosaur: 0.6
+    topic_mastery: {}
+    capability_direct: {}
+evidence_timeline:
+  - day: 1
+    channel: free_observation
+    raw_text: "今天会自己系鞋带了！"
+  - day: 1
+    channel: free_observation
+    raw_text: "今天会自己系鞋带了！"   # duplicate submission — must be decayed/deduped
+  - day: 2
+    channel: free_observation
+    raw_text: "系鞋带还是完全不会，昨天是碰巧的。"   # contradicts day 1
+  - day: 3
+    channel: free_observation
+    raw_text: "哈哈哈他今天在沙发上跳了一下午。"   # chit-chat — expect empty extraction
+  - day: 4
+    channel: mission_checkin
+    checkin_status: completed
+    raw_text: "任务完成了。"
+  - day: 4
+    channel: mission_checkin
+    checkin_status: not_completed
+    raw_text: "其实没完成，刚才是爷爷填的。"   # conflicting check-ins same day
+  - day: 6
+    channel: free_observation
+    raw_text: "数数数到20都很顺了。"
+  - day: 7
+    channel: free_observation
+    raw_text: "数到12就乱了，昨天是看着书念的。"   # contradiction again

@@ -1,0 +1,47 @@
+# Extraction golden set (ADR-002, Q12). Hand-labeled.
+# Case kinds deliberately include the three hard classes:
+#   - multi-topic: one observation, several true signals (tests recall)
+#   - chit-chat: no growth signal, expected_signals MUST be empty (tests false positives)
+#   - soft-trait: no honest topic anchor → direct capability channel (tests ADR-004 §4)
+cases:
+  - id: g01
+    kind: multi-topic
+    raw_text: "今天拼100片拼图，他自己发现先把四个角找出来会快很多，还跟我解释了为什么。"
+    expected_signals:
+      - target_id: "capability.pattern_recognition"
+      - target_id: "capability.verbal_explanation"
+    note: "strategy discovery + explanation; expect 2+ signals"
+
+  - id: g02
+    kind: chit-chat
+    raw_text: "今天天气不错，下午带他去外婆家吃饭了，回来路上睡着了。"
+    expected_signals: []
+    note: "logistics only — any extraction is a false positive"
+
+  - id: g03
+    kind: soft-trait
+    raw_text: "那个积木塔倒了四次，她每次都重新搭，最后一次终于搭成了，特别开心。"
+    expected_signals:
+      - target_id: "capability.persistence"
+    note: "no honest topic anchor → direct capability evidence, strength capped 0.5"
+
+  - id: g04
+    kind: chit-chat
+    raw_text: "今天吃了两碗饭，真棒！"
+    expected_signals: []
+    note: "parent praise but no growth signal — extractor must resist flattery"
+
+  - id: g05
+    kind: multi-topic
+    raw_text: "她给玩偶们排队，按高矮排好后，又自己发明了按衣服颜色重新排，还给每个玩偶编了名字和故事。"
+    expected_signals:
+      - target_id: "capability.pattern_recognition"
+      - target_id: "capability.storytelling"
+      - target_id: "capability.creativity"
+
+  - id: g06
+    kind: soft-trait
+    raw_text: "别的小朋友抢了他的铲子，他没有哭也没有抢回来，而是说'我们轮流玩好不好'。"
+    expected_signals:
+      - target_id: "capability.emotion_regulation"
+      - target_id: "capability.social_negotiation"

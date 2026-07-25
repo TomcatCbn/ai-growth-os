@@ -1,0 +1,33 @@
+# Virtual child 2 (Q18): strong language, weak math.
+# Tests: does the frontier/planner honestly converge toward the math side.
+profile:
+  child_id: vc_language
+  name: 朵朵
+  age: 4
+  stage: early_childhood
+  initial_state:
+    interests:
+      princess: 0.8
+      drawing: 0.7
+    topic_mastery: {}
+    capability_direct:
+      storytelling: { level: 0.8, confidence: 0.6, evidence_count: 9 }
+      pattern_recognition: { level: 0.2, confidence: 0.4, evidence_count: 3 }
+evidence_timeline:
+  - day: 1
+    channel: free_observation
+    raw_text: "自己编了一个二十分钟的故事，有开头有结尾，还给每个角色设计了台词。"
+  - day: 4
+    channel: mission_checkin
+    checkin_status: not_completed
+    raw_text: "数数到15就会乱，数着数着开始编故事，任务没完成。"
+  - day: 7
+    channel: child_retelling
+    raw_text: "她把今天的冒险复述得特别完整，还加了情节，但问有几个蘑菇时说'好多好多'。"
+  - day: 10
+    channel: free_observation
+    raw_text: "玩串珠时偶然按红蓝红蓝串了一串，自己没意识到是规律。"
+  - day: 13
+    channel: mission_checkin
+    checkin_status: partial
+    raw_text: "在故事包装下愿意数到10个公主的宝石了，比上周有进步。"

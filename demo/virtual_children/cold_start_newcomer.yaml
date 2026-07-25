@@ -1,0 +1,32 @@
+# Virtual child 3 (Q18): cold start — initial state comes ONLY from the parent
+# questionnaire. Tests: priors behave sanely and converge as evidence arrives.
+profile:
+  child_id: vc_coldstart
+  name: 石头
+  age: 6
+  stage: early_childhood
+  cold_start_questionnaire:
+    favorite_things: [挖土机, 恐龙]
+    parent_goals: [专注, 表达]
+    concerns: [不太爱说话]
+  initial_state:
+    interests:
+      vehicle.excavator: 0.8   # from questionnaire
+      dinosaur: 0.8
+    topic_mastery: {}          # everything at age prior
+    capability_direct: {}
+evidence_timeline:
+  - day: 2
+    channel: mission_checkin
+    checkin_status: completed
+    raw_text: "挖土机主题的任务一下子就接受了，话比平时多。"
+  - day: 5
+    channel: child_retelling
+    raw_text: "他讲了挖土机救援的全过程，虽然简单但第一次主动讲这么久。"
+  - day: 9
+    channel: free_observation
+    raw_text: "玩沙子时把挖土机按大小排队，说'大挖土机先挖'。"
+  - day: 14
+    channel: mission_checkin
+    checkin_status: completed
+    raw_text: "这周主动跟爷爷讲了豆豆兔的故事，爷爷很惊喜。"

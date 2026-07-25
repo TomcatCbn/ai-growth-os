@@ -1,0 +1,78 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MissionArc",
+  "description": "A Growth Arc (ADR-007): goal set + narrative arc + difficulty gradient + growth hypothesis + measurement plan. Blueprint fields are the immutable contract ('what to measure is static'); interaction_mode/default_modality are the Orchestrator's adaptation space ('how to accompany is dynamic'). Replaces the legacy single-card mission.schema.json.",
+  "type": "object",
+  "required": ["arc_id", "child_id", "status", "primary_goal", "growth_hypothesis", "chapters", "created_at"],
+  "properties": {
+    "arc_id": { "type": "string" },
+    "child_id": { "type": "string" },
+    "status": {
+      "type": "string",
+      "enum": ["draft", "active", "completed", "abandoned", "stalled"]
+    },
+    "primary_goal": {
+      "type": "object",
+      "required": ["topic_id"],
+      "properties": {
+        "topic_id": { "type": "string" },
+        "capability_ids": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "supporting_goals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "kind"],
+        "properties": {
+          "id": { "type": "string" },
+          "kind": { "type": "string", "enum": ["topic", "capability"] }
+        }
+      }
+    },
+    "growth_hypothesis": {
+      "type": "object",
+      "required": ["statement", "key_signal"],
+      "properties": {
+        "statement": { "type": "string", "description": "e.g. 'Completing this arc should move pattern-recognition mastery 0.4 → 0.6.'" },
+        "expected_mastery_delta": { "type": "number" },
+        "key_signal": { "type": "string", "description": "The observable that would confirm it, e.g. 'child verbally predicts the next item in a sequence.'" }
+      }
+    },
+    "hypothesis_verdict": {
+      "type": "string",
+      "enum": ["confirmed", "refuted", "inconclusive"],
+      "description": "Set at arc close by the Planner; becomes meta-evidence about which arcs work for this child."
+    },
+    "interest_theme": { "type": "string", "description": "Interest label used for theming (e.g. 'animal.rabbit')." },
+    "chapters": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 4,
+      "items": {
+        "type": "object",
+        "required": ["chapter_id", "index", "title", "narration", "real_world_task", "return_prompt", "observation_checklist", "difficulty", "status"],
+        "properties": {
+          "chapter_id": { "type": "string" },
+          "index": { "type": "integer", "minimum": 1 },
+          "title": { "type": "string" },
+          "narration": { "type": "string", "description": "Story hook text (zh). Demo: parent reads aloud." },
+          "real_world_task": { "type": "string", "description": "Offline activity instruction (zh)." },
+          "return_prompt": { "type": "string", "description": "Prompt inviting the child's retelling (zh)." },
+          "observation_checklist": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Parent observation points (zh), derived from the topic's evidence criteria (i18n, ADR-005). IMMUTABLE — the measurement plan."
+          },
+          "difficulty": { "type": "integer", "minimum": 1, "maximum": 5 },
+          "interaction_mode": { "type": "string", "enum": ["parent_card", "voice_story", "drawing", "mini_game", "parent_child_activity"] },
+          "default_modality": { "type": "string", "description": "Orchestrator may substitute a registered modality (logged), never the checklist." },
+          "status": { "type": "string", "enum": ["pending", "active", "done", "skipped"] }
+        }
+      }
+    },
+    "decision_trace_id": { "type": "string" },
+    "created_at": { "type": "string", "format": "date-time" },
+    "closed_at": { "type": "string", "format": "date-time" }
+  }
+}

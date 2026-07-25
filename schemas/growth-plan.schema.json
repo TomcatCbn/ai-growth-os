@@ -1,0 +1,40 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "GrowthPlan",
+  "description": "Growth Planner output (ADR-003): LLM ranks WITHIN the code-computed frontier. Selecting a non-frontier topic is a hard failure. Rationale feeds the Parent Coach and Decision Trace.",
+  "type": "object",
+  "required": ["plan_id", "child_id", "trigger", "frontier_snapshot", "candidates", "selected_topic_id", "rationale", "created_at"],
+  "properties": {
+    "plan_id": { "type": "string" },
+    "child_id": { "type": "string" },
+    "trigger": {
+      "type": "string",
+      "enum": ["evidence_submitted", "mission_stalled", "parent_request", "cold_start"]
+    },
+    "frontier_snapshot": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Topic ids whose prerequisites are satisfied and not yet mastered, computed by code at plan time."
+    },
+    "candidates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["topic_id", "rank", "rationale"],
+        "properties": {
+          "topic_id": { "type": "string" },
+          "rank": { "type": "integer", "minimum": 1 },
+          "capability_targets": { "type": "array", "items": { "type": "string" } },
+          "rationale": { "type": "string" }
+        }
+      }
+    },
+    "selected_topic_id": {
+      "type": "string",
+      "description": "MUST be a member of frontier_snapshot — code-verified."
+    },
+    "rationale": { "type": "string", "description": "Selection reasoning: interests, capability priorities, recent evidence." },
+    "decision_trace_id": { "type": "string" },
+    "created_at": { "type": "string", "format": "date-time" }
+  }
+}

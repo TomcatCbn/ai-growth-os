@@ -1,0 +1,26 @@
+{
+  "child_id": "demo",
+  "age": 5,
+  "stage": "early_childhood",
+  "interests": {
+    "animal": 0.9,
+    "animal.rabbit": 0.8,
+    "vehicle.excavator": 0.7
+  },
+  "topic_mastery": {
+    "mt_N8CpN1EJrP": {
+      "mastery": 0.6,
+      "confidence": 0.5,
+      "evidence_count": 3,
+      "last_evidence_at": "2026-07-20T10:30:00Z"
+    }
+  },
+  "capability_direct": {
+    "persistence": {
+      "level": 0.5,
+      "confidence": 0.3,
+      "evidence_count": 1,
+      "last_evidence_at": "2026-07-22T18:00:00Z"
+    }
+  }
+}
