@@ -31,3 +31,10 @@ evidence_timeline:
     channel: mission_checkin
     checkin_status: partial
     raw_text: "在故事包装下愿意数到10个公主的宝石了，比上周有进步。"
+family:
+  values: ["阅读优先"]
+  goals:
+    - title: "数学"
+      raw_text: "希望朵朵多接触数学，别太抗拒"
+      status: active
+  constraints: ["每次不超过10分钟"]

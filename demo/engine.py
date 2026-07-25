@@ -49,6 +49,7 @@ from runtime.twin import (
     project_tendencies,
     project_twin,
 )
+from runtime.twin.family import build_family_model
 
 ROOT = Path(__file__).resolve().parent.parent
 ARTIFACT = "knowledge/artifact/growth-artifact-0.1.json"
@@ -184,10 +185,13 @@ class ChildEngine:
         trigger = "cold_start" if not any(
             e["event_type"] == "mission.activated" for e in events
         ) else "evidence_submitted"
+        family = build_family_model(
+            self.child_id, self.profile.get("family"), self.state["interests"])
         plan, _ = self.planner.plan(
             child_id=self.child_id, child_state=self.state,
             frontier=frontier, recent_evidence=events[-10:], trigger=trigger,
-            capabilities=caps, growth_memory=growth_memory_from_events(events))
+            capabilities=caps, growth_memory=growth_memory_from_events(events),
+            family_goals=family["goals"])
         topic = self.topics_by_id[plan["selected_topic_id"]]
         theme = max(self.state["interests"], key=self.state["interests"].get).split(".")[-1]
         pattern = select_pattern(self.patterns, topic_capabilities(topic["id"], self.cap_map), events)
@@ -251,6 +255,8 @@ class ChildEngine:
             child=self.child, events=events, state=self.state, capabilities=derived)
         tendencies = project_tendencies(events)
         partner = project_partner_state(self.child_id, events)
+        family = build_family_model(
+            self.child_id, self.profile.get("family"), self.state["interests"])
         arc = self.manager.active
         if arc:
             topic = self.topics_by_id.get(arc["primary_goal"]["topic_id"], {})
@@ -264,5 +270,6 @@ class ChildEngine:
             "arc": arc, "log": self.log[-15:][::-1],
             "insight": insight,
             "twin": twin, "tendencies": tendencies, "partner": partner,
+            "family": family,
             "n_events": len(self.store.events_for(self.child_id)),
         }

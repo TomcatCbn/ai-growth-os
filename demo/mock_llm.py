@@ -20,8 +20,7 @@ from runtime.llm.base import LLMRequest, LLMResponse
 
 # Keywords are deliberately distinctive per capability — collisions would
 # make the offline evaluation baseline meaningless (false-positive discipline).
-CAP_KEYWORDS = {
-    "pattern_recognition": ["规律", "排好", "红黄", "排序"],
+CAP_KEYWORDS = {    "pattern_recognition": ["规律", "排好", "红黄", "排序"],
     "verbal_explanation": ["解释", "因为"],
     "persistence": ["重新", "终于", "再试", "坚持"],
     "storytelling": ["故事"],
@@ -32,6 +31,18 @@ CAP_KEYWORDS = {
     "social_negotiation": ["轮流", "商量"],
     "curiosity": ["为什么", "问了"],
     "focused_attention": ["二十分钟", "蹲着", "专注"],
+}
+
+
+# Family-goal title → topic subject mapping for the interest bridge
+# (goal titles are zh; topic subjects are canonical English).
+GOAL_SUBJECT = {
+    "数学": "Mathematics",
+    "英语": "English",
+    "阅读": "English",
+    "科学": "Science",
+    "社交": "Personal & Social Development",
+    "生活": "Life Skills",
 }
 
 
@@ -73,6 +84,8 @@ class MockLLMProvider:
         frontier = payload["frontier"]
         interests = payload["child_state"].get("interests", {})
         caps = payload.get("capabilities", {})
+        family_goals = [g for g in payload.get("family_goals", [])
+                        if g.get("status", "active") == "active"]
         # Growth memory: a refuted/inconclusive arc on a topic pushes the
         # baseline toward a different strategy (ADR-012). Confirmed arcs get a
         # mild "move on" nudge — the topic was just exercised; variety wins.
@@ -91,15 +104,22 @@ class MockLLMProvider:
 
         def score(c):
             name = (c.get("name") or "").lower()
-            overlap = sum(1 for w in interest_words if w in name)
-            # capability-gap bonus: high development_priority × low current
-            # score — different children, different rankings (ADR-004 §3).
-            gap_bonus = sum(
+            # Mission score (blueprint): engagement 40 + growth 30 + family 20
+            # + novelty 10. Centrality is only a deterministic tiebreak.
+            engagement = 1.0 if any(w in name for w in interest_words) else 0.0
+            growth = min(1.0, sum(
                 prio * (1.0 - caps.get(cap, {}).get("score", 0.3))
                 for cap, prio in c.get("development_priorities", {}).items()
-            )
+            ))
+            family = 1.0 if any(
+                g["title"] in (c.get("name") or "")
+                or GOAL_SUBJECT.get(g["title"]) == c.get("subject")
+                for g in family_goals
+            ) else 0.0
+            novelty = 0.0 if c["topic_id"] in penalties else 1.0
             return (
-                c.get("centrality", 0.0) + 0.5 * overlap + gap_bonus
+                0.4 * engagement + 0.3 * growth + 0.2 * family + 0.1 * novelty
+                + 0.05 * c.get("centrality", 0.0)
                 - penalties.get(c["topic_id"], 0.0)
             )
 
