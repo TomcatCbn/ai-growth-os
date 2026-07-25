@@ -11,8 +11,8 @@ profile:
       drawing: 0.7
     topic_mastery: {}
     capability_direct:
-      storytelling: { level: 0.8, confidence: 0.6, evidence_count: 9 }
-      pattern_recognition: { level: 0.2, confidence: 0.4, evidence_count: 3 }
+      capability.storytelling: { level: 0.8, confidence: 0.6, evidence_count: 9 }
+      capability.pattern_recognition: { level: 0.2, confidence: 0.4, evidence_count: 3 }
 evidence_timeline:
   - day: 1
     channel: free_observation

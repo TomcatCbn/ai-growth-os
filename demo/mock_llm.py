@@ -70,6 +70,16 @@ class MockLLMProvider:
         payload = json.loads(user)
         frontier = payload["frontier"]
         interests = payload["child_state"].get("interests", {})
+        caps = payload.get("capabilities", {})
+        # Growth memory: a refuted/inconclusive arc on a topic pushes the
+        # baseline toward a different strategy (ADR-012).
+        verdict_penalty = {"refuted": 1.0, "inconclusive": 0.4, "confirmed": 0.3}
+        penalties: dict[str, float] = {}
+        for arc in payload.get("growth_memory", {}).get("closed_arcs", []):
+            tid = arc.get("topic_id")
+            if tid:
+                penalties[tid] = max(
+                    penalties.get(tid, 0.0), verdict_penalty.get(arc.get("verdict"), 0.0))
         # interest label words that might appear in English topic names
         interest_words = set()
         for label, w in interests.items():
@@ -79,15 +89,27 @@ class MockLLMProvider:
         def score(c):
             name = (c.get("name") or "").lower()
             overlap = sum(1 for w in interest_words if w in name)
-            return c.get("centrality", 0.0) + 0.5 * overlap
+            # capability-gap bonus: high development_priority × low current
+            # score — different children, different rankings (ADR-004 §3).
+            gap_bonus = sum(
+                prio * (1.0 - caps.get(cap, {}).get("score", 0.3))
+                for cap, prio in c.get("development_priorities", {}).items()
+            )
+            return (
+                c.get("centrality", 0.0) + 0.5 * overlap + gap_bonus
+                - penalties.get(c["topic_id"], 0.0)
+            )
 
         ranked = sorted(frontier, key=score, reverse=True)[:5]
         candidates = [
             {
                 "topic_id": c["topic_id"],
                 "rank": i + 1,
-                "capability_targets": [],
-                "rationale": f"rule baseline: centrality={c.get('centrality', 0):.2f}, interest overlap",
+                "capability_targets": c.get("capability_targets", []),
+                "rationale": (
+                    f"rule baseline: centrality={c.get('centrality', 0):.2f}, "
+                    f"interest overlap, capability-gap bonus"
+                ),
             }
             for i, c in enumerate(ranked)
         ]
@@ -96,7 +118,7 @@ class MockLLMProvider:
             {
                 "candidates": candidates,
                 "selected_topic_id": selected,
-                "rationale": "Mock rule baseline: highest centrality + interest overlap within frontier.",
+                "rationale": "Mock rule baseline: centrality + interest overlap + capability-gap bonus within frontier.",
             },
             ensure_ascii=False,
         )

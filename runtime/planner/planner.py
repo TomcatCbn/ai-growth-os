@@ -18,11 +18,14 @@ from ..llm.base import LLMRequest
 TRIGGERS = ("evidence_submitted", "mission_stalled", "parent_request", "cold_start")
 
 SYSTEM = """You are the Growth Planner of AI Growth OS, a companion for children aged 4-6.
-You receive: the child's state, recent evidence, and a FRONTIER of candidate topics
-(pre-computed; every candidate is developmentally reachable).
-Choose and rank candidates ONLY from the frontier, using the child's interests,
-capability priorities, and recent evidence. Always explain your reasoning —
-a parent will read it. Never invent topics outside the frontier."""
+You receive: the child's state, the derived capability view, recent evidence,
+and a FRONTIER of candidate topics (pre-computed; every candidate is
+developmentally reachable). Choose and rank candidates ONLY from the frontier,
+using the child's interests, capability priorities (development_priority on
+each candidate; prefer high-priority capabilities where the child's score is
+low), and recent evidence. For each candidate, copy its capability_targets.
+Always explain your reasoning — a parent will read it. Never invent topics
+outside the frontier."""
 
 RESPONSE_SCHEMA: dict[str, Any] = {
     "type": "object",
@@ -64,6 +67,7 @@ class GrowthPlanner:
         recent_evidence: list[dict],
         growth_memory: dict | None = None,
         trigger: str = "evidence_submitted",
+        capabilities: dict | None = None,
     ) -> tuple[dict, str]:
         """Returns (plan, trace_id). Raises FrontierViolation on illegal pick,
         ContractViolation if the completed plan breaches the contract."""
@@ -72,6 +76,7 @@ class GrowthPlanner:
         user = json.dumps(
             {
                 "child_state": child_state,
+                "capabilities": capabilities or {},
                 "frontier": frontier,
                 "recent_evidence": recent_evidence[-10:],
                 "growth_memory": growth_memory or {},

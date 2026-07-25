@@ -21,13 +21,18 @@ from runtime.mission.manager import MissionManager  # noqa: E402
 from runtime.planner.frontier import compute_frontier  # noqa: E402
 from runtime.planner.planner import GrowthPlanner  # noqa: E402
 from runtime.safety.guards import InputGuard, OutputGuard  # noqa: E402
+from runtime.state.memory import growth_memory_from_events  # noqa: E402
 from runtime.state.reducer import reduce_events  # noqa: E402
+from runtime.state.capabilities import (  # noqa: E402
+    derive_capabilities, development_priorities, load_capability_map, topic_capabilities,
+)
 from runtime.trace.trace import TrackedProvider  # noqa: E402
 from knowledge.i18n import I18n  # noqa: E402
 from demo.run_loop import CHECKIN_SIGNAL, generate_arc, load_targets  # noqa: E402
 
 ARTIFACT = "knowledge/artifact/growth-artifact-0.1.json"
 TAXONOMY = "world-model/capability-taxonomy.yaml"
+CAPMAP = "world-model/topic-capability-map.yaml"
 
 
 class ChildEngine:
@@ -59,6 +64,7 @@ class ChildEngine:
         self.manager = MissionManager()
         self.in_guard, self.out_guard = InputGuard(), OutputGuard()
         self.targets = load_targets(self.artifact, self.taxonomy)
+        self.cap_map = load_capability_map(root / CAPMAP)
         self.i18n = I18n()
         self.day = 0
         self.log: list[str] = []
@@ -93,25 +99,26 @@ class ChildEngine:
                 "confidence": 0.7,
                 "quote": guarded.text,
             })
-            chapters = arc["chapters"]
-            current = next(i for i, c in enumerate(chapters) if c["status"] == "active")
-            if current == len(chapters) - 1:
-                closed = self.manager.close(entry["checkin_status"])
-                self.store.append("mission.closed", self.child_id, {
-                    "arc_id": closed["arc_id"], "verdict": closed["hypothesis_verdict"],
-                    "status": closed["status"]})
-                self.log.append(f"day {day}｜打卡「{entry['checkin_status']}」→ 冒险结束（假设{closed['hypothesis_verdict']}）")
-            else:
-                chapter = self.manager.advance_chapter()
-                self.store.append("mission.chapter_advanced", self.child_id, {
-                    "arc_id": arc["arc_id"], "chapter_id": chapter["chapter_id"],
-                    "checkin_status": entry["checkin_status"]})
-                self.log.append(f"day {day}｜打卡「{entry['checkin_status']}」→ 进入第 {chapter['index']} 章「{chapter['title']}」")
+            closed = self.manager.close(entry["checkin_status"])
+            self.store.append("mission.closed", self.child_id, {
+                "arc_id": closed["arc_id"], "verdict": closed["hypothesis_verdict"],
+                "status": closed["status"]})
+            self.log.append(f"day {day}｜打卡「{entry['checkin_status']}」→ 冒险结束（假设{closed['hypothesis_verdict']}）")
         else:
             signals, _ = self.extractor.extract(
                 child_id=self.child_id, raw_text=guarded.text, candidate_targets=self.targets)
             kinds = "、".join(self.i18n.capability_name(s["target_id"]) for s in signals) or "无信号"
             self.log.append(f"day {day}｜{entry['channel']} → {kinds}")
+            # Chapter progression: family activity days advance the arc.
+            if self.manager.active is not None:
+                chapters = self.manager.active["chapters"]
+                current = next(i for i, c in enumerate(chapters) if c["status"] == "active")
+                if current < len(chapters) - 1:
+                    chapter = self.manager.advance_chapter()
+                    self.store.append("mission.chapter_advanced", self.child_id, {
+                        "arc_id": self.manager.active["arc_id"],
+                        "chapter_id": chapter["chapter_id"], "day": day})
+                    self.log.append(f"day {day}｜↳ 进入第 {chapter['index']} 章「{chapter['title']}」")
 
         self.store.append("evidence.signals_extracted", self.child_id,
                           {"day": day, "signals": signals})
@@ -129,12 +136,20 @@ class ChildEngine:
         frontier = compute_frontier(
             self.artifact["topics"], self.artifact["dependencies"],
             self.state.get("topic_mastery", {}), age=self.age)
+        caps = derive_capabilities(
+            self.state.get("topic_mastery", {}), self.state.get("capability_direct", {}),
+            self.cap_map, age=self.age)
+        for c in frontier:
+            c["capability_targets"] = topic_capabilities(c["topic_id"], self.cap_map)
+            c["development_priorities"] = development_priorities(
+                self.cap_map, c["topic_id"], age=self.age)
         trigger = "cold_start" if not any(
             e["event_type"] == "mission.activated" for e in events
         ) else "evidence_submitted"
         plan, _ = self.planner.plan(
             child_id=self.child_id, child_state=self.state,
-            frontier=frontier, recent_evidence=events[-10:], trigger=trigger)
+            frontier=frontier, recent_evidence=events[-10:], trigger=trigger,
+            capabilities=caps, growth_memory=growth_memory_from_events(events))
         topic = self.topics_by_id[plan["selected_topic_id"]]
         theme = max(self.state["interests"], key=self.state["interests"].get).split(".")[-1]
         arc = generate_arc(topic, theme, self.child_id, self.child["name"], self.i18n)
@@ -163,11 +178,14 @@ class ChildEngine:
     # -- view ----------------------------------------------------------------
 
     def view(self) -> dict:
+        derived = derive_capabilities(
+            self.state.get("topic_mastery", {}), self.state.get("capability_direct", {}),
+            self.cap_map, age=self.age)
         caps = [
-            {"name": self.i18n.capability_name(cid), "level": r["level"],
-             "conf": r["confidence"], "n": r["evidence_count"]}
-            for cid, r in sorted(self.state.get("capability_direct", {}).items(),
-                                 key=lambda kv: -kv[1]["level"])
+            {"name": self.i18n.capability_name(cid), "level": r["score"],
+             "conf": r["confidence"],
+             "n": r["topic_evidence_count"] + r["direct_evidence_count"]}
+            for cid, r in sorted(derived.items(), key=lambda kv: -kv[1]["score"])
         ]
         topics = [
             {"name": self.i18n.topic_name(tid, self.topics_by_id.get(tid, {}).get("name", tid)),

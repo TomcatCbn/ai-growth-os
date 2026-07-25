@@ -12,8 +12,8 @@ profile:
       space: 0.7
     topic_mastery: {}   # mostly age priors
     capability_direct:
-      curiosity: { level: 0.8, confidence: 0.6, evidence_count: 8 }
-      persistence: { level: 0.3, confidence: 0.5, evidence_count: 6 }
+      capability.curiosity: { level: 0.8, confidence: 0.6, evidence_count: 8 }
+      capability.persistence: { level: 0.3, confidence: 0.5, evidence_count: 6 }
 evidence_timeline:
   - day: 1
     channel: free_observation

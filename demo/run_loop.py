@@ -31,7 +31,11 @@ from runtime.mission.manager import MissionManager  # noqa: E402
 from runtime.planner.frontier import compute_frontier  # noqa: E402
 from runtime.planner.planner import GrowthPlanner  # noqa: E402
 from runtime.safety.guards import InputGuard, OutputGuard  # noqa: E402
+from runtime.state.memory import growth_memory_from_events  # noqa: E402
 from runtime.state.reducer import reduce_events  # noqa: E402
+from runtime.state.capabilities import (  # noqa: E402
+    derive_capabilities, development_priorities, load_capability_map, topic_capabilities,
+)
 from runtime.trace.trace import TrackedProvider  # noqa: E402
 from knowledge.i18n import I18n  # noqa: E402
 
@@ -103,6 +107,7 @@ def main() -> None:
     ap.add_argument("--profile", required=True)
     ap.add_argument("--artifact", required=True)
     ap.add_argument("--taxonomy", default="world-model/capability-taxonomy.yaml")
+    ap.add_argument("--capmap", default="world-model/topic-capability-map.yaml")
     ap.add_argument("--live", action="store_true")
     ap.add_argument("--db", default=":memory:")
     args = ap.parse_args()
@@ -129,6 +134,7 @@ def main() -> None:
     manager = MissionManager()
     in_guard, out_guard = InputGuard(), OutputGuard()
     targets = load_targets(artifact, taxonomy)
+    cap_map = load_capability_map(args.capmap)
     i18n = I18n()
 
     # Restart recovery: growth state AND runtime state replay from the event
@@ -160,27 +166,27 @@ def main() -> None:
                 "confidence": 0.7,
                 "quote": guarded.text,
             })
-            chapters = arc["chapters"]
-            current = next(i for i, c in enumerate(chapters) if c["status"] == "active")
-            if current == len(chapters) - 1:
-                closed = manager.close(entry["checkin_status"])
-                store.append("mission.closed", child_id, {
-                    "arc_id": closed["arc_id"], "verdict": closed["hypothesis_verdict"],
-                    "status": closed["status"]})
-                print(f"day {day:>2} | check-in {entry['checkin_status']:<13} → mission closed "
-                      f"(verdict: {closed['hypothesis_verdict']})")
-            else:
-                chapter = manager.advance_chapter()
-                store.append("mission.chapter_advanced", child_id, {
-                    "arc_id": arc["arc_id"], "chapter_id": chapter["chapter_id"],
-                    "checkin_status": entry["checkin_status"]})
-                print(f"day {day:>2} | check-in {entry['checkin_status']:<13} "
-                      f"→ chapter {chapter['index']} 「{chapter['title']}」")
+            closed = manager.close(entry["checkin_status"])
+            store.append("mission.closed", child_id, {
+                "arc_id": closed["arc_id"], "verdict": closed["hypothesis_verdict"],
+                "status": closed["status"]})
+            print(f"day {day:>2} | check-in {entry['checkin_status']:<13} → mission closed "
+                  f"(verdict: {closed['hypothesis_verdict']})")
         else:
             signals, _ = extractor.extract(
                 child_id=child_id, raw_text=guarded.text, candidate_targets=targets)
             kinds = ", ".join(s["target_id"].split(".")[-1] for s in signals) or "—"
             print(f"day {day:>2} | {entry['channel']:<17} → signals: {kinds}")
+            # Chapter progression: family activity days advance the arc.
+            if manager.active is not None:
+                chapters = manager.active["chapters"]
+                current = next(i for i, c in enumerate(chapters) if c["status"] == "active")
+                if current < len(chapters) - 1:
+                    chapter = manager.advance_chapter()
+                    store.append("mission.chapter_advanced", child_id, {
+                        "arc_id": manager.active["arc_id"],
+                        "chapter_id": chapter["chapter_id"], "day": day})
+                    print(f"         ↳ chapter {chapter['index']} 「{chapter['title']}」")
 
         store.append("evidence.signals_extracted", child_id, {"day": day, "signals": signals})
 
@@ -194,12 +200,20 @@ def main() -> None:
             frontier = compute_frontier(
                 artifact["topics"], artifact["dependencies"],
                 state.get("topic_mastery", {}), age=age)
+            caps = derive_capabilities(
+                state.get("topic_mastery", {}), state.get("capability_direct", {}),
+                cap_map, age=age)
+            for c in frontier:
+                c["capability_targets"] = topic_capabilities(c["topic_id"], cap_map)
+                c["development_priorities"] = development_priorities(
+                    cap_map, c["topic_id"], age=age)
             trigger = "cold_start" if not any(
                 e["event_type"] == "mission.activated" for e in events
             ) else "evidence_submitted"
             plan, _ = planner.plan(
                 child_id=child_id, child_state=state,
-                frontier=frontier, recent_evidence=events[-10:], trigger=trigger)
+                frontier=frontier, recent_evidence=events[-10:], trigger=trigger,
+                capabilities=caps, growth_memory=growth_memory_from_events(events))
             topic = topics_by_id[plan["selected_topic_id"]]
             theme = max(state.get("interests", {"冒险": 1}), key=state.get("interests", {}).get)
             theme = theme.split(".")[-1]
@@ -227,10 +241,13 @@ def main() -> None:
     for tid, rec in sorted(tm.items(), key=lambda kv: -kv[1]["mastery"])[:5]:
         name = topics_by_id.get(tid, {}).get("name", tid)
         print(f"  topic  {name[:45]:<47} mastery={rec['mastery']:.2f} n={rec['evidence_count']}")
-    for cid, rec in sorted(state.get("capability_direct", {}).items(),
-                           key=lambda kv: -kv[1]["level"])[:6]:
-        print(f"  cap    {cid.split('.')[-1]:<25} level={rec['level']:.2f} "
-              f"conf={rec['confidence']:.2f} n={rec['evidence_count']}")
+    caps = derive_capabilities(
+        state.get("topic_mastery", {}), state.get("capability_direct", {}),
+        cap_map, age=age)
+    for cid, rec in sorted(caps.items(), key=lambda kv: -kv[1]["score"])[:6]:
+        print(f"  cap    {cid.split('.')[-1]:<25} score={rec['score']:.2f} "
+              f"(topic={rec['topic_derived']}, direct={rec['direct']}) "
+              f"conf={rec['confidence']:.2f}")
     print(f"  events={len(store.events_for(child_id))}")
 
 
