@@ -17,6 +17,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from ..safety.guards import InputGuard
+
 SCHEMA = """
 CREATE TABLE IF NOT EXISTS events (
     seq INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -61,15 +63,20 @@ class Event:
 
 
 class EventStore:
-    def __init__(self, path: str | Path = ":memory:"):
+    def __init__(self, path: str | Path = ":memory:", input_guard: InputGuard | None = None):
         # check_same_thread=False: web servers (FastAPI threadpool) call from
         # worker threads; a lock serializes writes instead.
         self._lock = threading.Lock()
         self._db = sqlite3.connect(str(path), check_same_thread=False)
         self._db.executescript(SCHEMA)
+        # Layer 1 enforcement lives HERE (ADR-008): every append is screened,
+        # so PII cannot enter the event log even if a caller forgets.
+        self._guard = input_guard or InputGuard()
 
     def append(self, event_type: str, child_id: str, payload: dict[str, Any]) -> Event:
-        """Append an immutable fact. Caller MUST have run Input Guard first."""
+        """Append an immutable fact. Payload is PII-screened inside — the
+        Input Guard is not the caller's responsibility."""
+        payload, flags = self._guard.screen_payload(payload)
         ev = Event(
             event_id=f"ev_{uuid.uuid4().hex[:12]}",
             event_type=event_type,
@@ -78,13 +85,24 @@ class EventStore:
             created_at=_now(),
         )
         with self._lock:
-            self._db.execute(
-                "INSERT INTO events (event_id, event_type, child_id, payload, created_at)"
-                " VALUES (?, ?, ?, ?, ?)",
-                (ev.event_id, ev.event_type, ev.child_id, json.dumps(ev.payload), ev.created_at),
-            )
+            self._insert_event(ev)
+            if flags:
+                self._insert_event(Event(
+                    event_id=f"ev_{uuid.uuid4().hex[:12]}",
+                    event_type="safety.input_screened",
+                    child_id=child_id,
+                    payload={"flags": flags, "screened_event": ev.event_id},
+                    created_at=_now(),
+                ))
             self._db.commit()
         return ev
+
+    def _insert_event(self, ev: Event) -> None:
+        self._db.execute(
+            "INSERT INTO events (event_id, event_type, child_id, payload, created_at)"
+            " VALUES (?, ?, ?, ?, ?)",
+            (ev.event_id, ev.event_type, ev.child_id, json.dumps(ev.payload), ev.created_at),
+        )
 
     def trace(
         self,
@@ -99,6 +117,10 @@ class EventStore:
         output_tokens: int = 0,
     ) -> str:
         trace_id = f"tr_{uuid.uuid4().hex[:12]}"
+        # Traces carry full prompts and child state — screened on the way in,
+        # same as events (no unredacted PII anywhere in the store).
+        input_snapshot, _ = self._guard.screen_payload(input_snapshot)
+        output, _ = self._guard.screen_payload(output)
         with self._lock:
             self._db.execute(
                 "INSERT INTO decision_trace (trace_id, component, child_id, input_snapshot,"

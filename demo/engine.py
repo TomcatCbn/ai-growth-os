@@ -139,11 +139,12 @@ class ChildEngine:
         theme = max(self.state["interests"], key=self.state["interests"].get).split(".")[-1]
         arc = generate_arc(topic, theme, self.child_id, self.child["name"], self.i18n)
         arc["child_id"] = self.child_id  # required by mission-arc contract
-        check = self.out_guard.review(
-            " ".join(c["narration"] for c in arc["chapters"]), audience="child")
-        if not check.passed:
-            self.store.append("safety.output_rejected", self.child_id, {"flags": check.flags})
-            self.log.append(f"day {day}｜⚠ 安全护栏拦截了任务生成：{check.flags}")
+        check = self.out_guard.review_arc(arc)
+        rationale_check = self.out_guard.review(plan["rationale"], audience="parent")
+        if not (check.passed and rationale_check.passed):
+            flags = check.flags + rationale_check.flags
+            self.store.append("safety.output_rejected", self.child_id, {"flags": flags})
+            self.log.append(f"day {day}｜⚠ 安全护栏拦截了任务生成：{flags}")
             return
         self.manager.activate(arc)
         self.store.append("mission.activated", self.child_id, {

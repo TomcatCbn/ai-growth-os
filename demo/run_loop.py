@@ -204,11 +204,12 @@ def main() -> None:
             theme = max(state.get("interests", {"冒险": 1}), key=state.get("interests", {}).get)
             theme = theme.split(".")[-1]
             arc = generate_arc(topic, theme, child_id, child["name"], i18n)
-            content_check = out_guard.review(
-                " ".join(c["narration"] for c in arc["chapters"]), audience="child")
-            if not content_check.passed:
-                store.append("safety.output_rejected", child_id, {"flags": content_check.flags})
-                print(f"         ⚠ output guard rejected arc: {content_check.flags}")
+            content_check = out_guard.review_arc(arc)
+            rationale_check = out_guard.review(plan["rationale"], audience="parent")
+            if not (content_check.passed and rationale_check.passed):
+                flags = content_check.flags + rationale_check.flags
+                store.append("safety.output_rejected", child_id, {"flags": flags})
+                print(f"         ⚠ output guard rejected arc: {flags}")
                 continue
             manager.activate(arc)
             store.append("mission.activated", child_id, {
