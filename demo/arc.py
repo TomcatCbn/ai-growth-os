@@ -68,18 +68,25 @@ def generate_arc(
     child_name: str,
     i18n: I18n,
     pattern: dict,
+    callback: dict | None = None,
 ) -> dict:
-    """Instantiate a growth pattern into a mission-arc contract object."""
+    """Instantiate a growth pattern into a mission-arc contract object.
+
+    callback: an unused partner-state callback moment — woven into the hook
+    narration ("还记得…吗？") so the companion demonstrably remembers."""
     checklist = i18n.topic_evidence_zh(topic["id"], topic.get("evidence", []))[:3]
     topic_name = i18n.topic_name(topic["id"], topic["name"])
     chapters = []
     for i, ch in enumerate(pattern["chapter_skeleton"], start=1):
+        narration = ch["narration"].format(theme=theme)
+        if i == 1 and callback:
+            narration = f"还记得我们的{callback['moment']}吗？这一次——" + narration
         chapters.append({
             "chapter_id": f"ch_{i}",
             "index": i,
             "role": ch["role"],
             "title": ch["title"],
-            "narration": ch["narration"].format(theme=theme),
+            "narration": narration,
             "real_world_task": ch["task_pattern"].format(theme=theme),
             "return_prompt": ch["return_prompt"],
             "observation_checklist": checklist,

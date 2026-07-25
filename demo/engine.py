@@ -43,7 +43,12 @@ from runtime.state.capabilities import (
 from runtime.state.memory import growth_memory_from_events
 from runtime.state.reducer import reduce_events
 from runtime.trace.trace import TrackedProvider
-from runtime.twin import project_tendencies, project_twin
+from runtime.twin import (
+    next_callback,
+    project_partner_state,
+    project_tendencies,
+    project_twin,
+)
 
 ROOT = Path(__file__).resolve().parent.parent
 ARTIFACT = "knowledge/artifact/growth-artifact-0.1.json"
@@ -186,7 +191,10 @@ class ChildEngine:
         topic = self.topics_by_id[plan["selected_topic_id"]]
         theme = max(self.state["interests"], key=self.state["interests"].get).split(".")[-1]
         pattern = select_pattern(self.patterns, topic_capabilities(topic["id"], self.cap_map), events)
-        arc = generate_arc(topic, theme, self.child_id, self.child["name"], self.i18n, pattern)
+        partner_state = project_partner_state(self.child_id, events)
+        callback = next_callback(partner_state)
+        arc = generate_arc(topic, theme, self.child_id, self.child["name"],
+                           self.i18n, pattern, callback=callback)
         if not self.i18n.has_topic_zh(topic["id"]):
             self._emit(f"day {day}｜⚠ i18n 缺口：{topic['name']} 的观察清单回退为英文")
         check = self.out_guard.review_arc(arc)
@@ -202,6 +210,11 @@ class ChildEngine:
             "pattern_id": pattern["pattern_id"],
             "plan_trace": plan["decision_trace_id"],
             "arc": arc, "activated_at": self.manager.activated_at})
+        if callback:
+            self.store.append("partner.callback_used", self.child_id, {
+                "moment": callback["moment"],
+                "source_event_id": callback["source_event_id"],
+                "arc_id": arc["arc_id"]})
         tname = self.i18n.topic_name(topic["id"], topic["name"])
         self._emit(f"day {day}｜▶ 新冒险「{theme}·{tname}」模式={pattern['name_zh']}（候选池 {len(frontier)}）")
 
@@ -237,6 +250,7 @@ class ChildEngine:
         twin = project_twin(
             child=self.child, events=events, state=self.state, capabilities=derived)
         tendencies = project_tendencies(events)
+        partner = project_partner_state(self.child_id, events)
         arc = self.manager.active
         if arc:
             topic = self.topics_by_id.get(arc["primary_goal"]["topic_id"], {})
@@ -249,6 +263,6 @@ class ChildEngine:
             "caps": caps, "topics": topics, "interests": interests,
             "arc": arc, "log": self.log[-15:][::-1],
             "insight": insight,
-            "twin": twin, "tendencies": tendencies,
+            "twin": twin, "tendencies": tendencies, "partner": partner,
             "n_events": len(self.store.events_for(self.child_id)),
         }

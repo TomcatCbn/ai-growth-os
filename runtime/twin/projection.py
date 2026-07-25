@@ -13,6 +13,7 @@ from typing import Any
 from ..contracts import validate
 from ..state.memory import growth_memory_from_events
 from ..state.trends import capability_trends
+from .partner import trust_from_events
 
 
 def project_twin(
@@ -54,13 +55,12 @@ def project_twin(
         },
     }
 
-    # Relationship summary (deep partner state arrives with its own
-    # projection; trust is a simple deterministic function of shared arcs).
+    # Relationship summary (the full partner state has its own projection —
+    # runtime/twin/partner.py; trust is shared, never computed twice).
     closed = growth_memory_from_events(events)["closed_arcs"]
-    confirmed = sum(1 for a in closed if a["verdict"] == "confirmed")
     twin["relationship"] = {
         "partner_id": "doudou_rabbit",
-        "trust_level": round(min(1.0, 0.1 * len(closed) + 0.1 * confirmed), 4),
+        "trust_level": trust_from_events(events),
         "story_progress": f"一起经历了{len(closed)}段冒险" if closed else "故事刚开始",
     }
 
