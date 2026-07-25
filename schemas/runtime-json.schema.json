@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "StoryRuntimeSession",
-  "description": "The client-facing session contract (blueprint: the client is a Story Runtime, not a game engine — it consumes Runtime JSON). One chapter of an arc = one 5-10 minute session in five segments: greeting (30s) → choice (1min) → adventure (3-5min) → memory (30s) → farewell (30s). The Orchestrator may adapt scenes and actions; the observation checklist is immutable (ADR-007).",
+  "description": "The client-facing session contract (ADR-014). One chapter of an arc = one 5-10 minute session in five segments: greeting (30s) → choice (1min) → adventure (3-5min) → memory (30s) → farewell (30s). Sessions are the pacing container; each scene is an element-level Node DSL sequence (schemas/scene-dsl.schema.json — node definitions MUST stay identical). The Orchestrator may adapt scenes; the observation checklist is immutable (ADR-007).",
   "type": "object",
   "required": ["session_id", "child_id", "arc_id", "chapter_id", "segments", "created_at"],
   "properties": {
@@ -24,38 +24,13 @@
           "duration_seconds": { "type": "integer", "minimum": 10 },
           "scene": {
             "type": "object",
-            "required": ["scene_id", "narration", "assets", "actions"],
+            "required": ["scene_id", "nodes"],
             "properties": {
               "scene_id": { "type": "string" },
-              "narration": { "type": "string", "description": "Partner voice line (zh). Child-facing: must have passed the Output Guard." },
-              "assets": {
+              "nodes": {
                 "type": "array",
-                "items": {
-                  "type": "object",
-                  "required": ["asset_id", "kind", "ref"],
-                  "properties": {
-                    "asset_id": { "type": "string" },
-                    "kind": { "type": "string", "enum": ["video", "animation", "audio", "image"] },
-                    "ref": { "type": "string", "description": "Asset-pool reference (blueprint: ~20 base partner videos + AI-composed scenes)." }
-                  }
-                }
-              },
-              "actions": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "required": ["action_id", "type", "prompt"],
-                  "properties": {
-                    "action_id": { "type": "string" },
-                    "type": { "type": "string", "enum": ["choose_one", "drag_object", "voice_answer"] },
-                    "prompt": { "type": "string" },
-                    "options": {
-                      "type": "array",
-                      "items": { "type": "string" },
-                      "description": "For choose_one. Runtime interaction results become Evidence Events."
-                    }
-                  }
-                }
+                "minItems": 1,
+                "items": { "$ref": "#/definitions/node" }
               }
             }
           }
@@ -63,5 +38,55 @@
       }
     },
     "created_at": { "type": "string", "format": "date-time" }
+  },
+  "definitions": {
+    "node": {
+      "type": "object",
+      "required": ["node_id", "type"],
+      "properties": {
+        "node_id": { "type": "string" },
+        "type": { "type": "string", "enum": ["dialogue", "choice", "animation", "voice", "reward"] },
+        "speaker": { "type": "string" },
+        "text": { "type": "string" },
+        "voice": { "type": "string" },
+        "prompt": { "type": "string" },
+        "options": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "text"],
+            "properties": {
+              "id": { "type": "string" },
+              "text": { "type": "string" }
+            }
+          }
+        },
+        "asset": { "type": "string" },
+        "duration_seconds": { "type": "number", "minimum": 0 },
+        "kind": { "type": "string" }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "type": { "const": "dialogue" } } },
+          "then": { "required": ["speaker", "text"] }
+        },
+        {
+          "if": { "properties": { "type": { "const": "choice" } } },
+          "then": { "required": ["prompt", "options"] }
+        },
+        {
+          "if": { "properties": { "type": { "const": "animation" } } },
+          "then": { "required": ["asset"] }
+        },
+        {
+          "if": { "properties": { "type": { "const": "voice" } } },
+          "then": { "required": ["prompt"] }
+        },
+        {
+          "if": { "properties": { "type": { "const": "reward" } } },
+          "then": { "required": ["kind", "text"] }
+        }
+      ]
+    }
   }
 }

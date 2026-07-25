@@ -1,10 +1,9 @@
-"""Story Runtime JSON emitter (blueprint: five-segment session).
+"""Story Runtime JSON emitter (ADR-014: Scene DSL node sequences).
 
-Arc chapter → StoryRuntimeSession contract. Deterministic v1 mapping; the
-Orchestrator's adaptation space is scenes/actions, never the observation
-checklist (ADR-007). Every child-facing string must already have passed the
-Output Guard upstream — the emitter validates the contract, it does not
-re-review content.
+Arc chapter → StoryRuntimeSession: five segments (pacing container), each
+scene expressed as an ordered node list — backend describes WHAT plays, the
+client decides HOW. Deterministic; all text is Output-Guard territory
+upstream. Semantic asset refs only (AI never names files).
 """
 
 from __future__ import annotations
@@ -14,14 +13,7 @@ from datetime import UTC, datetime
 
 from ..contracts import validate
 
-# Asset-pool refs (blueprint: ~20 base partner videos composed by AI scenes).
-_SEGMENT_ASSETS = {
-    "greeting": [("vid_doudou_appear", "video")],
-    "choice": [("anim_doudou_point", "animation")],
-    "adventure": [("vid_doudou_explore", "video"), ("audio_scene_ambient", "audio")],
-    "memory": [("vid_doudou_star", "video")],
-    "farewell": [("vid_doudou_wave", "video")],
-}
+_DOUDOU = "doudou_v1"
 
 # kind → duration seconds (blueprint: 30s / 1min / 3-5min / 30s / 30s)
 _SEGMENT_DURATION = {
@@ -29,65 +21,58 @@ _SEGMENT_DURATION = {
 }
 
 
-def _scene(segment: str, arc_id: str, chapter_id: str, narration: str,
-           actions: list[dict]) -> dict:
+def _node(n: int, ntype: str, **fields) -> dict:
+    return {"node_id": f"nd_{n}", "type": ntype, **fields}
+
+
+def _segment(kind: str, arc_id: str, chapter_id: str, nodes: list[dict]) -> dict:
     return {
-        "scene_id": f"sc_{arc_id}_{chapter_id}_{segment}",
-        "narration": narration,
-        "assets": [
-            {"asset_id": aid, "kind": kind, "ref": f"assetpool://doudou/{aid}"}
-            for aid, kind in _SEGMENT_ASSETS[segment]
-        ],
-        "actions": actions,
+        "kind": kind,
+        "duration_seconds": _SEGMENT_DURATION[kind],
+        "scene": {
+            "scene_id": f"sc_{arc_id}_{chapter_id}_{kind}",
+            "nodes": nodes,
+        },
     }
 
 
 def emit_session(arc: dict, chapter: dict) -> dict:
     """One arc chapter → one five-segment session (contract-validated)."""
     arc_id, chapter_id = arc["arc_id"], chapter["chapter_id"]
-    narration = chapter["narration"]
     segments = [
-        {
-            "kind": "greeting",
-            "duration_seconds": _SEGMENT_DURATION["greeting"],
-            "scene": _scene("greeting", arc_id, chapter_id, narration, []),
-        },
-        {
-            "kind": "choice",
-            "duration_seconds": _SEGMENT_DURATION["choice"],
-            "scene": _scene("choice", arc_id, chapter_id,
-                            "今天想怎么帮助豆豆兔？",
-                            [{
-                                "action_id": f"act_{chapter_id}_choice",
-                                "type": "choose_one",
-                                "prompt": "选一个你想试的办法",
-                                "options": ["按照豆豆兔的办法", "试试我自己的办法"],
-                            }]),
-        },
-        {
-            "kind": "adventure",
-            "duration_seconds": _SEGMENT_DURATION["adventure"],
-            "scene": _scene("adventure", arc_id, chapter_id,
-                            chapter["real_world_task"],
-                            [{
-                                "action_id": f"act_{chapter_id}_retell",
-                                "type": "voice_answer",
-                                "prompt": chapter["return_prompt"],
-                            }]),
-        },
-        {
-            "kind": "memory",
-            "duration_seconds": _SEGMENT_DURATION["memory"],
-            "scene": _scene("memory", arc_id, chapter_id,
-                            f"豆豆兔记住了今天：{arc['growth_hypothesis']['key_signal']}",
-                            []),
-        },
-        {
-            "kind": "farewell",
-            "duration_seconds": _SEGMENT_DURATION["farewell"],
-            "scene": _scene("farewell", arc_id, chapter_id,
-                            "明天豆豆兔还在这里等你，不见不散！", []),
-        },
+        _segment("greeting", arc_id, chapter_id, [
+            _node(1, "animation", asset="character/doudou/action/appear",
+                  duration_seconds=3),
+            _node(2, "dialogue", speaker="doudou", text=chapter["narration"],
+                  voice=_DOUDOU),
+        ]),
+        _segment("choice", arc_id, chapter_id, [
+            _node(1, "dialogue", speaker="doudou",
+                  text="今天想怎么帮助豆豆兔？", voice=_DOUDOU),
+            _node(2, "choice", prompt="选一个你想试的办法", options=[
+                {"id": "opt_doudou", "text": "按照豆豆兔的办法"},
+                {"id": "opt_mine", "text": "试试我自己的办法"},
+            ]),
+        ]),
+        _segment("adventure", arc_id, chapter_id, [
+            _node(1, "animation", asset="character/doudou/action/explore",
+                  duration_seconds=5),
+            _node(2, "dialogue", speaker="doudou",
+                  text=chapter["real_world_task"], voice=_DOUDOU),
+            _node(3, "voice", prompt=chapter["return_prompt"]),
+        ]),
+        _segment("memory", arc_id, chapter_id, [
+            _node(1, "reward", kind="star",
+                  text=f"豆豆兔记住了今天：{arc['growth_hypothesis']['key_signal']}"),
+            _node(2, "animation", asset="character/doudou/emotion/happy",
+                  duration_seconds=3),
+        ]),
+        _segment("farewell", arc_id, chapter_id, [
+            _node(1, "dialogue", speaker="doudou",
+                  text="明天豆豆兔还在这里等你，不见不散！", voice=_DOUDOU),
+            _node(2, "animation", asset="character/doudou/action/wave",
+                  duration_seconds=3),
+        ]),
     ]
     session = {
         "session_id": f"ses_{uuid.uuid4().hex[:10]}",
@@ -99,3 +84,12 @@ def emit_session(arc: dict, chapter: dict) -> dict:
     }
     validate("runtime-json", session)
     return session
+
+
+def emit_scene(arc: dict, chapter: dict, segment_kind: str) -> dict:
+    """Standalone scene document (scene-dsl contract) for one segment."""
+    session = emit_session(arc, chapter)
+    scene = next(
+        s["scene"] for s in session["segments"] if s["kind"] == segment_kind)
+    validate("scene-dsl", scene)
+    return scene
