@@ -1,0 +1,7453 @@
+version: 0.1-mock
+generator: build_mapping --mock (deterministic heuristics; replace with --live + spot-check)
+edges:
+  mt_AzTrT5ySCx:
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  - capability: capability.planning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_XbGfVhfiUz:
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  - capability: capability.planning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_jvJ35MmCvK:
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  - capability: capability.planning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_WRRv1ABECC:
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  - capability: capability.planning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt__p5n8z5soJ:
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  - capability: capability.planning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_u6SYiVx7FX:
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  - capability: capability.planning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_scBgiMKhG_:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_GugVunb2lI:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_N8CpN1EJrP:
+  - capability: capability.vocabulary_use
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_of2GggtxFl:
+  - capability: capability.vocabulary_use
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_yBJyCfhtem:
+  - capability: capability.vocabulary_use
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_uM6q_KBWKy:
+  - capability: capability.vocabulary_use
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_TfOiog-ALs:
+  - capability: capability.vocabulary_use
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_YXVQaufkKO:
+  - capability: capability.vocabulary_use
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_VY3rBq8RyP:
+  - capability: capability.vocabulary_use
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_6lHBTwQPrS:
+  - capability: capability.vocabulary_use
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_18qkgxr_-T:
+  - capability: capability.vocabulary_use
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_QEr24lqzvH:
+  - capability: capability.vocabulary_use
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_mKAZTqItRG:
+  - capability: capability.vocabulary_use
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_ntqNLHsj5n:
+  - capability: capability.vocabulary_use
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_RioBUxHz1X:
+  - capability: capability.vocabulary_use
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_cU3LcEVkBQ:
+  - capability: capability.vocabulary_use
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_u1-UfD0rTH:
+  - capability: capability.vocabulary_use
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_qzwQAOfurw:
+  - capability: capability.vocabulary_use
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_enj1sMcfOT:
+  - capability: capability.vocabulary_use
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_sZXPK1FnRB:
+  - capability: capability.vocabulary_use
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_u7Jxjjatkh:
+  - capability: capability.vocabulary_use
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_wq-1OJ_8s5:
+  - capability: capability.vocabulary_use
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_WBfj79OqXz:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.storytelling
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_H7DquwQi_F:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.storytelling
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_DMvKfP4uGC:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.storytelling
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_oAK9GXSfqV:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.storytelling
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_02DH7sGXCi:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.storytelling
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt__KHQttMde3:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_9-OHslmt1g:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_frDIaXzWbx:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_PvU3eoikev:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_4GiE83rJF_:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_F978c32kDr:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_1KCwbGvm1F:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_BtMbZibZUj:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_70Ys4i1AB1:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_fMd7v87IiI:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_a6m7PqTuJN:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_t1JXeNgKcu:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_ZhvwM6LMBL:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_YKkCM63fSC:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt__CMXZiPfTV:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_C7abt7pRr6:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_UvNrOXny1i:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_roAgL1rQRF:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_OgJPbGkrYk:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_V-ldQp56bF:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_kVzAFMuFc4:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_8-POYyg7GJ:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_XeMZdf2Y9W:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_sSQlLOnAow:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_GLY3R3YSlf:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_5n-O41lUgn:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_gZIo5oiBMt:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_thsY1ZesaU:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_mLPEMpYb_R:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_aFvsj35QzC:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_OlhMP7ShFT:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_E5KC4AnRLW:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_rQ2YJJi4uh:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_xjl6AEhnjk:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_fL1Xz8ostr:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_QCWWmDMYZR:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_ZhUuT__i2H:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_zlSoIKPyId:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_VEwM7ClYYE:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_f8n4txtLej:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.dialogue_turn_taking
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.8
+      '5': 0.7
+      '6': 0.7
+  mt_4A7FYmvVhA:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.dialogue_turn_taking
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.8
+      '5': 0.7
+      '6': 0.7
+  mt_n6GhzDPllD:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.dialogue_turn_taking
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.8
+      '5': 0.7
+      '6': 0.7
+  mt_S0hzjAeLSK:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.dialogue_turn_taking
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.8
+      '5': 0.7
+      '6': 0.7
+  mt_wwdRhPyz6s:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.dialogue_turn_taking
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.8
+      '5': 0.7
+      '6': 0.7
+  mt_mB7DVai-Uf:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.dialogue_turn_taking
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.8
+      '5': 0.7
+      '6': 0.7
+  mt_ZBMcX2oRor:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.dialogue_turn_taking
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.8
+      '5': 0.7
+      '6': 0.7
+  mt_EqXlZfB4jp:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_BhYJZUsErp:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_AhfyJoTQtY:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_QdMMLRYWhn:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_zBUcAPDRPM:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_Jq0MjURrRC:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_p_jxNLdus4:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_Z3G_97fnha:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_IntmJBg4VQ:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_FYK8m6eHQm:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_6-MYToNZ39:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_VLu59hpQ4T:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_oL9s_bufDp:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_NP101Zl-4g:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_aw0PldeT_L:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_f_dMmvzxwo:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_UEe3MC5RZc:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  mt_OyOYHlZ2_T:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.storytelling
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_PJyCGJz5Hv:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.storytelling
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_4A4RpX-Go9:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.storytelling
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_nYU6x2E2T8:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.storytelling
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_nDAcXoPa0c:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.storytelling
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_91f1XFvGZq:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.storytelling
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_o8ciHks8t2:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.storytelling
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt__MDiDU9Vck:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.storytelling
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_hp2qJ-QRBn:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.storytelling
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_lIs10UMkPG:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.storytelling
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_9P9o6d0Qm3:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.storytelling
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_I65kFjWwnF:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.storytelling
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_WKxX-b86Vr:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.storytelling
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_YNe6siFTFq:
+  - capability: capability.vocabulary_use
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.7
+      '6': 0.7
+  - capability: capability.listening_comprehension
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.storytelling
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_IR8kIjZn_V:
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.storytelling
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_bvxkT1nepy:
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.storytelling
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_8UL1opbJEt:
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.storytelling
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_P0HBNfp46z:
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.storytelling
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_iFkd0CTwlA:
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.storytelling
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_E7avIa-tcE:
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.storytelling
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_mmudyxf7bT:
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.storytelling
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_szw1Ln490b:
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.storytelling
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_mMMXD4v9Sh:
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.storytelling
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_19qy2uuaKp:
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.storytelling
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_H1pAi4F_Oh:
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.storytelling
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_PhIZNl2230:
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.storytelling
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_VjxyJLtIbT:
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.storytelling
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_zh_RyesCgZ:
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.storytelling
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_bKV2JYNwf7:
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.storytelling
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_2GDBmKCJxs:
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.storytelling
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_9REmUc8r4D:
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.storytelling
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_VXcua6-txq:
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.storytelling
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_2DBPJ38iWl:
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.storytelling
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_M_xcaRcvSo:
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.storytelling
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_R1xLS1c2Pg:
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.storytelling
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_2NKzPeLzIm:
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.storytelling
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_0FYFiLTqx4:
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.storytelling
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_X5fdB4haHf:
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.storytelling
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_PThM5P7Umd:
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.storytelling
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_oN7fI4d_kU:
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.storytelling
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_mvXufozy2s:
+  - capability: capability.persistence
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.9
+  - capability: capability.focused_attention
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.9
+  mt_8dstvf-KKb:
+  - capability: capability.persistence
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.9
+  - capability: capability.focused_attention
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.9
+  mt_S4G6GLKr1-:
+  - capability: capability.persistence
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.9
+  - capability: capability.focused_attention
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.9
+  mt_klyw-tdlhP:
+  - capability: capability.persistence
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.9
+  - capability: capability.focused_attention
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.9
+  mt_QR3vxbN1o4:
+  - capability: capability.persistence
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.9
+  - capability: capability.focused_attention
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.9
+  mt_LE7nFEwS12:
+  - capability: capability.persistence
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.9
+  - capability: capability.focused_attention
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.9
+  mt_SbEaQnMQoD:
+  - capability: capability.planning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.impulse_control
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.8
+  mt_RgQxPddV8v:
+  - capability: capability.planning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.impulse_control
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.8
+  mt_CrGnpVjnk8:
+  - capability: capability.planning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.impulse_control
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.8
+  mt_vpMDMbx4pc:
+  - capability: capability.planning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.impulse_control
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.8
+  mt_RNRymbz5SO:
+  - capability: capability.planning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.impulse_control
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.8
+  mt_FIkqA0qhnj:
+  - capability: capability.planning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.impulse_control
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.8
+  mt_asRwlPZXC3:
+  - capability: capability.planning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.impulse_control
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.8
+  mt_FNSeo9_T2Z:
+  - capability: capability.planning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.impulse_control
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.8
+  mt__ab4knIaSL:
+  - capability: capability.planning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.impulse_control
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.8
+  mt_zrCyqhngYm:
+  - capability: capability.planning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.impulse_control
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.8
+  mt_SsS7GptD_o:
+  - capability: capability.planning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.impulse_control
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.8
+      '5': 0.8
+      '6': 0.8
+  mt_yJmvUCCym7:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_OvyoRo47K-:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_e8CZ7E5qW7:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_7XcCG43ZZW:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_PgsHGYJMH-:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_zuKAX6lcYR:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_mr_Vk7FGzK:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_VAWV_l7J0D:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_ghF3Vv6taM:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_s2mfRBoTal:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_8RmpkDxT9L:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_I5j1ZWo2cn:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_Zx1xZM-RbX:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_UQnAFPs83F:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_glPPG-kTQY:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_PpWSHA-0kv:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_m1W6nTQJ2b:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_QCgbiVrwnp:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_ezc2m_0dzN:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt__we2TDqnJx:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_3e_PQxwC12:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_T76hKqXf0z:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_ehGS_uVSJv:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_AKAtWEwpcj:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_wzAZ8qFDc4:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_HJTuIGHvcR:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_3JgrHY221M:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_oIzycTBeE4:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt__h7hvT4tEb:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_dmNvjroCPT:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_sYpKWbq5ra:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_WcfaSfVT33:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_pAcaehday5:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_nvdpxAJTBG:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_yqAL6O5i_v:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_M5PPDJStGm:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt__YRJ23GuIK:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_aHAM29nidj:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_OkSJfrmFb_:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_xppl18avyY:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_c29FaCTNsx:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_u5HkSxZECM:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_ylXdiVRAYv:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_1VSfm9yiLn:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_g3W0mdADVu:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_-hTTat0mBR:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_hyvHv2BCwb:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_vKcxX6iNOA:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_cFltwUQi-d:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_xACS3rWWDp:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_MyGblah2yY:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_KJeEeTutJI:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_Qcp2d_kuta:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_qeZYF6HZ4o:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_yGv8doDAmp:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_2VR963szuk:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_XjwUlmxdCT:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_mnEVZNkX3p:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_Y9XKzLrUAZ:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_UooUHC_V7U:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_sBcRdUfAzV:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_bfhng6mOuy:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_QNxFnxikCN:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_MqqR7VUoz1:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_Mnodea7mG_:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_WXW0hjNhph:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_TdV9YGJEoY:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_fEuoBYw6bU:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_lMz9nAs7VO:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_RFeVlw0QvX:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_20WfHhnL39:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_WkKkb7W9Qd:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_IM1G_7QzTa:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_nyK25mNOeR:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_uG2mjHFOlO:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_fLOkq-HfPB:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_f67qGDhyfi:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_EBYGhd8X3x:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_kJ5wYzO8qC:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_fZTn0W_iZR:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_O_UOTiMvT_:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_zMEvtigoM3:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_TMoHjMhRS2:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_DW2D1c0fKx:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_zkFbMLpu3U:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_TcG90kS8nu:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_uhuxX8sg9f:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_NtJYlJdUe9:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_-P1kdZhHbL:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_-vvVxpOHG2:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_4lp_b5Pzik:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_cPZwlUk8Nd:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_bj1YCgNWUx:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_KaF0SQvaiu:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_zd0YkB3xNj:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_0XxyaQLRhn:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt__N55B7u7HD:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_AF2BeFQwfX:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_DOe893F6gN:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_BFJ-ch_8QU:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_skYly2Qm01:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_cqSf213hSa:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_6J1wmCWf41:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_2XDGT5tei1:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_pbuhUQJjtt:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_6XCURuNwPw:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_HNOPGJYiRK:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_LpSuPgL31x:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_GRWwTDZ3wD:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_PZ909yPrEC:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_C9ZfT-4cgn:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_wh3UqnWsa7:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_0u4KLbvBa1:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_zOWwLxa77y:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_HhuSDxwDNM:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_9IzhGUZ30z:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_x8TshvbbQT:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_fR0UtsSREU:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_xmmgAzxe5j:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_kw7xmp68rU:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_r0VXbfAmsH:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_U0waNfD8PB:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_76SPWvdI7r:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_kJGCjnuelW:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_XV0B4kWwqL:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_9L3NQqgqRd:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_zfy1gOEewd:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_THl9GLxwoL:
+  - capability: capability.numeracy_sense
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  - capability: capability.pattern_recognition
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.7
+      '5': 0.8
+      '6': 0.8
+  mt_kvrvpQris4:
+  - capability: capability.emotion_regulation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.9
+      '6': 0.8
+  - capability: capability.social_negotiation
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.6
+      '5': 0.7
+      '6': 0.8
+  mt_ggcamLzXAy:
+  - capability: capability.emotion_regulation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.9
+      '6': 0.8
+  - capability: capability.social_negotiation
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.6
+      '5': 0.7
+      '6': 0.8
+  mt_LhkP_KKIRS:
+  - capability: capability.emotion_regulation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.9
+      '6': 0.8
+  - capability: capability.social_negotiation
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.6
+      '5': 0.7
+      '6': 0.8
+  mt_9Y5-GjF2B0:
+  - capability: capability.emotion_regulation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.9
+      '6': 0.8
+  - capability: capability.social_negotiation
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.6
+      '5': 0.7
+      '6': 0.8
+  mt_lAvS72LOUO:
+  - capability: capability.emotion_regulation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.9
+      '6': 0.8
+  - capability: capability.social_negotiation
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.6
+      '5': 0.7
+      '6': 0.8
+  mt_wzUzVEBqJb:
+  - capability: capability.emotion_regulation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.9
+      '6': 0.8
+  - capability: capability.social_negotiation
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.6
+      '5': 0.7
+      '6': 0.8
+  mt_OJVkWvIaM_:
+  - capability: capability.emotion_regulation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.9
+      '6': 0.8
+  - capability: capability.social_negotiation
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.6
+      '5': 0.7
+      '6': 0.8
+  mt_wRlf0g2MbB:
+  - capability: capability.emotion_regulation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.9
+      '5': 0.9
+      '6': 0.8
+  - capability: capability.social_negotiation
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.6
+      '5': 0.7
+      '6': 0.8
+  mt_PdYlsA33jB:
+  - capability: capability.emotion_regulation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.9
+      '6': 0.8
+  - capability: capability.social_negotiation
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.6
+      '5': 0.7
+      '6': 0.8
+  mt_YbX3LD0Eca:
+  - capability: capability.emotion_regulation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.9
+      '6': 0.8
+  - capability: capability.social_negotiation
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.6
+      '5': 0.7
+      '6': 0.8
+  mt_HBcvu0UxYe:
+  - capability: capability.emotion_regulation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.9
+      '6': 0.8
+  - capability: capability.social_negotiation
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.6
+      '5': 0.7
+      '6': 0.8
+  mt_FwI7q7DSIx:
+  - capability: capability.emotion_regulation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.9
+      '6': 0.8
+  - capability: capability.social_negotiation
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.6
+      '5': 0.7
+      '6': 0.8
+  mt_NS5t-Jzlh8:
+  - capability: capability.emotion_regulation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.9
+      '5': 0.9
+      '6': 0.8
+  - capability: capability.social_negotiation
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.6
+      '5': 0.7
+      '6': 0.8
+  mt_UHQfb-n-w3:
+  - capability: capability.emotion_regulation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.9
+      '6': 0.8
+  - capability: capability.social_negotiation
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.6
+      '5': 0.7
+      '6': 0.8
+  mt_q3vRl4dddK:
+  - capability: capability.emotion_regulation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.9
+      '6': 0.8
+  - capability: capability.social_negotiation
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.6
+      '5': 0.7
+      '6': 0.8
+  mt_Wc6cOTQ1bA:
+  - capability: capability.emotion_regulation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.9
+      '6': 0.8
+  - capability: capability.social_negotiation
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.6
+      '5': 0.7
+      '6': 0.8
+  mt_rkrG2w7WXI:
+  - capability: capability.emotion_regulation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.9
+      '6': 0.8
+  - capability: capability.social_negotiation
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.6
+      '5': 0.7
+      '6': 0.8
+  mt_uTKgmWqSoI:
+  - capability: capability.emotion_regulation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.9
+      '5': 0.9
+      '6': 0.8
+  - capability: capability.social_negotiation
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.6
+      '5': 0.7
+      '6': 0.8
+  mt_69hFD2NgGe:
+  - capability: capability.emotion_regulation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.9
+      '6': 0.8
+  - capability: capability.social_negotiation
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.6
+      '5': 0.7
+      '6': 0.8
+  mt_H4YZ1rSKP3:
+  - capability: capability.emotion_regulation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.9
+      '5': 0.9
+      '6': 0.8
+  - capability: capability.social_negotiation
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.6
+      '5': 0.7
+      '6': 0.8
+  mt_TU3BcLOgiV:
+  - capability: capability.emotion_regulation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.9
+      '5': 0.9
+      '6': 0.8
+  - capability: capability.social_negotiation
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.6
+      '5': 0.7
+      '6': 0.8
+  mt_aS-Gdh-MHx:
+  - capability: capability.emotion_regulation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.9
+      '6': 0.8
+  - capability: capability.social_negotiation
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.6
+      '5': 0.7
+      '6': 0.8
+  mt_UGf6jICEhs:
+  - capability: capability.emotion_regulation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.9
+      '6': 0.8
+  - capability: capability.social_negotiation
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.6
+      '5': 0.7
+      '6': 0.8
+  mt_nNDX_jZ-cb:
+  - capability: capability.emotion_regulation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.9
+      '6': 0.8
+  - capability: capability.social_negotiation
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.6
+      '5': 0.7
+      '6': 0.8
+  mt_Iwg2diBSyW:
+  - capability: capability.emotion_regulation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.9
+      '6': 0.8
+  - capability: capability.social_negotiation
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.6
+      '5': 0.7
+      '6': 0.8
+  mt_SeNxOZTHCN:
+  - capability: capability.emotion_regulation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.9
+      '5': 0.9
+      '6': 0.8
+  - capability: capability.social_negotiation
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.6
+      '5': 0.7
+      '6': 0.8
+  mt_pwo81ls_J-:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_oLHXfLujmh:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_goZW_hQUa4:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_v3Vz_Pgjjv:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_-vsLvsxp0L:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_V_wIdRZLsG:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_muxjw0fxxN:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_u0TeRwRII_:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_dpM1l5IOk6:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_BnabTHkNIp:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_bKlnc7dyVK:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_DJh2JPwTf6:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_JednrdYqpt:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_qixeaiswFP:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_HZvTriQWTh:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_go5i87u2b9:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_e6PP4ip39V:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_deexfCHU9m:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_cM8YS6NXqi:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_Fw0bbM1e_g:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_Sa48W7KXB5:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_ppENoD8vf1:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_EygMHKs8Ed:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_2agkUcdah9:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_iGSfQg3g5c:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_GBY8enpzO0:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_B3W5EfimJw:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_RlILL2sccX:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_LTb0ZReMR2:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_Wr6DDgr_kH:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_yR1moI5kX1:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt__7hXSTbu9s:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_zir5yyAzUB:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_QH-Fs97twT:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_BI6oGIO-xM:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_auVZZEuXjs:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_SwaNNdm_Ks:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_ZAJvTcroFO:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_5r47Pvstyn:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_1JFUNQDwAJ:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_wf-SJhZ1kC:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_rTn43s8RNX:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_4bJiGiMPmy:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_ytUG3yjCYt:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_l6OpmOKMuT:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_w2u9bXP9n7:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_mRCPP_Ab2W:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_oAg79ju344:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_m31_gPS8F1:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_fDoE-pL6Jv:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_83gRQ9OPkc:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_j7cer_Nmor:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_13CtLTcWUB:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_zexbopQjG0:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_zVLOm6U7bh:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_xT6jPzyj92:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_L1469gt34A:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_oR6dwRj2Ll:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_cEzX5r7kp0:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_0B64gfJf7j:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_3v0VNkwquK:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_aO018DkCun:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_22XbXTRq50:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_SrmHaJXKrX:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_3duNkf6Qmr:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_CK2orHetl3:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_7OJjLOl0fz:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_O9dH94NFae:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_4uPnLieBPN:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_s08-QxASd2:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_2zJ1NrGgYm:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_ntxlccnYzB:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_xVW5U41tbp:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_XL2gqdKJfu:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_-0cjwyYhce:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_x5ZrQMAZ5v:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_FZ_ixwU1p1:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_0u3QNroZ34:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_XirhnAB6Ye:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_nNYo5A-7Bl:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_hi8cVycbwn:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_vJO5Bxk4z-:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_ZFwPZaDJ0_:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_Wa44s-f8Ws:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_obF-6VYRya:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_Hw70LI5xza:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_ByXgbTld6R:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_XlyF294bPR:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_BVpB5wyijZ:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_PiWZA8Z0ZJ:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_oiqsIP97V3:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_EHuU1ZeUFA:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_K0mZxY2AM8:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_fk33IEGP-T:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_cxJRc15osy:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_SdIWVjzopp:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_tiPyEkm4cU:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_pJ5zsocdNx:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_nwSWPTENmv:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_lp1eTsQen7:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_uUa6cgv8zV:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt__pMF-Xb0TE:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_adpdEaKEBC:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_BLQ2_OXPod:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_e29VrLfmYt:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_S9SKah-yi_:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_ZL9qVVnpwN:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_4i-FKXDDXh:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_YPSx5pbpVl:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_p6frRFuxS6:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_VBl1T1sFCM:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.6
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_Dj2xr8CoI0:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_TlLE4cZgOr:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_fI-8iqf_Id:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_4pLvMN8uzL:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_PrWc-HZzDl:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_jc9k_HJQGd:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_URezjbU-6f:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
+  mt_j7cj9eWN7w:
+  - capability: capability.observation
+    relevance: 0.9
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.9
+      '5': 0.8
+      '6': 0.7
+  - capability: capability.causal_reasoning
+    relevance: 0.6
+    evidence_strength: 0.6
+    age_fit: 0.9
+    development_priority:
+      '4': 0.5
+      '5': 0.7
+      '6': 0.8
