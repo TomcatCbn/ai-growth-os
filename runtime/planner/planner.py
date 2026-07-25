@@ -86,10 +86,14 @@ class GrowthPlanner:
         plan = json.loads(resp.content)
 
         frontier_ids = {c["topic_id"] for c in frontier}
-        if plan["selected_topic_id"] not in frontier_ids:
-            raise FrontierViolation(
-                f"Planner selected {plan['selected_topic_id']} outside frontier"
-            )
+        selected = plan.get("selected_topic_id")
+        if selected not in frontier_ids:
+            raise FrontierViolation(f"Planner selected {selected} outside frontier")
+        plan["plan_id"] = f"plan_{uuid.uuid4().hex[:10]}"
+        plan["child_id"] = child_id
+        plan["trigger"] = trigger
         plan["frontier_snapshot"] = sorted(frontier_ids)
         plan["decision_trace_id"] = trace_id
+        plan["created_at"] = datetime.now(timezone.utc).isoformat()
+        validate("growth-plan", plan)
         return plan, trace_id

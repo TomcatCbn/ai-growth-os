@@ -10,6 +10,8 @@ from __future__ import annotations
 import uuid
 from datetime import datetime, timezone
 
+from ..contracts import validate
+
 STALL_DAYS = 3
 
 _VERDICT = {
@@ -29,7 +31,9 @@ class MissionManager:
             raise RuntimeError(f"mission {self.active['arc_id']} still active — close it first")
         arc["arc_id"] = arc.get("arc_id") or f"arc_{uuid.uuid4().hex[:10]}"
         arc["status"] = "active"
+        arc.setdefault("created_at", datetime.now(timezone.utc).isoformat())
         arc["chapters"][0]["status"] = "active"
+        validate("mission-arc", arc)
         self.active = arc
         self.activated_at = datetime.now(timezone.utc).isoformat()
         return arc

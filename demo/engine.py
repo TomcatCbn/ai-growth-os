@@ -112,12 +112,16 @@ class ChildEngine:
         frontier = compute_frontier(
             self.artifact["topics"], self.artifact["dependencies"],
             self.state.get("topic_mastery", {}), age=self.age)
+        trigger = "cold_start" if not any(
+            e["event_type"] == "mission.activated" for e in events
+        ) else "evidence_submitted"
         plan, _ = self.planner.plan(
             child_id=self.child_id, child_state=self.state,
-            frontier=frontier, recent_evidence=events[-10:])
+            frontier=frontier, recent_evidence=events[-10:], trigger=trigger)
         topic = self.topics_by_id[plan["selected_topic_id"]]
         theme = max(self.state["interests"], key=self.state["interests"].get).split(".")[-1]
-        arc = generate_arc(topic, theme, self.child["name"], self.i18n)
+        arc = generate_arc(topic, theme, self.child_id, self.child["name"], self.i18n)
+        arc["child_id"] = self.child_id  # required by mission-arc contract
         check = self.out_guard.review(
             " ".join(c["narration"] for c in arc["chapters"]), audience="child")
         if not check.passed:

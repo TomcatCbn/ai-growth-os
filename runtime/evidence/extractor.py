@@ -10,6 +10,7 @@ from __future__ import annotations
 import json
 from typing import Any
 
+from ..contracts import validate_signals
 from ..trace.trace import TrackedProvider
 from ..llm.base import LLMRequest
 
@@ -62,6 +63,7 @@ class EvidenceExtractor:
             child_id=child_id,
         )
         signals = json.loads(resp.content)["signals"]
+        validate_signals(signals)
         known = {t["id"] for t in candidate_targets}
         signals = [s for s in signals if s["target_id"] in known]
         for s in signals:

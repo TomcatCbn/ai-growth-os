@@ -60,7 +60,7 @@ def load_targets(artifact: dict, taxonomy: dict) -> list[dict]:
     return targets
 
 
-def generate_arc(topic: dict, theme: str, child_name: str, i18n: I18n) -> dict:
+def generate_arc(topic: dict, theme: str, child_id: str, child_name: str, i18n: I18n) -> dict:
     # Observation checklist: human-polished zh where available (ADR-005 §4),
     # canonical English otherwise.
     checklist = i18n.topic_evidence_zh(topic["id"], topic.get("evidence", []))[:3]
@@ -83,6 +83,7 @@ def generate_arc(topic: dict, theme: str, child_name: str, i18n: I18n) -> dict:
             }
         )
     return {
+        "child_id": child_id,
         "child_name": child_name,
         "status": "draft",
         "primary_goal": {"topic_id": topic["id"], "capability_ids": []},
@@ -173,13 +174,16 @@ def main() -> None:
             frontier = compute_frontier(
                 artifact["topics"], artifact["dependencies"],
                 state.get("topic_mastery", {}), age=age)
+            trigger = "cold_start" if not any(
+                e["event_type"] == "mission.activated" for e in events
+            ) else "evidence_submitted"
             plan, _ = planner.plan(
                 child_id=child_id, child_state=state,
-                frontier=frontier, recent_evidence=events[-10:])
+                frontier=frontier, recent_evidence=events[-10:], trigger=trigger)
             topic = topics_by_id[plan["selected_topic_id"]]
             theme = max(state.get("interests", {"冒险": 1}), key=state.get("interests", {}).get)
             theme = theme.split(".")[-1]
-            arc = generate_arc(topic, theme, child["name"], i18n)
+            arc = generate_arc(topic, theme, child_id, child["name"], i18n)
             content_check = out_guard.review(
                 " ".join(c["narration"] for c in arc["chapters"]), audience="child")
             if not content_check.passed:
