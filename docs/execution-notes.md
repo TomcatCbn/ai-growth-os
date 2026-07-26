@@ -96,9 +96,12 @@
 - **G8** North Star：D7/D14 Return Rate + Adventure Continuation 定义（问题47）
 - **G9** Project Constitution + AI Developer Rules（交付包 v1.0/1.1）
 
-### 待确认的 Phase 8–12
-- P8 Family 账号模型（family 一级对象 + 多孩子 + Parent 观察入口证据化）
-- P9 Character Bible（content/doudou-bible.yaml，schema 化）+ Prompt OS（版本化 prompt 文件，代码引用版本号）
-- P10 Adventure Template Library（10 模板数据化）+ 节奏规则（失败降难度/成功加挑战，进 Guardrail）
-- P11 ADR-014 Scene DSL 对齐（5段 session 映射为 Node 序列；不另造协议）
-- P12 North Star 指标（D7/D14 回访率定义与投影）+ Memory importance 分层
+### 待确认的 Phase 8–12（已全部执行完毕 2026-07-26）
+- P8 Family 账号模型 ✅（family-account 契约 + builder + engine view；多孩子就绪）
+- P9 Character Bible + Prompt OS ✅（content/doudou-bible.yaml 契约校验；prompts/*_v1.md 版本化，版本号进 decision trace）
+- P10 Adventure Template Library ✅（10 模板数据化 + 节奏规则：连败 ease / 连胜 push；朵朵「princess·数学」线保持）
+- P11 ADR-014 Scene DSL ✅（元素级 Node：dialogue/choice/animation/voice/reward；5 段 session 为节奏容器，scene 改为 Node 序列）
+- P12 North Star + Memory importance ✅（return_rate_d2 / adventure_continuation 定义冻结；importance 三层 long_term/standard/fading，<0.1 不存）
+
+G3 决策记录：对齐到 Scene DSL（用户拍板），落地为 ADR-014。
+最终验证：121 测试全绿，ruff 干净，评估门槛 PASS，四个孩子全部 OK。无路线偏离。
