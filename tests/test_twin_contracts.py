@@ -80,6 +80,8 @@ def _partner_state() -> dict:
         "relationship_memory": [{
             "entry": "给豆豆兔取了名字",
             "confidence": 0.7,
+            "importance": 0.9,
+            "tier": "long_term",
             "supporting_event_ids": ["ev_1"],
             "last_reinforced_at": NOW,
         }],

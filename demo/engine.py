@@ -222,7 +222,7 @@ class ChildEngine:
             "pattern_id": pattern["pattern_id"],
             "template_id": template["template_id"] if template else None,
             "plan_trace": plan["decision_trace_id"],
-            "arc": arc, "activated_at": self.manager.activated_at})
+            "arc": arc, "activated_at": self.manager.activated_at, "day": day})
         if callback:
             self.store.append("partner.callback_used", self.child_id, {
                 "moment": callback["moment"],

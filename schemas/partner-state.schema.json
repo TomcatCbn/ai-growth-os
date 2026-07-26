@@ -36,13 +36,15 @@
     },
     "relationship_memory": {
       "type": "array",
-      "description": "Curated relationship facts (ADR-012 Growth Memory discipline).",
+      "description": "Curated relationship facts (ADR-012 Growth Memory discipline). Importance controls lifecycle: >=0.8 long_term, >=0.5 standard, <0.5 fading, <0.1 not stored.",
       "items": {
         "type": "object",
-        "required": ["entry", "confidence", "supporting_event_ids", "last_reinforced_at"],
+        "required": ["entry", "confidence", "importance", "tier", "supporting_event_ids", "last_reinforced_at"],
         "properties": {
           "entry": { "type": "string", "description": "e.g. '给豆豆兔取了名字' (zh)." },
           "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+          "importance": { "type": "number", "minimum": 0, "maximum": 1 },
+          "tier": { "type": "string", "enum": ["long_term", "standard", "fading"] },
           "supporting_event_ids": { "type": "array", "minItems": 1, "items": { "type": "string" } },
           "last_reinforced_at": { "type": "string", "format": "date-time" },
           "stale": { "type": "boolean" }

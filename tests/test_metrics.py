@@ -36,3 +36,25 @@ def test_callback_usage_ratio():
     m = relationship_metrics(_events(store))
     assert m["callbacks_used"] == 1
     assert m["callbacks_offered"] == 1
+
+
+def test_return_rate_d2():
+    store = EventStore()
+    for day, channel in [(1, "free_observation"), (2, "free_observation"),
+                         (3, "free_observation"), (10, "free_observation")]:
+        store.append("evidence.submitted", "c1", {
+            "day": day, "channel": channel, "raw_text": "观察"})
+    m = relationship_metrics(_events(store))
+    # pairs: (1,2)✓ (2,3)✓ (3,10)✗ → 2/3
+    assert m["return_rate_d2"] == round(2 / 3, 4)
+
+
+def test_adventure_continuation():
+    store = EventStore()
+    store.append("mission.activated", "c1", {"arc_id": "a1", "day": 1})
+    store.append("evidence.submitted", "c1", {
+        "day": 2, "channel": "child_retelling", "raw_text": "接着讲昨天的"})
+    store.append("evidence.submitted", "c1", {
+        "day": 1, "channel": "child_retelling", "raw_text": "当天的"})
+    m = relationship_metrics(_events(store))
+    assert m["adventure_continuation"] == 1  # only the day-after retelling

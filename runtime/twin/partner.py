@@ -14,6 +14,19 @@ from ..state.memory import growth_memory_from_events
 
 PARTNER_ID = "doudou_rabbit"
 
+# Memory importance (blueprint Review v3.0): verdict → base importance.
+# >=0.8 long_term, >=0.5 standard, <0.5 fading, <0.1 not stored.
+_IMPORTANCE_BY_VERDICT = {"confirmed": 0.9, "inconclusive": 0.6, "refuted": 0.4}
+DROP_BELOW = 0.1
+
+
+def importance_tier(importance: float) -> str:
+    if importance >= 0.8:
+        return "long_term"
+    if importance >= 0.5:
+        return "standard"
+    return "fading"
+
 
 def trust_from_events(events: list[dict]) -> float:
     """Deterministic trust projection: shared arcs build trust, confirmed
@@ -54,13 +67,18 @@ def project_partner_state(child_id: str, events: list[dict]) -> dict:
             "source_event_id": source,
             "used": moment in used_callbacks,
         })
-        if arc["verdict"] == "confirmed":
-            relationship_memory.append({
-                "entry": f"一起完成了「{theme}」冒险",
-                "confidence": 0.6,
-                "supporting_event_ids": arc["supporting_event_ids"],
-                "last_reinforced_at": "",
-            })
+        importance = _IMPORTANCE_BY_VERDICT.get(arc["verdict"], 0.3)
+        if importance < DROP_BELOW:
+            continue
+        relationship_memory.append({
+            "entry": f"一起完成了「{theme}」冒险" if arc["verdict"] == "confirmed"
+                     else f"一起尝试了「{theme}」冒险",
+            "confidence": 0.6,
+            "importance": importance,
+            "tier": importance_tier(importance),
+            "supporting_event_ids": arc["supporting_event_ids"],
+            "last_reinforced_at": "",
+        })
 
     if relationship_memory:
         now = datetime.now(UTC).isoformat()

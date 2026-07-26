@@ -80,6 +80,20 @@ def test_relationship_memory_has_provenance():
         assert entry["last_reinforced_at"]
 
 
+def test_memory_importance_tiers():
+    store = EventStore()
+    _arc_lifecycle(store, "animal", "completed")   # confirmed → 0.9 long_term
+    _arc_lifecycle(store, "dinosaur", "partial")    # inconclusive → 0.6 standard
+    state = project_partner_state("c1", _events(store))
+    by_tier = {e["tier"] for e in state["relationship_memory"]}
+    assert "long_term" in by_tier and "standard" in by_tier
+    for e in state["relationship_memory"]:
+        assert e["importance"] >= 0.1
+    confirmed = next(e for e in state["relationship_memory"]
+                     if e["importance"] == 0.9)
+    assert confirmed["tier"] == "long_term"
+
+
 def test_callback_woven_into_hook_narration():
     arc = generate_arc(
         {"id": "mt_x", "name": "t", "evidence": ["o"]},
