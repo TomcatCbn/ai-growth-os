@@ -131,4 +131,15 @@ G3 决策记录：对齐到 Scene DSL（用户拍板），落地为 ADR-014。
 未采纳（记录）：scene-dsl 与 runtime-json 的节点定义重复（P3）——两文件已通过契约测试互相锁定，共享 $ref 需引入 schema registry，暂不值得。
 最终验证：144 测试全绿，ruff 干净，评估门槛 PASS，重启重放实测通过。
 
+## 第五次评审整改（事件完整性 + 留存语义，2026-07-26）
+
+1. ✅ Interaction 契约：node_id 精确定位节点（emitter 节点 id 按 segment 唯一化）；voice.answer 必填；additionalProperties:false。
+2. ✅ Callback 状态机：(session_id, moment) not_shown→shown→recognized|ignored，重复幂等、乱序硬失败（"recognized before shown"），首次答案生效。
+3. ✅ 共享投影 runtime/state/relationship_events.py：metrics 与 trust 单源，WINDOWS 实际使用。
+4. ✅ 留存语义：as_of_date 默认真实今天（停止回来指标会衰减，测试锁定）；cohort first_date + d2_returned（次日回访 T/F/None）；D7/D14 分母按可回来天数封顶；adventure_continuation 实现（次日同 arc）。
+5. ✅ Evidence 幂等：稳定 source_key（profile timeline 序号），不再用内容指纹。
+6. ✅ 入口分离：/player（child_mode，计入北极星）与 /preview（parent_preview，URL 参数不再决定来源）。
+残留已知限制（记录）：launch_source 仍是客户端自报，真实验证需设备/账号级身份区分——属 Phase 0 真实部署事项，非 demo 可解决。
+最终验证：150 测试全绿，ruff 干净，评估门槛 PASS。
+
 最终验证：137 测试全绿，ruff 干净，评估门槛 PASS，四个孩子全部 OK，API 实测闭环（start→interaction→doudou/request→player 页面→资产 200）。
