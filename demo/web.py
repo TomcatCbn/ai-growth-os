@@ -36,8 +36,12 @@ engines: dict[str, ChildEngine] = {}
 
 @app.on_event("startup")
 def startup() -> None:
+    data_dir = Path(__file__).resolve().parent / "data"
+    data_dir.mkdir(exist_ok=True)
     for cid, path in PROFILES.items():
-        engines[cid] = ChildEngine(path)
+        # Persistent db per child: sessions and growth state survive restarts
+        # (the event log is the system of record, ADR-016).
+        engines[cid] = ChildEngine(path, db=f"demo/data/{cid}.db")
 
 
 @app.get("/", response_class=HTMLResponse)
