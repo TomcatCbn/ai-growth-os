@@ -114,7 +114,17 @@ class ChildEngine:
             self._emit(f"(recovered {len(prior)} events; active mission: "
                        f"{self.manager.active['arc_id'] if self.manager.active else 'none'})")
 
+        # The event log is the system of record (ADR-016): profile timeline
+        # entries already present in the log must NOT be re-injected —
+        # duplicate evidence would poison Twin, trust, and return metrics.
+        processed_days = {
+            e.payload.get("day")
+            for e in self.store.events_for(self.child_id)
+            if e.event_type == "evidence.submitted"
+        }
         for entry in self.profile.get("evidence_timeline", []):
+            if entry.get("day") in processed_days:
+                continue
             self.process(entry)
 
     def _emit(self, msg: str) -> None:

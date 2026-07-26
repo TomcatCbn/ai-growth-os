@@ -91,6 +91,18 @@ def test_replay_restores_chapter_progress():
     assert statuses == ["done", "done", "active"]
 
 
+def test_restart_does_not_reinject_timeline(tmp_path):
+    """Restarting with a persistent db must not duplicate profile timeline
+    evidence — duplicates would poison Twin, trust, and return metrics."""
+    from demo.engine import ChildEngine
+    db = str(tmp_path / "engine.db")
+    first = ChildEngine("demo/virtual_children/curious_low_persistence.yaml", db=db)
+    n1 = len(first.store.events_for(first.child_id))
+    second = ChildEngine("demo/virtual_children/curious_low_persistence.yaml", db=db)
+    n2 = len(second.store.events_for(second.child_id))
+    assert n1 == n2, f"re-injection: {n1} events, then {n2} after restart"
+
+
 def test_growth_state_replay_is_deterministic():
     store = EventStore()
     store.append("evidence.signals_extracted", "c1", {"day": 1, "signals": [
