@@ -105,3 +105,17 @@
 
 G3 决策记录：对齐到 Scene DSL（用户拍板），落地为 ADR-014。
 最终验证：121 测试全绿，ruff 干净，评估门槛 PASS，四个孩子全部 OK。无路线偏离。
+
+## 第三次评审整改（Relationship First 顺序纠偏，2026-07-26）
+
+1. ✅ 路线偏离已记录（见上方「路线偏离」栏）；docs/constitution.md 建立唯一基线。
+2. ✅ 规范包重编号为 ADR-015~022 并提交（Scene DSL 已由 ADR-014 覆盖）；.DS_Store 清除。
+3. ✅ 重启重复灌入修复（按 evidence day 幂等，防回归测试锁定）。
+4. ✅ 真实 Session/Relationship 事件：session.started(initiated_by)/session.interaction/partner.callback_offered/recognized/child.requested_doudou；child_retelling 不再代理主动回访（评审用例已固化为测试）；trust 只由关系信号构成，与任务完成彻底脱钩。
+5. ✅ P1 缺陷：append_safety/rationale 脱敏、trace 在 schema 校验之后写入、evidence.submitted 全契约校验、insight quotes 过 Output Guard、live 模式拒绝 mock 能力映射。
+6. ✅ emit_session 接入 ChildEngine.start_session + POST /api/v1/session/start（+interaction +doudou/request）。
+7. ✅ 最小儿童 Story Player（/player，消费 Scene DSL Node：dialogue/choice/voice/reward/animation）。
+8. ✅ 真实豆豆兔 SVG 资产 4 个（happy/appear/explore/wave，符合 Character Bible 视觉规则），StaticFiles 挂载。
+9. ⏳ 7–14 天真实使用数据验证回访 — 需真实孩子使用，非代码任务。
+
+最终验证：137 测试全绿，ruff 干净，评估门槛 PASS，四个孩子全部 OK，API 实测闭环（start→interaction→doudou/request→player 页面→资产 200）。
