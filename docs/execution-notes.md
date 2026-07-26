@@ -118,4 +118,17 @@ G3 决策记录：对齐到 Scene DSL（用户拍板），落地为 ADR-014。
 8. ✅ 真实豆豆兔 SVG 资产 4 个（happy/appear/explore/wave，符合 Character Bible 视觉规则），StaticFiles 挂载。
 9. ⏳ 7–14 天真实使用数据验证回访 — 需真实孩子使用，非代码任务。
 
+## 第四次评审整改（关系指标可测量化，2026-07-26）
+
+1. ✅ 时间模型统一：session 事件用真实日历日期（ISO date）；回访定义冻结——首次启动是获客不是回访；session.returned 事件类型消除（去重）；新增 return_rate_d7/d14 窗口。
+2. ✅ launch_source 诚实化：child_mode（player 启动按钮）vs parent_preview（家长仪表盘预览入口）；旧硬编码 initiated_by="child" 移除。
+3. ✅ Callback 真实链路：offered/recognized 只由 player 实际交互产生（callback_shown/callback_recognized）；Arc 创建时不再提前记 offered。
+4. ✅ Session 持久化：完整 session 文档存入 session.started payload；get_session 从事件日志重建；web demo 用每孩子持久 db，重启后旧 session 交互实测 OK。
+5. ✅ Interaction 契约：session-interaction schema + 节点存在性 + choice 合法性 + callback moment 匹配，全部 ContractViolation 硬失败。
+6. ✅ 重启幂等改为 (day, channel, raw_text) 稳定键，同日不同观察不再被误跳过。
+7. ✅ 入口文档对齐：README v0.3 / architecture / next-steps 全部指向 constitution 与 Relationship First。
+
+未采纳（记录）：scene-dsl 与 runtime-json 的节点定义重复（P3）——两文件已通过契约测试互相锁定，共享 $ref 需引入 schema registry，暂不值得。
+最终验证：144 测试全绿，ruff 干净，评估门槛 PASS，重启重放实测通过。
+
 最终验证：137 测试全绿，ruff 干净，评估门槛 PASS，四个孩子全部 OK，API 实测闭环（start→interaction→doudou/request→player 页面→资产 200）。
