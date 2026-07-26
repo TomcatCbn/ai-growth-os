@@ -104,11 +104,23 @@ def doudou_request(child: str = Form(...)):
 
 
 @app.get("/player", response_class=HTMLResponse)
-def player(request: Request, child: str = "vc_curious", preview: int = 0):
-    launch_source = "parent_preview" if preview else "child_mode"
+def player(request: Request, child: str = "vc_curious"):
+    """The CHILD entry — sessions from here count toward the North Star."""
     return templates.TemplateResponse(
         request,
         "player.html",
-        {"child_id": child, "launch_source": launch_source,
+        {"child_id": child, "launch_source": "child_mode",
+         "child_name": engines[child].child["name"] if child in engines else ""},
+    )
+
+
+@app.get("/preview", response_class=HTMLResponse)
+def preview(request: Request, child: str = "vc_curious"):
+    """The PARENT preview entry — same player, but sessions are honestly
+    labelled parent_preview and never touch return-rate metrics."""
+    return templates.TemplateResponse(
+        request,
+        "player.html",
+        {"child_id": child, "launch_source": "parent_preview",
          "child_name": engines[child].child["name"] if child in engines else ""},
     )

@@ -39,38 +39,78 @@ def test_session_rebuilds_from_event_log(engine):
         "greeting", "choice", "adventure", "memory", "farewell"]
 
 
+def _choice_node(session: dict) -> dict:
+    for seg in session["segments"]:
+        for n in seg["scene"]["nodes"]:
+            if n["type"] == "choice":
+                return n
+    raise AssertionError("no choice node")
+
+
+def _voice_node(session: dict) -> dict:
+    for seg in session["segments"]:
+        for n in seg["scene"]["nodes"]:
+            if n["type"] == "voice":
+                return n
+    raise AssertionError("no voice node")
+
+
 def test_interaction_contract_rejects_bad_choice(engine):
+    session = engine.start_session()
+    node = _choice_node(session)
+    with pytest.raises(ContractViolation):
+        engine.record_interaction(session["session_id"], "choice",
+                                  {"node_id": node["node_id"],
+                                   "choice_id": "not_a_real_option"})
+
+
+def test_interaction_contract_rejects_unknown_node(engine):
     session = engine.start_session()
     with pytest.raises(ContractViolation):
         engine.record_interaction(session["session_id"], "choice",
-                                  {"choice_id": "not_a_real_option"})
+                                  {"node_id": "nd_ghost_1",
+                                   "choice_id": "opt_mine"})
 
 
 def test_interaction_contract_rejects_unknown_session(engine):
     with pytest.raises(ContractViolation):
         engine.record_interaction("ses_ghost", "choice",
-                                  {"choice_id": "opt_mine"})
+                                  {"node_id": "nd_x", "choice_id": "opt_mine"})
 
 
-def test_interaction_contract_rejects_wrong_node_type(engine):
+def test_interaction_contract_rejects_type_mismatch(engine):
     session = engine.start_session()
+    voice = _voice_node(session)
     with pytest.raises(ContractViolation):
-        engine.record_interaction(session["session_id"], "dance",
-                                  {"answer": "随便"})
+        engine.record_interaction(session["session_id"], "choice",
+                                  {"node_id": voice["node_id"],
+                                   "choice_id": "opt_mine"})
 
 
-def test_voice_interaction_matches_voice_node(engine):
+def test_interaction_requires_voice_answer(engine):
     session = engine.start_session()
-    engine.record_interaction(session["session_id"], "voice",
-                              {"answer": "我自己摆的规律"})
-    types = [e.event_type for e in engine.store.events_for(engine.child_id)]
-    assert "session.interaction" in types
+    node = _voice_node(session)
+    with pytest.raises(ContractViolation):
+        engine.record_interaction(session["session_id"], "voice",
+                                  {"node_id": node["node_id"]})
 
 
 def test_legal_choice_interaction_recorded(engine):
     session = engine.start_session()
+    node = _choice_node(session)
     engine.record_interaction(session["session_id"], "choice",
-                              {"choice_id": "opt_mine"})
+                              {"node_id": node["node_id"],
+                               "choice_id": "opt_mine"})
+    types = [e.event_type for e in engine.store.events_for(engine.child_id)]
+    assert "session.interaction" in types
+
+
+def test_voice_interaction_matches_voice_node(engine):
+    session = engine.start_session()
+    node = _voice_node(session)
+    engine.record_interaction(session["session_id"], "voice",
+                              {"node_id": node["node_id"],
+                               "answer": "我自己摆的规律"})
     types = [e.event_type for e in engine.store.events_for(engine.child_id)]
     assert "session.interaction" in types
 
@@ -88,6 +128,39 @@ def test_callback_shown_and_recognized_flow(engine):
     types = [e.event_type for e in engine.store.events_for(engine.child_id)]
     assert "partner.callback_offered" in types
     assert "partner.callback_recognized" in types
+
+
+def test_callback_state_machine(engine):
+    """not_shown → shown → recognized|ignored; repeats idempotent,
+    out-of-order hard-fails."""
+    session = engine.start_session()
+    moment = session.get("callback_moment")
+    if moment is None:
+        pytest.skip("this arc has no callback woven in")
+    sid = session["session_id"]
+
+    # recognized before shown → hard violation
+    with pytest.raises(ContractViolation):
+        engine.record_interaction(sid, "callback_recognized",
+                                  {"moment": moment, "response": "recognized"})
+
+    engine.record_interaction(sid, "callback_shown", {"moment": moment})
+    # repeat shown → idempotent no-op (still exactly one offered event)
+    engine.record_interaction(sid, "callback_shown", {"moment": moment})
+    engine.record_interaction(sid, "callback_recognized",
+                              {"moment": moment, "response": "recognized"})
+    # repeat answer → idempotent no-op (still exactly one recognized)
+    engine.record_interaction(sid, "callback_recognized",
+                              {"moment": moment, "response": "ignored"})
+
+    events = [e for e in engine.store.events_for(engine.child_id)
+              if e.payload.get("session_id") == sid]
+    assert sum(1 for e in events
+               if e.event_type == "partner.callback_offered") == 1
+    answered = [e for e in events
+                if e.event_type == "partner.callback_recognized"]
+    assert len(answered) == 1
+    assert answered[0].payload["response"] == "recognized"  # first answer wins
 
 
 def test_callback_moment_mismatch_rejected(engine):
@@ -117,15 +190,22 @@ def test_session_api_endpoints():
         session = resp.json()
         validate("runtime-json", session)
         sid = session["session_id"]
+        choice = next(n for seg in session["segments"]
+                      for n in seg["scene"]["nodes"] if n["type"] == "choice")
+        import json as _json
         resp = client.post("/api/v1/session/interaction",
                            data={"child": "vc_curious", "session_id": sid,
                                  "node_type": "choice",
-                                 "data": '{"choice_id": "opt_mine"}'})
+                                 "data": _json.dumps({
+                                     "node_id": choice["node_id"],
+                                     "choice_id": "opt_mine"})})
         assert resp.json() == {"ok": True}
         resp = client.post("/api/v1/session/interaction",
                            data={"child": "vc_curious", "session_id": sid,
                                  "node_type": "choice",
-                                 "data": '{"choice_id": "bogus"}'})
+                                 "data": _json.dumps({
+                                     "node_id": choice["node_id"],
+                                     "choice_id": "bogus"})})
         assert resp.status_code == 422
         resp = client.post("/api/v1/doudou/request",
                            data={"child": "vc_curious"})

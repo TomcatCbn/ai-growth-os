@@ -122,21 +122,19 @@ class ChildEngine:
                        f"{self.manager.active['arc_id'] if self.manager.active else 'none'})")
 
         # The event log is the system of record (ADR-016): profile timeline
-        # entries already in the log must NOT be re-injected. Keyed by
-        # (day, channel, raw_text) — a second, DIFFERENT observation on the
-        # same day is new evidence and must be processed.
-        processed = {
-            (e.payload.get("day"), e.payload.get("channel"),
-             e.payload.get("raw_text"))
+        # entries already in the log must NOT be re-injected. Keyed by a
+        # stable source_key (profile position), never by content — identical
+        # text twice is two real observations, and guard-rule changes must
+        # not alter identity.
+        processed_keys = {
+            e.payload.get("source_key")
             for e in self.store.events_for(self.child_id)
             if e.event_type == "evidence.submitted"
         }
-        for entry in self.profile.get("evidence_timeline", []):
-            key = (entry.get("day"), entry["channel"],
-                   self.in_guard.screen(entry["raw_text"]).text)
-            if key in processed:
+        for i, entry in enumerate(self.profile.get("evidence_timeline", [])):
+            if f"{self.child_id}:timeline:{i}" in processed_keys:
                 continue
-            self.process(entry)
+            self.process(entry, source_key=f"{self.child_id}:timeline:{i}")
 
     def _emit(self, msg: str) -> None:
         self.log.append(msg)
@@ -150,7 +148,7 @@ class ChildEngine:
 
     # -- core loop ----------------------------------------------------------
 
-    def process(self, entry: dict) -> None:
+    def process(self, entry: dict, source_key: str | None = None) -> None:
         self.day = max(self.day, entry.get("day", self.day + 1))
         day = entry.get("day", self.day)
         guarded = self.in_guard.screen(entry["raw_text"])
@@ -166,6 +164,7 @@ class ChildEngine:
             "created_at": datetime.now(UTC).isoformat(),
             "day": day,
             "guard_flags": guarded.flags,
+            "source_key": source_key or f"{self.child_id}:live:{evidence_id}",
         }
         if entry["channel"] == "mission_checkin":
             evidence["checkin_status"] = entry.get("checkin_status", "completed")
@@ -312,25 +311,32 @@ class ChildEngine:
         return None
 
     def record_interaction(self, session_id: str, node_type: str, data: dict) -> None:
-        """A real child interaction (choice made, voice answer, callback
-        response). Contract-validated: the session must exist, the node type
-        must match a node in its Scene DSL, and choices must be legal."""
+        """A real child interaction. Contract: the session must exist, the
+        EXACT node (node_id) must exist in its Scene DSL with matching type,
+        and the choice must be one of that node's options.
+        Callback transitions are a state machine per (session, moment):
+        not_shown → shown → recognized|ignored — repeats are idempotent
+        no-ops, out-of-order is a hard violation."""
         interaction = {"session_id": session_id, "node_type": node_type, **data}
         validate("session-interaction", interaction)
 
         session = self.get_session(session_id)
         if session is None:
             raise ContractViolation(f"unknown session: {session_id}")
-        nodes = [
-            n for seg in session["segments"] for n in seg["scene"]["nodes"]
-        ]
+        nodes = {
+            n["node_id"]: n
+            for seg in session["segments"] for n in seg["scene"]["nodes"]
+        }
         if node_type in ("choice", "voice"):
-            typed = [n for n in nodes if n["type"] == node_type]
-            if not typed:
+            node = nodes.get(data.get("node_id"))
+            if node is None:
                 raise ContractViolation(
-                    f"session {session_id} has no {node_type} node")
+                    f"unknown node {data.get('node_id')} in session {session_id}")
+            if node["type"] != node_type:
+                raise ContractViolation(
+                    f"node {node['node_id']} is {node['type']}, not {node_type}")
             if node_type == "choice":
-                legal = {o["id"] for n in typed for o in n.get("options", [])}
+                legal = {o["id"] for o in node.get("options", [])}
                 if data.get("choice_id") not in legal:
                     raise ContractViolation(
                         f"illegal choice_id {data.get('choice_id')}; legal: {legal}")
@@ -338,20 +344,37 @@ class ChildEngine:
             if data.get("moment") != session.get("callback_moment"):
                 raise ContractViolation(
                     f"callback moment mismatch for session {session_id}")
+            self._callback_transition(session_id, data, node_type)
+            return
 
         self.store.append("session.interaction", self.child_id, {
             "session_id": session_id, "node_type": node_type,
             "date": datetime.now(UTC).date().isoformat(), **data,
         })
-        # Callback events are produced ONLY by real player interactions —
-        # offered when the child actually sees it, recognized/ignored by
-        # the child's own answer.
+
+    def _callback_transition(self, session_id: str, data: dict, node_type: str) -> None:
+        moment = data["moment"]
+        history = [
+            e for e in self.store.events_for(self.child_id)
+            if e.payload.get("session_id") == session_id
+            and e.payload.get("moment") == moment
+        ]
+        shown = any(e.event_type == "partner.callback_offered" for e in history)
+        answered = any(
+            e.event_type == "partner.callback_recognized" for e in history)
         if node_type == "callback_shown":
+            if shown:
+                return  # idempotent: already shown
             self.store.append("partner.callback_offered", self.child_id, {
-                "moment": data["moment"], "session_id": session_id})
-        elif node_type == "callback_recognized":
+                "moment": moment, "session_id": session_id})
+        else:
+            if not shown:
+                raise ContractViolation(
+                    "callback recognized before it was shown")
+            if answered:
+                return  # idempotent: already answered
             self.store.append("partner.callback_recognized", self.child_id, {
-                "moment": data["moment"], "response": data["response"],
+                "moment": moment, "response": data["response"],
                 "session_id": session_id})
 
     def request_doudou(self) -> None:

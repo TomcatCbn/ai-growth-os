@@ -146,7 +146,7 @@ function showNode() {
       btn.className = "choice-btn";
       btn.textContent = opt.text;
       btn.onclick = () => {
-        interact("choice", {choice_id: opt.id, prompt: n.prompt});
+        interact("choice", {node_id: n.node_id, choice_id: opt.id, prompt: n.prompt});
         bubble.textContent = "好呀！就这么办！";
         choices.innerHTML = "";
         nextBtn.style.display = "";
@@ -160,7 +160,7 @@ function showNode() {
     voiceInput.focus();
     voiceInput.onkeydown = (e) => {
       if (e.key === "Enter" && voiceInput.value.trim()) {
-        interact("voice", {answer: voiceInput.value.trim(), prompt: n.prompt});
+        interact("voice", {node_id: n.node_id, answer: voiceInput.value.trim(), prompt: n.prompt});
         bubble.textContent = "哇，豆豆兔记住了！";
         voiceInput.style.display = "none";
         nextBtn.style.display = "";
