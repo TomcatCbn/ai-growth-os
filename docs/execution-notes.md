@@ -9,7 +9,7 @@
 
 | 日期 | 偏离内容 | 原因 | 保守退路 |
 |----|--------|----|--------|
-| （暂无） | | | |
+| 2026-07-26 | **实施顺序调整**：原计划继续扩 Growth Intelligence（Twin/Agent/Knowledge），改为先做 Phase 0 儿童体验垂直闭环（Story Player + Session API + 真实事件 + 真实资产） | 第三份评审指出：长期方向对齐但顺序背离新北极星（Relationship First）；已建成的 Twin/Metrics 在"孩子尚未真正使用产品"的前提下语义不成立（child_retelling 被误当主动回访；trust 实为任务完成指标） | 不删任何已建模块（评审确认"已经对齐的部分"全部保留）；停止新增 Twin/Agent/Knowledge 模块；只做垂直闭环所需的最小增量 |
 
 ## 蓝图 vs 现状：差距分析
 
