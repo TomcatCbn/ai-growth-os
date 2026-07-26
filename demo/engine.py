@@ -49,6 +49,7 @@ from runtime.state.capabilities import (
 )
 from runtime.state.memory import growth_memory_from_events
 from runtime.state.reducer import reduce_events
+from runtime.story import emit_session
 from runtime.trace.trace import TrackedProvider
 from runtime.twin import (
     next_callback,
@@ -267,6 +268,40 @@ class ChildEngine:
         if channel == "mission_checkin":
             entry["checkin_status"] = checkin_status or "completed"
         self.process(entry)
+
+    # -- sessions (Phase 0 vertical loop) -------------------------------------
+
+    def start_session(self, initiated_by: str = "parent") -> dict:
+        """Child opens the app → Runtime JSON session for the active chapter.
+        Records the honest initiation source (session.started) — voluntary
+        returns are measured from THIS, never inferred from retellings."""
+        if initiated_by not in ("child", "parent", "partner_invite"):
+            raise ValueError(f"unknown initiated_by: {initiated_by}")
+        arc = self.manager.active
+        if arc is None:
+            raise RuntimeError("no active mission — plan one first")
+        chapter = next(c for c in arc["chapters"] if c["status"] == "active")
+        session = emit_session(arc, chapter)
+        self.store.append("session.started", self.child_id, {
+            "session_id": session["session_id"], "arc_id": arc["arc_id"],
+            "chapter_id": chapter["chapter_id"], "day": self.day,
+            "initiated_by": initiated_by,
+        })
+        return session
+
+    def record_interaction(self, session_id: str, node_type: str, data: dict) -> None:
+        """A real child interaction (choice made, voice answer given). These
+        are facts about what the child DID in the player."""
+        self.store.append("session.interaction", self.child_id, {
+            "session_id": session_id, "node_type": node_type,
+            "day": self.day, **data,
+        })
+
+    def request_doudou(self) -> None:
+        """The child spontaneously asked for Doudou — the strongest
+        relationship signal we can record."""
+        self.store.append("child.requested_doudou", self.child_id,
+                          {"day": self.day})
 
     # -- view ----------------------------------------------------------------
 

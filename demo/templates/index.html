@@ -59,6 +59,7 @@
     {% for cid, name in children.items() %}
     <a href="/?child={{ cid }}" class="{{ 'on' if cid == child_id }}">{{ name }}</a>
     {% endfor %}
+    <a href="/player?child={{ child_id }}" style="margin-left:auto;background:#ff9f43;color:#fff;border-radius:20px;padding:4px 14px;">🐰 孩子模式</a>
   </nav>
 </header>
 <main>

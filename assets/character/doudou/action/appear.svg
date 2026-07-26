@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- Doudou Rabbit — appear (jumping in, ears up, arms open) -->
+  <ellipse cx="100" cy="132" rx="55" ry="48" fill="#FAF3E8"/>
+  <ellipse cx="100" cy="80" rx="48" ry="44" fill="#FAF3E8"/>
+  <path d="M70 50 C60 6 74 0 82 38 L86 52 Z" fill="#FAF3E8"/>
+  <path d="M73 44 C67 14 76 10 81 42 Z" fill="#C9A88C"/>
+  <path d="M114 52 L118 38 C126 0 140 6 130 50 Z" fill="#FAF3E8"/>
+  <path d="M119 42 C124 10 133 14 127 44 Z" fill="#C9A88C"/>
+  <circle cx="84" cy="74" r="6" fill="#333"/>
+  <circle cx="116" cy="74" r="6" fill="#333"/>
+  <circle cx="86" cy="72" r="2" fill="#fff"/>
+  <circle cx="118" cy="72" r="2" fill="#fff"/>
+  <ellipse cx="100" cy="88" rx="6" ry="4.5" fill="#F5A8B8"/>
+  <path d="M90 96 Q100 106 110 96" stroke="#333" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <ellipse cx="68" cy="88" rx="8" ry="5" fill="#F8C9D4" opacity=".7"/>
+  <ellipse cx="132" cy="88" rx="8" ry="5" fill="#F8C9D4" opacity=".7"/>
+  <path d="M62 120 Q100 106 138 120 L134 134 Q100 122 66 134 Z" fill="#7FBF6E"/>
+  <path d="M52 116 Q36 106 40 96" stroke="#FAF3E8" stroke-width="12" fill="none" stroke-linecap="round"/>
+  <path d="M148 116 Q164 106 160 96" stroke="#FAF3E8" stroke-width="12" fill="none" stroke-linecap="round"/>
+  <ellipse cx="76" cy="170" rx="14" ry="8" fill="#FAF3E8"/>
+  <ellipse cx="124" cy="170" rx="14" ry="8" fill="#FAF3E8"/>
+  <path d="M46 188 h30 M124 188 h30" stroke="#8a8" stroke-width="3" stroke-linecap="round" opacity=".5"/>
+</svg>

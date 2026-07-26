@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- Doudou Rabbit — happy (Character Bible: 奶白色, 浅棕耳朵内侧, 粉色鼻头, 左耳小缺口, 绿色小围巾) -->
+  <ellipse cx="100" cy="130" rx="55" ry="50" fill="#FAF3E8"/>
+  <ellipse cx="100" cy="78" rx="48" ry="44" fill="#FAF3E8"/>
+  <path d="M72 48 C66 10 78 4 84 40 L88 52 Z" fill="#FAF3E8"/>
+  <path d="M75 44 C71 16 79 12 83 42 Z" fill="#C9A88C"/>
+  <path d="M116 52 L120 40 C126 4 138 10 132 48 Z" fill="#FAF3E8"/>
+  <path d="M120 44 C124 12 132 16 128 44 Z" fill="#C9A88C"/>
+  <path d="M70 30 l-4 -6 6 2 z" fill="#FAF3E8"/>
+  <circle cx="84" cy="72" r="5.5" fill="#333"/>
+  <circle cx="116" cy="72" r="5.5" fill="#333"/>
+  <circle cx="86" cy="70" r="1.8" fill="#fff"/>
+  <circle cx="118" cy="70" r="1.8" fill="#fff"/>
+  <ellipse cx="100" cy="86" rx="6" ry="4.5" fill="#F5A8B8"/>
+  <path d="M92 94 Q100 102 108 94" stroke="#333" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <ellipse cx="70" cy="86" rx="8" ry="5" fill="#F8C9D4" opacity=".7"/>
+  <ellipse cx="130" cy="86" rx="8" ry="5" fill="#F8C9D4" opacity=".7"/>
+  <path d="M62 118 Q100 104 138 118 L134 132 Q100 120 66 132 Z" fill="#7FBF6E"/>
+  <ellipse cx="78" cy="168" rx="14" ry="9" fill="#FAF3E8"/>
+  <ellipse cx="122" cy="168" rx="14" ry="9" fill="#FAF3E8"/>
+</svg>

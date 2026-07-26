@@ -1,8 +1,9 @@
-"""Parent-facing demo web app (Q2: minimal web, form B).
+"""Demo web app — parent dashboard AND child Story Player (Phase 0).
 
-Single page: child state + active growth arc + evidence submission + event
-feed. All data flows through the real pipeline via ChildEngine — what you
-see is what the runtime computed, not a mock UI.
+Parent surface: child state + active arc + evidence + insights (/).
+Child surface: /player — a minimal Story Player that consumes Scene DSL
+nodes (ADR-014) and records REAL interaction events (session.started,
+session.interaction, child.requested_doudou).
 
 Run: python3 -m uvicorn demo.web:app --port 8765
 """
@@ -13,7 +14,8 @@ import sys
 from pathlib import Path
 
 from fastapi import FastAPI, Form, Request
-from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
+from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
@@ -27,8 +29,10 @@ PROFILES = {
 }
 
 app = FastAPI(title="AI Growth OS — Demo")
+app.mount("/assets", StaticFiles(directory=str(Path(__file__).resolve().parent.parent / "assets")), name="assets")
 templates = Jinja2Templates(directory=str(Path(__file__).parent / "templates"))
 engines: dict[str, ChildEngine] = {}
+sessions: dict[str, dict] = {}  # session_id -> {child_id, session}
 
 
 @app.on_event("startup")
@@ -58,3 +62,49 @@ def submit(
     engine = engines[child]
     engine.submit(channel, raw_text, checkin_status)
     return RedirectResponse(f"/?child={child}", status_code=303)
+
+
+# -- Phase 0: session API + Story Player --------------------------------------
+
+@app.post("/api/v1/session/start")
+def session_start(child: str = Form(...), initiated_by: str = Form("child")):
+    engine = engines[child]
+    try:
+        session = engine.start_session(initiated_by=initiated_by)
+    except RuntimeError as e:
+        return JSONResponse({"error": str(e)}, status_code=409)
+    sessions[session["session_id"]] = {"child_id": child, "session": session}
+    return JSONResponse(session)
+
+
+@app.post("/api/v1/session/interaction")
+def session_interaction(
+    session_id: str = Form(...),
+    node_type: str = Form(...),
+    data: str = Form("{}"),
+):
+    import json
+    entry = sessions.get(session_id)
+    if not entry:
+        return JSONResponse({"error": "unknown session"}, status_code=404)
+    engine = engines[entry["child_id"]]
+    engine.record_interaction(session_id, node_type, json.loads(data))
+    return JSONResponse({"ok": True})
+
+
+@app.post("/api/v1/doudou/request")
+def doudou_request(child: str = Form(...)):
+    engines[child].request_doudou()
+    return JSONResponse({"ok": True})
+
+
+@app.get("/player", response_class=HTMLResponse)
+def player(request: Request, child: str = "vc_curious", session_id: str = ""):
+    entry = sessions.get(session_id)
+    session = entry["session"] if entry else None
+    return templates.TemplateResponse(
+        request,
+        "player.html",
+        {"child_id": child, "session": session,
+         "child_name": engines[child].child["name"] if child in engines else ""},
+    )

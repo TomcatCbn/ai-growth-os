@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- Doudou Rabbit — wave goodbye -->
+  <ellipse cx="100" cy="132" rx="55" ry="48" fill="#FAF3E8"/>
+  <ellipse cx="100" cy="80" rx="48" ry="44" fill="#FAF3E8"/>
+  <path d="M72 50 C66 10 78 4 84 40 L88 52 Z" fill="#FAF3E8"/>
+  <path d="M75 44 C71 16 79 12 83 42 Z" fill="#C9A88C"/>
+  <path d="M116 52 L120 40 C126 4 138 10 132 48 Z" fill="#FAF3E8"/>
+  <path d="M120 44 C124 12 132 16 128 44 Z" fill="#C9A88C"/>
+  <path d="M78 74 q6 6 12 0" stroke="#333" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M110 74 q6 6 12 0" stroke="#333" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <ellipse cx="100" cy="88" rx="6" ry="4.5" fill="#F5A8B8"/>
+  <path d="M92 96 Q100 104 108 96" stroke="#333" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <ellipse cx="70" cy="88" rx="8" ry="5" fill="#F8C9D4" opacity=".7"/>
+  <ellipse cx="130" cy="88" rx="8" ry="5" fill="#F8C9D4" opacity=".7"/>
+  <path d="M62 120 Q100 106 138 120 L134 134 Q100 122 66 134 Z" fill="#7FBF6E"/>
+  <path d="M146 118 Q168 104 166 86" stroke="#FAF3E8" stroke-width="12" fill="none" stroke-linecap="round"/>
+  <circle cx="166" cy="82" r="8" fill="#FAF3E8"/>
+  <path d="M174 66 l4 -8 M180 74 l8 -4 M170 60 l2 -8" stroke="#F5B74A" stroke-width="3" stroke-linecap="round"/>
+  <ellipse cx="78" cy="170" rx="14" ry="8" fill="#FAF3E8"/>
+  <ellipse cx="122" cy="170" rx="14" ry="8" fill="#FAF3E8"/>
+</svg>

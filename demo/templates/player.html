@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>豆豆兔的森林</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "PingFang SC", "Comic Sans MS", sans-serif;
+    background: linear-gradient(180deg, #a8e063 0%, #56ab2f 100%);
+    min-height: 100vh; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; overflow: hidden;
+  }
+  #stage { position: relative; width: 100%; max-width: 480px; text-align: center; }
+  #doudou { width: 220px; height: 220px; margin: 0 auto; transition: transform .4s; }
+  #doudou.bounce { animation: bounce .6s ease; }
+  @keyframes bounce { 0%,100%{transform:translateY(0)} 40%{transform:translateY(-24px)} }
+  .bubble {
+    background: #fff; border-radius: 22px; padding: 18px 22px; margin: 18px auto;
+    max-width: 380px; font-size: 20px; line-height: 1.5; color: #333;
+    box-shadow: 0 4px 12px rgba(0,0,0,.15); position: relative;
+  }
+  .bubble::before {
+    content: ""; position: absolute; top: -12px; left: 50%; margin-left: -10px;
+    border: 10px solid transparent; border-bottom-color: #fff; border-top: 0;
+  }
+  .choices { display: flex; flex-direction: column; gap: 12px; margin-top: 16px; }
+  .choice-btn {
+    background: #ff9f43; color: #fff; border: none; border-radius: 30px;
+    font-size: 20px; padding: 14px 28px; cursor: pointer; font-family: inherit;
+    box-shadow: 0 4px 0 #e88b2d; transition: transform .1s;
+  }
+  .choice-btn:active { transform: translateY(3px); box-shadow: none; }
+  .voice-input {
+    width: 90%; max-width: 380px; padding: 14px; font-size: 18px;
+    border: 3px solid #ff9f43; border-radius: 16px; margin-top: 12px;
+    font-family: inherit;
+  }
+  #star { font-size: 72px; display: none; animation: starpop .8s ease; }
+  @keyframes starpop { 0%{transform:scale(0) rotate(-180deg)} 100%{transform:scale(1) rotate(0)} }
+  #next-btn { margin-top: 20px; }
+  #call-doudou {
+    position: fixed; top: 14px; right: 14px; background: #fff;
+    border: none; border-radius: 50%; width: 60px; height: 60px;
+    font-size: 30px; cursor: pointer; box-shadow: 0 3px 8px rgba(0,0,0,.2);
+  }
+  #start-overlay {
+    position: fixed; inset: 0; background: rgba(40,80,30,.92);
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: center; z-index: 10; color: #fff;
+  }
+  #start-overlay h1 { font-size: 34px; margin-bottom: 30px; }
+</style>
+</head>
+<body>
+<button id="call-doudou" title="叫豆豆兔">🐰</button>
+<div id="stage">
+  <img id="doudou" src="/assets/character/doudou/emotion/happy.svg" alt="豆豆兔">
+  <div id="star">⭐</div>
+  <div class="bubble" id="bubble">……</div>
+  <div class="choices" id="choices"></div>
+  <input class="voice-input" id="voice-input" style="display:none" placeholder="说一说…">
+  <button class="choice-btn" id="next-btn" style="display:none">继续 ▶</button>
+</div>
+
+<div id="start-overlay">
+  <h1>🌲 豆豆兔的森林 🌲</h1>
+  <button class="choice-btn" id="start-btn">开始冒险！</button>
+</div>
+
+<script>
+const CHILD = "{{ child_id }}";
+let SESSION = {{ session | tojson | safe if session else "null" }};
+const NODES = [];
+if (SESSION) {
+  for (const seg of SESSION.segments) {
+    for (const n of seg.scene.nodes) NODES.push(n);
+  }
+}
+let idx = 0;
+
+const bubble = document.getElementById("bubble");
+const choices = document.getElementById("choices");
+const voiceInput = document.getElementById("voice-input");
+const nextBtn = document.getElementById("next-btn");
+const doudou = document.getElementById("doudou");
+const star = document.getElementById("star");
+
+const ASSET = {
+  "character/doudou/action/appear": "/assets/character/doudou/action/appear.svg",
+  "character/doudou/action/explore": "/assets/character/doudou/action/explore.svg",
+  "character/doudou/action/wave": "/assets/character/doudou/action/wave.svg",
+  "character/doudou/emotion/happy": "/assets/character/doudou/emotion/happy.svg",
+};
+
+function post(url, data) {
+  return fetch(url, {method: "POST",
+    headers: {"Content-Type": "application/x-www-form-urlencoded"},
+    body: new URLSearchParams(data)});
+}
+
+function interact(nodeType, data) {
+  if (SESSION) post("/api/v1/session/interaction", {
+    session_id: SESSION.session_id, node_type: nodeType,
+    data: JSON.stringify(data)});
+}
+
+function showNode() {
+  choices.innerHTML = "";
+  voiceInput.style.display = "none";
+  nextBtn.style.display = "none";
+  if (idx >= NODES.length) {
+    bubble.textContent = "今天真开心！明天再来找豆豆兔玩吧！";
+    doudou.src = ASSET["character/doudou/emotion/happy"];
+    return;
+  }
+  const n = NODES[idx];
+  if (n.type === "dialogue") {
+    bubble.textContent = n.text;
+    doudou.classList.remove("bounce"); void doudou.offsetWidth;
+    doudou.classList.add("bounce");
+    nextBtn.style.display = "";
+  } else if (n.type === "animation") {
+    doudou.src = ASSET[n.asset] || ASSET["character/doudou/emotion/happy"];
+    doudou.classList.remove("bounce"); void doudou.offsetWidth;
+    doudou.classList.add("bounce");
+    nextBtn.style.display = "";
+  } else if (n.type === "choice") {
+    bubble.textContent = n.prompt;
+    for (const opt of n.options) {
+      const btn = document.createElement("button");
+      btn.className = "choice-btn";
+      btn.textContent = opt.text;
+      btn.onclick = () => {
+        interact("choice", {choice_id: opt.id, prompt: n.prompt});
+        bubble.textContent = "好呀！就这么办！";
+        choices.innerHTML = "";
+        nextBtn.style.display = "";
+      };
+      choices.appendChild(btn);
+    }
+  } else if (n.type === "voice") {
+    bubble.textContent = n.prompt;
+    voiceInput.style.display = "";
+    voiceInput.value = "";
+    voiceInput.focus();
+    voiceInput.onkeydown = (e) => {
+      if (e.key === "Enter" && voiceInput.value.trim()) {
+        interact("voice", {answer: voiceInput.value.trim(), prompt: n.prompt});
+        bubble.textContent = "哇，豆豆兔记住了！";
+        voiceInput.style.display = "none";
+        nextBtn.style.display = "";
+      }
+    };
+  } else if (n.type === "reward") {
+    star.style.display = "block";
+    bubble.textContent = n.text;
+    nextBtn.style.display = "";
+  }
+}
+
+nextBtn.onclick = () => { idx++; star.style.display = "none"; showNode(); };
+
+document.getElementById("start-btn").onclick = async () => {
+  document.getElementById("start-overlay").style.display = "none";
+  if (!SESSION) {
+    const resp = await post("/api/v1/session/start",
+      {child: CHILD, initiated_by: "child"});
+    if (resp.ok) {
+      SESSION = await resp.json();
+      for (const seg of SESSION.segments) {
+        for (const n of seg.scene.nodes) NODES.push(n);
+      }
+    } else {
+      bubble.textContent = "豆豆兔还在准备新的冒险，请家长先来看看哦！";
+      return;
+    }
+  }
+  showNode();
+};
+
+document.getElementById("call-doudou").onclick = () => {
+  post("/api/v1/doudou/request", {child: CHILD});
+  doudou.classList.remove("bounce"); void doudou.offsetWidth;
+  doudou.classList.add("bounce");
+  bubble.textContent = "豆豆兔来啦！我们一起玩吧！";
+};
+</script>
+</body>
+</html>
