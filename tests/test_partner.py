@@ -40,14 +40,17 @@ def test_partner_state_satisfies_contract():
     assert state["story_progress"]["completed_arcs"]
 
 
-def test_trust_grows_with_confirmed_arcs():
+def test_trust_grows_with_relationship_signals_not_completion():
+    """Arc completion must NOT move trust; relationship signals must."""
     store = EventStore()
-    assert trust_from_events(_events(store)) == 0.0
     _arc_lifecycle(store, "animal", "completed")
-    first = trust_from_events(_events(store))
-    _arc_lifecycle(store, "dinosaur", "partial")
-    second = trust_from_events(_events(store))
-    assert 0 < first < second
+    _arc_lifecycle(store, "dinosaur", "completed")
+    assert trust_from_events(_events(store)) == 0.0, \
+        "completed arcs are task metrics, not relationship"
+    store.append("session.returned", "c1", {"day": 3})
+    store.append("partner.callback_recognized", "c1", {
+        "moment": "animal冒险", "response": "recognized"})
+    assert trust_from_events(_events(store)) == 0.25  # 0.1 + 0.15
 
 
 def test_completed_arc_offers_callback():
@@ -60,10 +63,10 @@ def test_completed_arc_offers_callback():
     assert cb["used"] is False
 
 
-def test_callback_marks_used_after_injection():
+def test_callback_marks_used_after_offering():
     store = EventStore()
     _arc_lifecycle(store, "animal")
-    store.append("partner.callback_used", "c1", {
+    store.append("partner.callback_offered", "c1", {
         "moment": "animal冒险", "source_event_id": "ev_x", "arc_id": "arc_y"})
     state = project_partner_state("c1", _events(store))
     assert next_callback(state) is None

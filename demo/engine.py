@@ -234,7 +234,7 @@ class ChildEngine:
             "plan_trace": plan["decision_trace_id"],
             "arc": arc, "activated_at": self.manager.activated_at, "day": day})
         if callback:
-            self.store.append("partner.callback_used", self.child_id, {
+            self.store.append("partner.callback_offered", self.child_id, {
                 "moment": callback["moment"],
                 "source_event_id": callback["source_event_id"],
                 "arc_id": arc["arc_id"]})

@@ -1,15 +1,16 @@
-"""Relationship metrics (blueprint Q47: measure the relationship, not completion).
+"""Relationship metrics (Constitution: North Star = child voluntary return).
 
-North Star: Child Return Rate — did the child come back on their own?
-Deliberately NOT tracked: task completion rate, learning minutes.
+Honest semantics — a metric may only claim what its events actually prove:
+
+- voluntary_returns: session.started with initiated_by="child" or explicit
+  session.returned events. A parent-prompted retelling is NOT a return.
+- child_initiated: child.requested_doudou events.
+- callback_recognition: partner.callback_recognized / callback_offered —
+  did the child light up when Doudou referenced a shared memory?
+- trust_level: relationship signals only (returns, recognitions, requests).
+  NEVER arc completion — finishing a task is not loving the rabbit.
+
 All metrics are event-log projections — recomputable, no new truth.
-
-Definitions (frozen):
-- return_rate_d2: of all adjacent active-day pairs, the share that are
-  CONSECUTIVE days (came back the very next day).
-- adventure_continuation: child retellings on a day AFTER an arc was
-  activated — the child returned to continue a shared story.
-- callbacks_used/offered: partner memory feedback loop usage.
 """
 
 from __future__ import annotations
@@ -21,45 +22,38 @@ from ..twin.partner import trust_from_events
 
 
 def relationship_metrics(events: list[dict]) -> dict[str, Any]:
-    child_retellings = [
-        e for e in events
-        if e.get("event_type") == "evidence.submitted"
-        and e["payload"].get("channel") == "child_retelling"
+    session_starts = [
+        e for e in events if e.get("event_type") == "session.started"
     ]
-    callbacks_used = [
-        e for e in events if e.get("event_type") == "partner.callback_used"
-    ]
-    arcs_closed = [
-        e for e in events if e.get("event_type") == "mission.closed"
-    ]
-    arc_days = {
+    voluntary_returns = sum(
+        1 for e in session_starts
+        if e["payload"].get("initiated_by") == "child"
+    ) + sum(1 for e in events if e.get("event_type") == "session.returned")
+    child_requests = sum(
+        1 for e in events if e.get("event_type") == "child.requested_doudou")
+
+    offered = sum(
+        1 for e in events if e.get("event_type") == "partner.callback_offered")
+    recognized = sum(
+        1 for e in events
+        if e.get("event_type") == "partner.callback_recognized"
+        and e["payload"].get("response") == "recognized")
+
+    session_days = sorted({
         e["payload"].get("day")
-        for e in events
-        if e.get("event_type") in ("mission.activated", "mission.chapter_advanced")
-        and e["payload"].get("day") is not None
-    }
-    active_days = sorted({
-        e["payload"].get("day")
-        for e in events
-        if e.get("event_type") == "evidence.submitted" and e["payload"].get("day")
+        for e in session_starts if e["payload"].get("day") is not None
     })
-
-    consecutive = sum(1 for a, b in pairwise(active_days) if b == a + 1)
-    opportunities = max(0, len(active_days) - 1)
+    consecutive = sum(1 for a, b in pairwise(session_days) if b == a + 1)
+    opportunities = max(0, len(session_days) - 1)
     return_rate_d2 = round(consecutive / opportunities, 4) if opportunities else 0.0
-
-    continuation = sum(
-        1 for e in child_retellings
-        if any(d < e["payload"].get("day", 0) for d in arc_days)
-    )
 
     return {
         "return_rate_d2": return_rate_d2,
-        "adventure_continuation": continuation,
-        "voluntary_returns": len(child_retellings),
-        "callbacks_used": len(callbacks_used),
-        "callbacks_offered": len(arcs_closed),
-        "child_initiated": len(child_retellings),
-        "active_days": len(active_days),
+        "voluntary_returns": voluntary_returns,
+        "child_initiated": child_requests,
+        "callbacks_offered": offered,
+        "callbacks_recognized": recognized,
+        "callback_recognition_rate": round(recognized / offered, 4) if offered else None,
+        "session_days": len(session_days),
         "trust_level": trust_from_events(events),
     }
