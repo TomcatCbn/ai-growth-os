@@ -142,4 +142,13 @@ G3 决策记录：对齐到 Scene DSL（用户拍板），落地为 ADR-014。
 残留已知限制（记录）：launch_source 仍是客户端自报，真实验证需设备/账号级身份区分——属 Phase 0 真实部署事项，非 demo 可解决。
 最终验证：150 测试全绿，ruff 干净，评估门槛 PASS。
 
+## 第六次评审整改（Relationship 数据可信度，2026-07-26）
+
+1. ✅ Point-in-time 截断：`slice_to(events, as_of)` 按语义日期统一过滤，voluntary/session_days/continuation/callback/trust 全部在截断后计算（未来事件不可泄漏，测试锁定）。
+2. ✅ Preview 隔离：callback/doudou 事件携带 launch_source（从 session.started 继承）；投影只纳入 child_mode；preview 触发的 offered/recognized/request 对指标与 trust 均为 0（测试锁定）。
+3. ✅ Callback 原子幂等：`append_idempotent`（idempotency_keys 表，INSERT OR IGNORE 单语句仲裁）+ store 读写统一锁；10 线程并发 shown/answered 各只落 1 条（测试锁定）；metrics 按 (session, moment) 防御性去重，recognition rate 永不超过 1。
+4. ✅ Callback aggregate 下沉至 runtime/state/callbacks.py，engine 只提交命令。
+5. ✅ 指标命名同步：constitution/README/next-steps 统一为 d2_returned / active_days_d7 / active_days_d14。
+最终验证：157 测试全绿，ruff 干净，评估门槛 PASS。评审所列"真实儿童实验"三项前置（as_of 截断/Preview 隔离/原子幂等）已全部完成。
+
 最终验证：137 测试全绿，ruff 干净，评估门槛 PASS，四个孩子全部 OK，API 实测闭环（start→interaction→doudou/request→player 页面→资产 200）。
