@@ -154,6 +154,9 @@ class ParentCoach:
         texts: list[str] = []
         for m in insight["moments"]:
             texts.append(m["title"])
+            # Verbatim quotes reach parent eyes too — they go through the
+            # guard like everything else (ADR-008 Layer 2).
+            texts.extend(m["evidence_quotes"])
         for t in insight["trends"]:
             texts.append(t["interpretation"])
         texts += [insight["suggestion"]["title"], insight["suggestion"]["home_activity"]]

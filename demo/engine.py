@@ -12,7 +12,9 @@ from __future__ import annotations
 
 import json
 import sys
+import uuid
 from collections.abc import Callable
+from datetime import UTC, datetime
 from pathlib import Path
 
 import yaml
@@ -31,6 +33,7 @@ from demo.arc import (
 )
 from knowledge.i18n import I18n
 from runtime.coach import ParentCoach
+from runtime.contracts import validate
 from runtime.events.store import EventStore
 from runtime.evidence.extractor import EvidenceExtractor
 from runtime.metrics import relationship_metrics
@@ -85,6 +88,11 @@ class ChildEngine:
         self.topics_by_id = {t["id"]: t for t in self.artifact["topics"]}
 
         self.store = EventStore(ROOT / db if db != ":memory:" else db)
+        self.targets = load_targets(self.artifact, self.taxonomy)
+        # Mock maps are for offline demo/baseline only; a live run must use
+        # an adjudicated map — checked BEFORE any provider is constructed
+        # (gate: UnadjudicatedAssetError otherwise).
+        self.cap_map = load_capability_map(ROOT / capmap, allow_mock=not live)
         if live:
             from runtime.llm.claude import ClaudeProvider
             provider = ClaudeProvider()
@@ -97,8 +105,6 @@ class ChildEngine:
         self.planner = GrowthPlanner(llm)
         self.manager = MissionManager()
         self.in_guard, self.out_guard = InputGuard(), OutputGuard()
-        self.targets = load_targets(self.artifact, self.taxonomy)
-        self.cap_map = load_capability_map(ROOT / capmap, allow_mock=True)
         self.patterns = load_patterns()
         self.adventure_templates = load_adventure_templates()
         self.i18n = I18n()
@@ -143,10 +149,24 @@ class ChildEngine:
         self.day = max(self.day, entry.get("day", self.day + 1))
         day = entry.get("day", self.day)
         guarded = self.in_guard.screen(entry["raw_text"])
-        self.store.append("evidence.submitted", self.child_id, {
-            "day": day, "channel": entry["channel"], "raw_text": guarded.text,
+        # Full Evidence contract validation before the fact is recorded
+        # (ADR-002): every evidence.submitted is a complete Evidence object.
+        evidence_id = f"ev_{uuid.uuid4().hex[:12]}"
+        evidence = {
+            "evidence_id": evidence_id,
+            "child_id": self.child_id,
+            "channel": entry["channel"],
+            "submitted_by": entry.get("submitted_by", "parent"),
+            "raw_text": guarded.text,
+            "created_at": datetime.now(UTC).isoformat(),
+            "day": day,
             "guard_flags": guarded.flags,
-        })
+        }
+        if entry["channel"] == "mission_checkin":
+            evidence["checkin_status"] = entry.get("checkin_status", "completed")
+        validate("evidence", evidence)
+        self.store.append("evidence.submitted", self.child_id, evidence,
+                          event_id=evidence_id)
         signals = []
 
         if entry["channel"] == "mission_checkin" and self.manager.active:

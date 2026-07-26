@@ -83,12 +83,13 @@ class EventStore:
         # so PII cannot enter the event log even if a caller forgets.
         self._guard = input_guard or InputGuard()
 
-    def append(self, event_type: str, child_id: str, payload: dict[str, Any]) -> Event:
+    def append(self, event_type: str, child_id: str, payload: dict[str, Any],
+               event_id: str | None = None) -> Event:
         """Append an immutable fact. Payload is PII-screened inside — the
         Input Guard is not the caller's responsibility."""
         payload, flags = self._guard.screen_payload(payload)
         ev = Event(
-            event_id=f"ev_{uuid.uuid4().hex[:12]}",
+            event_id=event_id or f"ev_{uuid.uuid4().hex[:12]}",
             event_type=event_type,
             child_id=child_id,
             payload=payload,
@@ -109,7 +110,9 @@ class EventStore:
 
     def append_safety(self, event_type: str, child_id: str, payload: dict[str, Any]) -> Event:
         """Safety Memory entry (output rejections, guard actions). Separate
-        stream from the growth record (ADR-008)."""
+        stream from the growth record (ADR-008). Screened like everything
+        else — safety events may carry quoted content."""
+        payload, _ = self._guard.screen_payload(payload)
         ev = Event(
             event_id=f"ev_{uuid.uuid4().hex[:12]}",
             event_type=event_type,
@@ -161,6 +164,8 @@ class EventStore:
         # same as events (no unredacted PII anywhere in the store).
         input_snapshot, _ = self._guard.screen_payload(input_snapshot)
         output, _ = self._guard.screen_payload(output)
+        rationale, _ = self._guard.screen_payload({"r": rationale})
+        rationale = rationale["r"]
         with self._lock:
             self._db.execute(
                 "INSERT INTO decision_trace (trace_id, component, child_id, input_snapshot,"
