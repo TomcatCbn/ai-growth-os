@@ -13,7 +13,7 @@ AI Growth OS 的首个产品：**Doudou Rabbit Companion** — 豆豆兔不是 A
 
 **Relationship First：先证明孩子愿意持续回来见豆豆兔，再证明成长推断能力。**
 
-- North Star Metric：Child Return Rate（`return_rate_d2`，D7/D14 窗口）
+- North Star Metric：Child Return Rate（`d2_returned` + `active_days_d7` / `active_days_d14`，cohort + as_of 语义，见 runtime/metrics/relationship.py 文档字符串）
 - 辅助：adventure continuation、callback recognized、家长看到变化
 - 明确不衡量：任务完成率、学习时长、分数排名
 

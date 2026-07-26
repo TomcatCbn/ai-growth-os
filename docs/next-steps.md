@@ -9,8 +9,8 @@
 
 剩余：
 1. **真实使用验证**（最高优先级）：让真实孩子用 7–14 天，观察
-   `return_rate_d2/d7/d14` 与 callback recognition —— 这是 Phase 0
-   唯一真正的验收标准。
+   `d2_returned` / `active_days_d7` / `active_days_d14` 与 callback
+   recognition —— 这是 Phase 0 唯一真正的验收标准。
 2. 资产扩充：更多豆豆兔动作/场景 SVG（按 Character Bible 视觉规则）；
    森林背景。
 3. Player 体验打磨：TTS（固定豆豆兔声音 doudou_v1）、动画节奏。

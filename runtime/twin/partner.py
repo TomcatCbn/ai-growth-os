@@ -33,11 +33,14 @@ def importance_tier(importance: float) -> str:
     return "fading"
 
 
-def trust_from_events(events: list[dict]) -> float:
+def trust_from_events(events: list[dict], *, as_of=None) -> float:
     """Trust projection from RELATIONSHIP signals only — voluntary return
     days, recognized callbacks, spontaneous Doudou requests (shared
     projection: runtime/state/relationship_events.py). Arc completion is a
     task metric and never feeds trust."""
+    if as_of is not None:
+        from ..state.relationship_events import slice_to
+        events = slice_to(events, as_of)
     return round(min(1.0,
                      0.1 * voluntary_return_days(events)
                      + 0.15 * recognized_callbacks(events)

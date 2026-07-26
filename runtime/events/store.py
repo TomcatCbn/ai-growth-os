@@ -46,6 +46,13 @@ CREATE TABLE IF NOT EXISTS snapshots (
     last_event_seq INTEGER NOT NULL,
     created_at TEXT NOT NULL
 );
+-- Atomic idempotency keys (review6: read-check-append races must not
+-- duplicate relationship facts). PRIMARY KEY is the race arbiter.
+CREATE TABLE IF NOT EXISTS idempotency_keys (
+    idem_key TEXT PRIMARY KEY,
+    event_id TEXT NOT NULL,
+    created_at TEXT NOT NULL
+);
 -- Safety Memory (ADR-008): guard actions live in their own stream, separate
 -- from content events, so access control can differ.
 CREATE TABLE IF NOT EXISTS safety_events (
@@ -126,11 +133,12 @@ class EventStore:
         return ev
 
     def safety_events_for(self, child_id: str) -> list[Event]:
-        rows = self._db.execute(
+        with self._lock:
+            rows = self._db.execute(
             "SELECT event_id, event_type, child_id, payload, created_at"
             " FROM safety_events WHERE child_id = ? ORDER BY seq",
-            (child_id,),
-        ).fetchall()
+                (child_id,),
+            ).fetchall()
         return [Event(r[0], r[1], r[2], json.loads(r[3]), r[4]) for r in rows]
 
     def _insert_event(self, ev: Event) -> None:
@@ -139,6 +147,38 @@ class EventStore:
             " VALUES (?, ?, ?, ?, ?)",
             (ev.event_id, ev.event_type, ev.child_id, json.dumps(ev.payload), ev.created_at),
         )
+
+    def append_idempotent(
+        self, event_type: str, child_id: str, payload: dict[str, Any], idem_key: str
+    ) -> Event | None:
+        """Append only if idem_key was never used — the database PRIMARY KEY
+        arbitrates races, so concurrent retries cannot duplicate the fact.
+        Returns None when the key already existed (idempotent no-op)."""
+        payload, _ = self._guard.screen_payload(payload)
+        with self._lock:
+            # INSERT OR IGNORE: one atomic statement, no error transaction.
+            cursor = self._db.execute(
+                "INSERT OR IGNORE INTO idempotency_keys (idem_key, event_id, created_at)"
+                " VALUES (?, ?, ?)",
+                (idem_key, "pending", _now()),
+            )
+            if cursor.rowcount == 0:
+                self._db.rollback()
+                return None
+            ev = Event(
+                event_id=f"ev_{uuid.uuid4().hex[:12]}",
+                event_type=event_type,
+                child_id=child_id,
+                payload=payload,
+                created_at=_now(),
+            )
+            self._insert_event(ev)
+            self._db.execute(
+                "UPDATE idempotency_keys SET event_id = ? WHERE idem_key = ?",
+                (ev.event_id, idem_key),
+            )
+            self._db.commit()
+        return ev
 
     def _insert_safety_event(self, ev: Event) -> None:
         self._db.execute(
@@ -182,11 +222,12 @@ class EventStore:
     def decision_traces(self, child_id: str) -> list[dict[str, Any]]:
         """Public accessor for decision traces — tests and audits must not
         reach into _db."""
-        rows = self._db.execute(
-            "SELECT trace_id, component, input_snapshot, output, rationale, model, created_at"
-            " FROM decision_trace WHERE child_id = ? ORDER BY created_at",
-            (child_id,),
-        ).fetchall()
+        with self._lock:
+            rows = self._db.execute(
+                "SELECT trace_id, component, input_snapshot, output, rationale, model, created_at"
+                " FROM decision_trace WHERE child_id = ? ORDER BY created_at",
+                (child_id,),
+            ).fetchall()
         return [
             {"trace_id": r[0], "component": r[1], "input_snapshot": json.loads(r[2]),
              "output": json.loads(r[3]), "rationale": r[4], "model": r[5],
@@ -195,11 +236,12 @@ class EventStore:
         ]
 
     def events_for(self, child_id: str) -> list[Event]:
-        rows = self._db.execute(
-            "SELECT event_id, event_type, child_id, payload, created_at"
-            " FROM events WHERE child_id = ? ORDER BY seq",
-            (child_id,),
-        ).fetchall()
+        with self._lock:
+            rows = self._db.execute(
+                "SELECT event_id, event_type, child_id, payload, created_at"
+                " FROM events WHERE child_id = ? ORDER BY seq",
+                (child_id,),
+            ).fetchall()
         return [
             Event(r[0], r[1], r[2], json.loads(r[3]), r[4]) for r in rows
         ]

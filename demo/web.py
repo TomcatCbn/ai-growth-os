@@ -98,8 +98,8 @@ def session_interaction(
 
 
 @app.post("/api/v1/doudou/request")
-def doudou_request(child: str = Form(...)):
-    engines[child].request_doudou()
+def doudou_request(child: str = Form(...), launch_source: str = Form("child_mode")):
+    engines[child].request_doudou(launch_source=launch_source)
     return JSONResponse({"ok": True})
 
 

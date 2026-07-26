@@ -26,8 +26,10 @@ from typing import Any
 from ..state.relationship_events import (
     adventure_continuations,
     doudou_requests,
+    offered_callbacks,
     recognized_callbacks,
     session_dates,
+    slice_to,
     voluntary_return_days,
 )
 from ..twin.partner import trust_from_events
@@ -47,6 +49,8 @@ def relationship_metrics(
     events: list[dict], *, as_of: date | None = None
 ) -> dict[str, Any]:
     as_of = as_of or datetime.now(UTC).date()
+    # Point-in-time: nothing after the cutoff may leak into any metric.
+    events = slice_to(events, as_of)
     dates = session_dates(events)
     first = dates[0] if dates else None
 
@@ -59,8 +63,7 @@ def relationship_metrics(
         rates[f"active_days_d{w}"] = (
             _active_day_rate(dates, first, as_of, w) if first else None)
 
-    offered = sum(
-        1 for e in events if e.get("event_type") == "partner.callback_offered")
+    offered = offered_callbacks(events)
     recognized = recognized_callbacks(events)
 
     return {

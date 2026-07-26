@@ -195,7 +195,7 @@ document.getElementById("start-btn").onclick = async () => {
 };
 
 document.getElementById("call-doudou").onclick = () => {
-  post("/api/v1/doudou/request", {child: CHILD});
+  post("/api/v1/doudou/request", {child: CHILD, launch_source: LAUNCH_SOURCE});
   doudou.classList.remove("bounce"); void doudou.offsetWidth;
   doudou.classList.add("bounce");
   bubble.textContent = "豆豆兔来啦！我们一起玩吧！";

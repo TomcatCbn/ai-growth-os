@@ -41,6 +41,7 @@ from runtime.mission.manager import MissionManager
 from runtime.planner.frontier import compute_frontier
 from runtime.planner.planner import GrowthPlanner
 from runtime.safety.guards import InputGuard, OutputGuard
+from runtime.state.callbacks import apply_callback, session_launch_source
 from runtime.state.capabilities import (
     derive_capabilities,
     development_priorities,
@@ -344,7 +345,17 @@ class ChildEngine:
             if data.get("moment") != session.get("callback_moment"):
                 raise ContractViolation(
                     f"callback moment mismatch for session {session_id}")
-            self._callback_transition(session_id, data, node_type)
+            events = self.store.events_for(self.child_id)
+            launch_source = session_launch_source(events, session_id)
+            if launch_source is None:
+                raise ContractViolation(f"unknown session: {session_id}")
+            apply_callback(
+                self.store, child_id=self.child_id, session_id=session_id,
+                moment=data["moment"],
+                transition="shown" if node_type == "callback_shown" else "answered",
+                launch_source=launch_source,
+                date=datetime.now(UTC).date().isoformat(),
+                response=data.get("response"))
             return
 
         self.store.append("session.interaction", self.child_id, {
@@ -352,36 +363,15 @@ class ChildEngine:
             "date": datetime.now(UTC).date().isoformat(), **data,
         })
 
-    def _callback_transition(self, session_id: str, data: dict, node_type: str) -> None:
-        moment = data["moment"]
-        history = [
-            e for e in self.store.events_for(self.child_id)
-            if e.payload.get("session_id") == session_id
-            and e.payload.get("moment") == moment
-        ]
-        shown = any(e.event_type == "partner.callback_offered" for e in history)
-        answered = any(
-            e.event_type == "partner.callback_recognized" for e in history)
-        if node_type == "callback_shown":
-            if shown:
-                return  # idempotent: already shown
-            self.store.append("partner.callback_offered", self.child_id, {
-                "moment": moment, "session_id": session_id})
-        else:
-            if not shown:
-                raise ContractViolation(
-                    "callback recognized before it was shown")
-            if answered:
-                return  # idempotent: already answered
-            self.store.append("partner.callback_recognized", self.child_id, {
-                "moment": moment, "response": data["response"],
-                "session_id": session_id})
-
-    def request_doudou(self) -> None:
+    def request_doudou(self, launch_source: str = "child_mode") -> None:
         """The child spontaneously asked for Doudou — the strongest
-        relationship signal we can record."""
-        self.store.append("child.requested_doudou", self.child_id,
-                          {"date": datetime.now(UTC).date().isoformat()})
+        relationship signal we can record. Source-labelled: preview clicks
+        never touch the North Star."""
+        if launch_source not in ("child_mode", "parent_preview"):
+            raise ValueError(f"unknown launch_source: {launch_source}")
+        self.store.append("child.requested_doudou", self.child_id, {
+            "date": datetime.now(UTC).date().isoformat(),
+            "launch_source": launch_source})
 
     # -- view ----------------------------------------------------------------
 

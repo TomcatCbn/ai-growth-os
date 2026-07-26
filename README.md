@@ -9,7 +9,7 @@ then prove the growth-intelligence underneath.**
 
 ## North Star
 
-Child Return Rate（`return_rate_d2` / `d7` / `d14`，真实日历日期）。
+Child Return Rate（`d2_returned` / `active_days_d7` / `active_days_d14`，真实日历日期）。
 明确不衡量：任务完成率、学习时长、分数排名。
 
 ## Phase 路线
