@@ -1,6 +1,8 @@
 # Architecture
 
-Final-review version (ADR-001 … ADR-012).
+Baseline: docs/constitution.md (Relationship First). ADR-001 … ADR-022.
+Phase 0 = child-facing Story Player + honest relationship events; the
+Growth Intelligence below it is Phase 1 inventory, activated progressively.
 
 ## Layers
 

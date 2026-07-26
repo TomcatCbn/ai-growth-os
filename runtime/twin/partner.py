@@ -29,22 +29,27 @@ def importance_tier(importance: float) -> str:
 
 
 def trust_from_events(events: list[dict]) -> float:
-    """Trust projection from RELATIONSHIP signals only — voluntary returns,
-    recognized callbacks, spontaneous Doudou requests. Arc completion is a
-    task metric and never feeds trust (Constitution: relationship first;
-    finishing a task is not loving the rabbit)."""
-    returns = sum(
-        1 for e in events
-        if e.get("event_type") == "session.returned"
-        or (e.get("event_type") == "session.started"
-            and e["payload"].get("initiated_by") == "child"))
+    """Trust projection from RELATIONSHIP signals only — voluntary returns
+    (child_mode sessions after the first), recognized callbacks, spontaneous
+    Doudou requests. Arc completion is a task metric and never feeds trust
+    (Constitution: relationship first; finishing a task is not loving the
+    rabbit)."""
+    dates = sorted({
+        e["payload"].get("date")
+        for e in events
+        if e.get("event_type") == "session.started"
+        and e["payload"].get("launch_source") == "child_mode"
+        and e["payload"].get("date")
+    })
+    voluntary_returns = max(0, len(set(dates)) - 1) if dates else 0
     recognized = sum(
         1 for e in events
         if e.get("event_type") == "partner.callback_recognized"
         and e["payload"].get("response") == "recognized")
     requested = sum(
         1 for e in events if e.get("event_type") == "child.requested_doudou")
-    return round(min(1.0, 0.1 * returns + 0.15 * recognized + 0.1 * requested), 4)
+    return round(min(1.0, 0.1 * voluntary_returns
+                     + 0.15 * recognized + 0.1 * requested), 4)
 
 
 def project_partner_state(child_id: str, events: list[dict]) -> dict:

@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "SessionInteraction",
+  "description": "A real child interaction inside a Story Player session. Every interaction must reference a node that EXISTS in the session's Scene DSL, and choice interactions must pick a legal option (ADR-014; validated in code against the stored session document).",
+  "type": "object",
+  "required": ["session_id", "node_type"],
+  "properties": {
+    "session_id": { "type": "string" },
+    "node_type": {
+      "type": "string",
+      "enum": ["choice", "voice", "callback_shown", "callback_recognized"]
+    },
+    "choice_id": {
+      "type": "string",
+      "description": "Required for node_type=choice; must be one of the choice node's options."
+    },
+    "answer": {
+      "type": "string",
+      "description": "Child's spoken/typed answer for node_type=voice."
+    },
+    "moment": {
+      "type": "string",
+      "description": "Callback moment for callback_shown / callback_recognized."
+    },
+    "response": {
+      "type": "string",
+      "enum": ["recognized", "ignored"],
+      "description": "Required for callback_recognized."
+    }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "node_type": { "const": "choice" } } },
+      "then": { "required": ["choice_id"] }
+    },
+    {
+      "if": { "properties": { "node_type": { "const": "callback_recognized" } } },
+      "then": { "required": ["moment", "response"] }
+    },
+    {
+      "if": { "properties": { "node_type": { "const": "callback_shown" } } },
+      "then": { "required": ["moment"] }
+    }
+  ]
+}

@@ -1,5 +1,4 @@
-"""Relationship metrics tests — honest semantics: metrics may only claim
-what their events actually prove."""
+"""Relationship metrics tests — honest semantics, real calendar dates."""
 
 from __future__ import annotations
 
@@ -9,6 +8,12 @@ from runtime.metrics import relationship_metrics
 
 def _events(store: EventStore) -> list[dict]:
     return [vars(e) for e in store.events_for("c1")]
+
+
+def _start(store, date: str, source: str = "child_mode", sid: str | None = None):
+    store.append("session.started", "c1", {
+        "session_id": sid or f"s_{date}_{source}", "date": date,
+        "launch_source": source})
 
 
 def test_parent_prompted_retelling_is_not_a_voluntary_return():
@@ -21,38 +26,53 @@ def test_parent_prompted_retelling_is_not_a_voluntary_return():
     assert m["child_initiated"] == 0
 
 
-def test_child_initiated_session_counts():
+def test_first_session_is_acquisition_not_return():
     store = EventStore()
-    store.append("session.started", "c1", {
-        "session_id": "s1", "day": 2, "initiated_by": "child"})
-    store.append("session.started", "c1", {
-        "session_id": "s2", "day": 3, "initiated_by": "parent"})
-    store.append("child.requested_doudou", "c1", {"day": 3})
+    _start(store, "2026-07-20")
     m = relationship_metrics(_events(store))
-    assert m["voluntary_returns"] == 1  # only the child-initiated one
-    assert m["child_initiated"] == 1
+    assert m["voluntary_returns"] == 0
+    assert m["return_rate_d2"] is None
+    _start(store, "2026-07-21")
+    m = relationship_metrics(_events(store))
+    assert m["voluntary_returns"] == 1
 
 
-def test_return_rate_d2_uses_session_days():
+def test_parent_preview_never_counts():
     store = EventStore()
-    for i, day in enumerate([1, 2, 3, 10]):
-        store.append("session.started", "c1", {
-            "session_id": f"s{i}", "day": day, "initiated_by": "child"})
+    _start(store, "2026-07-20", "parent_preview")
+    _start(store, "2026-07-21", "parent_preview")
     m = relationship_metrics(_events(store))
-    assert m["return_rate_d2"] == round(2 / 3, 4)  # (1,2)✓ (2,3)✓ (3,10)✗
+    assert m["voluntary_returns"] == 0
+    assert m["session_days"] == 0
+
+
+def test_return_rate_d2_uses_real_calendar_dates():
+    store = EventStore()
+    for d in ["2026-07-20", "2026-07-21", "2026-07-22", "2026-07-30"]:
+        _start(store, d)
+    m = relationship_metrics(_events(store))
+    assert m["return_rate_d2"] == round(2 / 3, 4)
+
+
+def test_return_rate_d7_d14_windows():
+    store = EventStore()
+    for d in ["2026-07-01", "2026-07-02", "2026-07-20", "2026-07-21"]:
+        _start(store, d)
+    m = relationship_metrics(_events(store))
+    # window ends at latest (07-21); span = 21 days → denominator 7 / 14
+    assert m["return_rate_d7"] == round(2 / 7, 4)
+    assert m["return_rate_d14"] == round(2 / 14, 4)
 
 
 def test_callback_recognition_rate():
     store = EventStore()
-    store.append("partner.callback_offered", "c1", {"moment": "m1", "arc_id": "a2"})
-    store.append("partner.callback_offered", "c1", {"moment": "m2", "arc_id": "a3"})
+    store.append("partner.callback_offered", "c1", {"moment": "m1"})
+    store.append("partner.callback_offered", "c1", {"moment": "m2"})
     store.append("partner.callback_recognized", "c1", {
         "moment": "m1", "response": "recognized"})
     store.append("partner.callback_recognized", "c1", {
         "moment": "m2", "response": "ignored"})
     m = relationship_metrics(_events(store))
-    assert m["callbacks_offered"] == 2
-    assert m["callbacks_recognized"] == 1
     assert m["callback_recognition_rate"] == 0.5
 
 

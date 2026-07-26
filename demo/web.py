@@ -32,7 +32,6 @@ app = FastAPI(title="AI Growth OS — Demo")
 app.mount("/assets", StaticFiles(directory=str(Path(__file__).resolve().parent.parent / "assets")), name="assets")
 templates = Jinja2Templates(directory=str(Path(__file__).parent / "templates"))
 engines: dict[str, ChildEngine] = {}
-sessions: dict[str, dict] = {}  # session_id -> {child_id, session}
 
 
 @app.on_event("startup")
@@ -67,28 +66,30 @@ def submit(
 # -- Phase 0: session API + Story Player --------------------------------------
 
 @app.post("/api/v1/session/start")
-def session_start(child: str = Form(...), initiated_by: str = Form("child")):
+def session_start(child: str = Form(...), launch_source: str = Form("child_mode")):
     engine = engines[child]
     try:
-        session = engine.start_session(initiated_by=initiated_by)
+        session = engine.start_session(launch_source=launch_source)
     except RuntimeError as e:
         return JSONResponse({"error": str(e)}, status_code=409)
-    sessions[session["session_id"]] = {"child_id": child, "session": session}
     return JSONResponse(session)
 
 
 @app.post("/api/v1/session/interaction")
 def session_interaction(
+    child: str = Form(...),
     session_id: str = Form(...),
     node_type: str = Form(...),
     data: str = Form("{}"),
 ):
     import json
-    entry = sessions.get(session_id)
-    if not entry:
-        return JSONResponse({"error": "unknown session"}, status_code=404)
-    engine = engines[entry["child_id"]]
-    engine.record_interaction(session_id, node_type, json.loads(data))
+
+    from runtime.contracts import ContractViolation
+    engine = engines[child]
+    try:
+        engine.record_interaction(session_id, node_type, json.loads(data))
+    except ContractViolation as e:
+        return JSONResponse({"error": str(e)}, status_code=422)
     return JSONResponse({"ok": True})
 
 
@@ -99,12 +100,11 @@ def doudou_request(child: str = Form(...)):
 
 
 @app.get("/player", response_class=HTMLResponse)
-def player(request: Request, child: str = "vc_curious", session_id: str = ""):
-    entry = sessions.get(session_id)
-    session = entry["session"] if entry else None
+def player(request: Request, child: str = "vc_curious", preview: int = 0):
+    launch_source = "parent_preview" if preview else "child_mode"
     return templates.TemplateResponse(
         request,
         "player.html",
-        {"child_id": child, "session": session,
+        {"child_id": child, "launch_source": launch_source,
          "child_name": engines[child].child["name"] if child in engines else ""},
     )

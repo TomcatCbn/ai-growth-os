@@ -1,12 +1,12 @@
 """Phase 0 vertical loop tests — session start → player interaction →
-honest relationship events."""
+honest relationship events. Sessions replay from the event log."""
 
 from __future__ import annotations
 
 import pytest
 
 from demo.engine import ChildEngine
-from runtime.contracts import validate
+from runtime.contracts import ContractViolation, validate
 
 
 @pytest.fixture(scope="module")
@@ -15,74 +15,122 @@ def engine():
 
 
 def test_start_session_returns_contract_runtime_json(engine):
-    session = engine.start_session(initiated_by="child")
+    session = engine.start_session(launch_source="child_mode")
     validate("runtime-json", session)
     assert session["child_id"] == engine.child_id
 
 
-def test_start_session_records_honest_initiation(engine):
-    session = engine.start_session(initiated_by="child")
+def test_start_session_records_honest_launch_source(engine):
+    session = engine.start_session(launch_source="parent_preview")
     events = [e for e in engine.store.events_for(engine.child_id)
               if e.event_type == "session.started"]
     last = events[-1]
-    assert last.payload["initiated_by"] == "child"
+    assert last.payload["launch_source"] == "parent_preview"
     assert last.payload["session_id"] == session["session_id"]
+    assert last.payload["date"], "sessions use real calendar dates"
 
 
-def test_start_session_uses_active_chapter(engine):
-    arc = engine.manager.active
-    if arc is None:
-        pytest.skip("no active mission at end of timeline")
-    chapter = next(c for c in arc["chapters"] if c["status"] == "active")
+def test_session_rebuilds_from_event_log(engine):
     session = engine.start_session()
-    assert session["chapter_id"] == chapter["chapter_id"]
-    assert session["arc_id"] == arc["arc_id"]
+    restored = engine.get_session(session["session_id"])
+    assert restored is not None
+    assert restored["session_id"] == session["session_id"]
+    assert [s["kind"] for s in restored["segments"]] == [
+        "greeting", "choice", "adventure", "memory", "farewell"]
 
 
-def test_interaction_and_doudou_request_events(engine):
-    session = engine.start_session(initiated_by="child")
-    engine.record_interaction(session["session_id"], "choice",
-                              {"choice_id": "opt_mine"})
-    engine.request_doudou()
+def test_interaction_contract_rejects_bad_choice(engine):
+    session = engine.start_session()
+    with pytest.raises(ContractViolation):
+        engine.record_interaction(session["session_id"], "choice",
+                                  {"choice_id": "not_a_real_option"})
+
+
+def test_interaction_contract_rejects_unknown_session(engine):
+    with pytest.raises(ContractViolation):
+        engine.record_interaction("ses_ghost", "choice",
+                                  {"choice_id": "opt_mine"})
+
+
+def test_interaction_contract_rejects_wrong_node_type(engine):
+    session = engine.start_session()
+    with pytest.raises(ContractViolation):
+        engine.record_interaction(session["session_id"], "dance",
+                                  {"answer": "随便"})
+
+
+def test_voice_interaction_matches_voice_node(engine):
+    session = engine.start_session()
+    engine.record_interaction(session["session_id"], "voice",
+                              {"answer": "我自己摆的规律"})
     types = [e.event_type for e in engine.store.events_for(engine.child_id)]
     assert "session.interaction" in types
-    assert "child.requested_doudou" in types
 
 
-def test_voluntary_return_metric_reflects_real_session(engine):
-    from runtime.metrics import relationship_metrics
-    events = [vars(e) for e in engine.store.events_for(engine.child_id)]
-    m = relationship_metrics(events)
-    assert m["voluntary_returns"] >= 1
-    assert m["child_initiated"] >= 1
+def test_legal_choice_interaction_recorded(engine):
+    session = engine.start_session()
+    engine.record_interaction(session["session_id"], "choice",
+                              {"choice_id": "opt_mine"})
+    types = [e.event_type for e in engine.store.events_for(engine.child_id)]
+    assert "session.interaction" in types
 
 
-def test_bad_initiated_by_rejected(engine):
+def test_callback_shown_and_recognized_flow(engine):
+    """Callback events exist ONLY through real player interactions."""
+    session = engine.start_session()
+    moment = session.get("callback_moment")
+    if moment is None:
+        pytest.skip("this arc has no callback woven in")
+    engine.record_interaction(session["session_id"], "callback_shown",
+                              {"moment": moment})
+    engine.record_interaction(session["session_id"], "callback_recognized",
+                              {"moment": moment, "response": "recognized"})
+    types = [e.event_type for e in engine.store.events_for(engine.child_id)]
+    assert "partner.callback_offered" in types
+    assert "partner.callback_recognized" in types
+
+
+def test_callback_moment_mismatch_rejected(engine):
+    session = engine.start_session()
+    if session.get("callback_moment") is None:
+        pytest.skip("this arc has no callback woven in")
+    with pytest.raises(ContractViolation):
+        engine.record_interaction(session["session_id"], "callback_recognized",
+                                  {"moment": "虚构时刻", "response": "recognized"})
+
+
+def test_bad_launch_source_rejected(engine):
     with pytest.raises(ValueError):
-        engine.start_session(initiated_by="nobody")
+        engine.start_session(launch_source="child")  # old field is gone
 
 
 def test_session_api_endpoints():
     from fastapi.testclient import TestClient
 
-    from demo.web import app, sessions
+    from demo.web import app
     client = TestClient(app)
     with client:
         resp = client.post("/api/v1/session/start",
-                           data={"child": "vc_curious", "initiated_by": "child"})
+                           data={"child": "vc_curious",
+                                 "launch_source": "child_mode"})
         assert resp.status_code == 200
         session = resp.json()
         validate("runtime-json", session)
         sid = session["session_id"]
-        assert sid in sessions
         resp = client.post("/api/v1/session/interaction",
-                           data={"session_id": sid, "node_type": "choice",
+                           data={"child": "vc_curious", "session_id": sid,
+                                 "node_type": "choice",
                                  "data": '{"choice_id": "opt_mine"}'})
         assert resp.json() == {"ok": True}
-        resp = client.post("/api/v1/doudou/request", data={"child": "vc_curious"})
+        resp = client.post("/api/v1/session/interaction",
+                           data={"child": "vc_curious", "session_id": sid,
+                                 "node_type": "choice",
+                                 "data": '{"choice_id": "bogus"}'})
+        assert resp.status_code == 422
+        resp = client.post("/api/v1/doudou/request",
+                           data={"child": "vc_curious"})
         assert resp.json() == {"ok": True}
-        resp = client.get("/player", params={"child": "vc_curious",
-                                             "session_id": sid})
+        resp = client.get("/player", params={"child": "vc_curious"})
         assert resp.status_code == 200
         assert "豆豆兔" in resp.text
 

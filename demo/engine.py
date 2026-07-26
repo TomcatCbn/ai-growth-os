@@ -33,7 +33,7 @@ from demo.arc import (
 )
 from knowledge.i18n import I18n
 from runtime.coach import ParentCoach
-from runtime.contracts import validate
+from runtime.contracts import ContractViolation, validate
 from runtime.events.store import EventStore
 from runtime.evidence.extractor import EvidenceExtractor
 from runtime.metrics import relationship_metrics
@@ -122,15 +122,19 @@ class ChildEngine:
                        f"{self.manager.active['arc_id'] if self.manager.active else 'none'})")
 
         # The event log is the system of record (ADR-016): profile timeline
-        # entries already present in the log must NOT be re-injected —
-        # duplicate evidence would poison Twin, trust, and return metrics.
-        processed_days = {
-            e.payload.get("day")
+        # entries already in the log must NOT be re-injected. Keyed by
+        # (day, channel, raw_text) — a second, DIFFERENT observation on the
+        # same day is new evidence and must be processed.
+        processed = {
+            (e.payload.get("day"), e.payload.get("channel"),
+             e.payload.get("raw_text"))
             for e in self.store.events_for(self.child_id)
             if e.event_type == "evidence.submitted"
         }
         for entry in self.profile.get("evidence_timeline", []):
-            if entry.get("day") in processed_days:
+            key = (entry.get("day"), entry["channel"],
+                   self.in_guard.screen(entry["raw_text"]).text)
+            if key in processed:
                 continue
             self.process(entry)
 
@@ -254,11 +258,6 @@ class ChildEngine:
             "template_id": template["template_id"] if template else None,
             "plan_trace": plan["decision_trace_id"],
             "arc": arc, "activated_at": self.manager.activated_at, "day": day})
-        if callback:
-            self.store.append("partner.callback_offered", self.child_id, {
-                "moment": callback["moment"],
-                "source_event_id": callback["source_event_id"],
-                "arc_id": arc["arc_id"]})
         tname = self.i18n.topic_name(topic["id"], topic["name"])
         tname_tpl = f"·{template['name_zh']}" if template else ""
         self._emit(f"day {day}｜▶ 新冒险「{theme}·{tname}{tname_tpl}」模式={pattern['name_zh']}（候选池 {len(frontier)}）")
@@ -271,37 +270,95 @@ class ChildEngine:
 
     # -- sessions (Phase 0 vertical loop) -------------------------------------
 
-    def start_session(self, initiated_by: str = "parent") -> dict:
+    def start_session(self, launch_source: str = "child_mode") -> dict:
         """Child opens the app → Runtime JSON session for the active chapter.
-        Records the honest initiation source (session.started) — voluntary
-        returns are measured from THIS, never inferred from retellings."""
-        if initiated_by not in ("child", "parent", "partner_invite"):
-            raise ValueError(f"unknown initiated_by: {initiated_by}")
+        The FULL session document is stored in the event payload, so player
+        state rebuilds from the event log after any restart (ADR-016).
+        launch_source is an honest entry label: child_mode (the player's own
+        start button) vs parent_preview (from the parent dashboard)."""
+        if launch_source not in ("child_mode", "parent_preview"):
+            raise ValueError(f"unknown launch_source: {launch_source}")
         arc = self.manager.active
         if arc is None:
             raise RuntimeError("no active mission — plan one first")
         chapter = next(c for c in arc["chapters"] if c["status"] == "active")
         session = emit_session(arc, chapter)
+        callback = self._session_callback_moment(session)
+        if callback:
+            session["callback_moment"] = callback
         self.store.append("session.started", self.child_id, {
             "session_id": session["session_id"], "arc_id": arc["arc_id"],
-            "chapter_id": chapter["chapter_id"], "day": self.day,
-            "initiated_by": initiated_by,
+            "chapter_id": chapter["chapter_id"],
+            "date": datetime.now(UTC).date().isoformat(),
+            "launch_source": launch_source,
+            "session": session,
         })
         return session
 
+    def _session_callback_moment(self, session: dict) -> str | None:
+        for seg in session["segments"]:
+            for n in seg["scene"]["nodes"]:
+                if n["type"] == "dialogue" and "还记得我们的" in n.get("text", ""):
+                    text = n["text"]
+                    return text.split("还记得我们的", 1)[1].split("吗？", 1)[0]
+        return None
+
+    def get_session(self, session_id: str) -> dict | None:
+        """Rebuild a session document from the event log (restart-safe)."""
+        for e in self.store.events_for(self.child_id):
+            if (e.event_type == "session.started"
+                    and e.payload.get("session_id") == session_id):
+                return e.payload.get("session")
+        return None
+
     def record_interaction(self, session_id: str, node_type: str, data: dict) -> None:
-        """A real child interaction (choice made, voice answer given). These
-        are facts about what the child DID in the player."""
+        """A real child interaction (choice made, voice answer, callback
+        response). Contract-validated: the session must exist, the node type
+        must match a node in its Scene DSL, and choices must be legal."""
+        interaction = {"session_id": session_id, "node_type": node_type, **data}
+        validate("session-interaction", interaction)
+
+        session = self.get_session(session_id)
+        if session is None:
+            raise ContractViolation(f"unknown session: {session_id}")
+        nodes = [
+            n for seg in session["segments"] for n in seg["scene"]["nodes"]
+        ]
+        if node_type in ("choice", "voice"):
+            typed = [n for n in nodes if n["type"] == node_type]
+            if not typed:
+                raise ContractViolation(
+                    f"session {session_id} has no {node_type} node")
+            if node_type == "choice":
+                legal = {o["id"] for n in typed for o in n.get("options", [])}
+                if data.get("choice_id") not in legal:
+                    raise ContractViolation(
+                        f"illegal choice_id {data.get('choice_id')}; legal: {legal}")
+        elif node_type in ("callback_shown", "callback_recognized"):
+            if data.get("moment") != session.get("callback_moment"):
+                raise ContractViolation(
+                    f"callback moment mismatch for session {session_id}")
+
         self.store.append("session.interaction", self.child_id, {
             "session_id": session_id, "node_type": node_type,
-            "day": self.day, **data,
+            "date": datetime.now(UTC).date().isoformat(), **data,
         })
+        # Callback events are produced ONLY by real player interactions —
+        # offered when the child actually sees it, recognized/ignored by
+        # the child's own answer.
+        if node_type == "callback_shown":
+            self.store.append("partner.callback_offered", self.child_id, {
+                "moment": data["moment"], "session_id": session_id})
+        elif node_type == "callback_recognized":
+            self.store.append("partner.callback_recognized", self.child_id, {
+                "moment": data["moment"], "response": data["response"],
+                "session_id": session_id})
 
     def request_doudou(self) -> None:
         """The child spontaneously asked for Doudou — the strongest
         relationship signal we can record."""
         self.store.append("child.requested_doudou", self.child_id,
-                          {"day": self.day})
+                          {"date": datetime.now(UTC).date().isoformat()})
 
     # -- view ----------------------------------------------------------------
 

@@ -71,14 +71,9 @@
 
 <script>
 const CHILD = "{{ child_id }}";
-let SESSION = {{ session | tojson | safe if session else "null" }};
+const LAUNCH_SOURCE = "{{ launch_source }}";
+let SESSION = null;
 const NODES = [];
-if (SESSION) {
-  for (const seg of SESSION.segments) {
-    for (const n of seg.scene.nodes) NODES.push(n);
-  }
-}
-let idx = 0;
 
 const bubble = document.getElementById("bubble");
 const choices = document.getElementById("choices");
@@ -102,7 +97,7 @@ function post(url, data) {
 
 function interact(nodeType, data) {
   if (SESSION) post("/api/v1/session/interaction", {
-    session_id: SESSION.session_id, node_type: nodeType,
+    child: CHILD, session_id: SESSION.session_id, node_type: nodeType,
     data: JSON.stringify(data)});
 }
 
@@ -120,6 +115,24 @@ function showNode() {
     bubble.textContent = n.text;
     doudou.classList.remove("bounce"); void doudou.offsetWidth;
     doudou.classList.add("bounce");
+    if (n.text.includes("还记得我们的") && SESSION && SESSION.callback_moment) {
+      const moment = SESSION.callback_moment;
+      interact("callback_shown", {moment: moment});
+      for (const [label, resp] of [["记得！", "recognized"], ["不记得了", "ignored"]]) {
+        const btn = document.createElement("button");
+        btn.className = "choice-btn";
+        btn.textContent = label;
+        btn.onclick = () => {
+          interact("callback_recognized", {moment: moment, response: resp});
+          bubble.textContent = resp === "recognized"
+            ? "哇！你真的记得！豆豆兔太开心了！" : "没关系，豆豆兔再给你讲一次！";
+          choices.innerHTML = "";
+          nextBtn.style.display = "";
+        };
+        choices.appendChild(btn);
+      }
+      return;
+    }
     nextBtn.style.display = "";
   } else if (n.type === "animation") {
     doudou.src = ASSET[n.asset] || ASSET["character/doudou/emotion/happy"];
@@ -166,7 +179,7 @@ document.getElementById("start-btn").onclick = async () => {
   document.getElementById("start-overlay").style.display = "none";
   if (!SESSION) {
     const resp = await post("/api/v1/session/start",
-      {child: CHILD, initiated_by: "child"});
+      {child: CHILD, launch_source: LAUNCH_SOURCE});
     if (resp.ok) {
       SESSION = await resp.json();
       for (const seg of SESSION.segments) {

@@ -47,10 +47,13 @@ def test_trust_grows_with_relationship_signals_not_completion():
     _arc_lifecycle(store, "dinosaur", "completed")
     assert trust_from_events(_events(store)) == 0.0, \
         "completed arcs are task metrics, not relationship"
-    store.append("session.returned", "c1", {"day": 3})
+    store.append("session.started", "c1", {
+        "session_id": "s1", "date": "2026-07-20", "launch_source": "child_mode"})
+    store.append("session.started", "c1", {
+        "session_id": "s2", "date": "2026-07-21", "launch_source": "child_mode"})
     store.append("partner.callback_recognized", "c1", {
         "moment": "animal冒险", "response": "recognized"})
-    assert trust_from_events(_events(store)) == 0.25  # 0.1 + 0.15
+    assert trust_from_events(_events(store)) == 0.25  # 0.1 return + 0.15 recognized
 
 
 def test_completed_arc_offers_callback():
