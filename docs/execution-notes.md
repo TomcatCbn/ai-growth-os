@@ -151,4 +151,13 @@ G3 决策记录：对齐到 Scene DSL（用户拍板），落地为 ADR-014。
 5. ✅ 指标命名同步：constitution/README/next-steps 统一为 d2_returned / active_days_d7 / active_days_d14。
 最终验证：157 测试全绿，ruff 干净，评估门槛 PASS。评审所列"真实儿童实验"三项前置（as_of 截断/Preview 隔离/原子幂等）已全部完成。
 
+## 第七次评审整改（浏览器链路可信度，2026-07-27）
+
+1. ✅ 来源成为服务端事实：/player 与 /preview 各自签发 entry_id；session/start 只认 entry_id（伪造 403，直接传 launch_source 422）；doudou/request 从 session 事件推导来源（与 callback 统一）。
+2. ✅ 事件命名诚实化：partner.callback_answered {response: recognized|ignored}（node_type 同步更名）。
+3. ✅ 浏览器竞态修复：interact() 返回 Promise 且检查 resp.ok；callback_shown 成功后才显示回答按钮；点击后按钮禁用；失败提示重试；choice/voice 同样处理。
+4. ✅ 浏览器回归：scripts/browser_walk.py 用真实 Playwright 走完整冒险并断言事件库（session.started/interaction/callback_offered/answered，launch_source=child_mode，首答 recognized）——实测通过。
+5. ✅ store 写入原语统一（_write_locked），append_idempotent 也记录 screening flags。
+最终验证：159 测试全绿，ruff 干净，评估门槛 PASS，浏览器实测通过。真实儿童实验前置项已全部清除。
+
 最终验证：137 测试全绿，ruff 干净，评估门槛 PASS，四个孩子全部 OK，API 实测闭环（start→interaction→doudou/request→player 页面→资产 200）。
