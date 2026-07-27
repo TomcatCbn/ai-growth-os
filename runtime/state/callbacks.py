@@ -20,7 +20,7 @@ def _history(events: list, session_id: str, moment: str) -> tuple[bool, bool]:
             continue
         if e.event_type == "partner.callback_offered":
             shown = True
-        elif e.event_type == "partner.callback_recognized":
+        elif e.event_type == "partner.callback_answered":
             answered = True
     return shown, answered
 
@@ -53,7 +53,7 @@ def apply_callback(
         if response not in ("recognized", "ignored"):
             raise ContractViolation(f"invalid callback response: {response}")
         return None if answered else store.append_idempotent(
-            "partner.callback_recognized", child_id,
+            "partner.callback_answered", child_id,
             {**base, "response": response},
             idem_key=f"{child_id}:{session_id}:{moment}:answered") is not None
     raise ValueError(f"unknown callback transition: {transition}")

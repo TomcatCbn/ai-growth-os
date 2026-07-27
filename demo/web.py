@@ -69,11 +69,29 @@ def submit(
 
 # -- Phase 0: session API + Story Player --------------------------------------
 
+# Server-issued entry registry: the launch source is a SERVER-SIDE fact.
+# /player issues child_mode entries, /preview issues parent_preview entries;
+# clients can never claim a source — they present an entry id.
+entries: dict[str, dict] = {}
+
+
+def _issue_entry(child: str, source: str) -> str:
+    import uuid
+    entry_id = f"entry_{uuid.uuid4().hex[:10]}"
+    entries[entry_id] = {"child": child, "launch_source": source}
+    return entry_id
+
+
 @app.post("/api/v1/session/start")
-def session_start(child: str = Form(...), launch_source: str = Form("child_mode")):
+def session_start(child: str = Form(...), entry_id: str = Form(...)):
+    entry = entries.get(entry_id)
+    if not entry or entry["child"] != child:
+        return JSONResponse(
+            {"error": "unknown entry — open the player/preview page first"},
+            status_code=403)
     engine = engines[child]
     try:
-        session = engine.start_session(launch_source=launch_source)
+        session = engine.start_session(launch_source=entry["launch_source"])
     except RuntimeError as e:
         return JSONResponse({"error": str(e)}, status_code=409)
     return JSONResponse(session)
@@ -98,18 +116,27 @@ def session_interaction(
 
 
 @app.post("/api/v1/doudou/request")
-def doudou_request(child: str = Form(...), launch_source: str = Form("child_mode")):
-    engines[child].request_doudou(launch_source=launch_source)
+def doudou_request(child: str = Form(...), session_id: str = Form(...)):
+    """Source is derived from the session's own started event — same
+    derivation as callbacks, never from the client."""
+    engine = engines[child]
+    from runtime.state.callbacks import session_launch_source
+    source = session_launch_source(
+        engine.store.events_for(child), session_id)
+    if source is None:
+        return JSONResponse({"error": "unknown session"}, status_code=403)
+    engine.request_doudou(launch_source=source)
     return JSONResponse({"ok": True})
 
 
 @app.get("/player", response_class=HTMLResponse)
 def player(request: Request, child: str = "vc_curious"):
     """The CHILD entry — sessions from here count toward the North Star."""
+    entry_id = _issue_entry(child, "child_mode")
     return templates.TemplateResponse(
         request,
         "player.html",
-        {"child_id": child, "launch_source": "child_mode",
+        {"child_id": child, "entry_id": entry_id,
          "child_name": engines[child].child["name"] if child in engines else ""},
     )
 
@@ -118,9 +145,10 @@ def player(request: Request, child: str = "vc_curious"):
 def preview(request: Request, child: str = "vc_curious"):
     """The PARENT preview entry — same player, but sessions are honestly
     labelled parent_preview and never touch return-rate metrics."""
+    entry_id = _issue_entry(child, "parent_preview")
     return templates.TemplateResponse(
         request,
         "player.html",
-        {"child_id": child, "launch_source": "parent_preview",
+        {"child_id": child, "entry_id": entry_id,
          "child_name": engines[child].child["name"] if child in engines else ""},
     )

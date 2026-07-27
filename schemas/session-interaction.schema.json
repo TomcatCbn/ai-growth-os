@@ -13,7 +13,7 @@
     },
     "node_type": {
       "type": "string",
-      "enum": ["choice", "voice", "callback_shown", "callback_recognized"]
+      "enum": ["choice", "voice", "callback_shown", "callback_answered"]
     },
     "choice_id": {
       "type": "string",
@@ -26,12 +26,12 @@
     },
     "moment": {
       "type": "string",
-      "description": "Callback moment for callback_shown / callback_recognized."
+      "description": "Callback moment for callback_shown / callback_answered."
     },
     "response": {
       "type": "string",
       "enum": ["recognized", "ignored"],
-      "description": "Required for callback_recognized."
+      "description": "Required for callback_answered."
     }
   },
   "allOf": [
@@ -44,7 +44,7 @@
       "then": { "required": ["node_id", "answer"] }
     },
     {
-      "if": { "properties": { "node_type": { "const": "callback_recognized" } } },
+      "if": { "properties": { "node_type": { "const": "callback_answered" } } },
       "then": { "required": ["moment", "response"] }
     },
     {

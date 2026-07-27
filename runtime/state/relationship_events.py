@@ -72,7 +72,7 @@ def recognized_callbacks(events: list[dict]) -> int:
     return len({
         (e["payload"].get("session_id"), e["payload"].get("moment"))
         for e in events
-        if e.get("event_type") == "partner.callback_recognized"
+        if e.get("event_type") == "partner.callback_answered"
         and e["payload"].get("launch_source") == CHILD_MODE
         and e["payload"].get("response") == "recognized"
     })

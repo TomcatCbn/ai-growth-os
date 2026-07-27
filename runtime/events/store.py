@@ -103,17 +103,22 @@ class EventStore:
             created_at=_now(),
         )
         with self._lock:
-            self._insert_event(ev)
-            if flags:
-                self._insert_safety_event(Event(
-                    event_id=f"ev_{uuid.uuid4().hex[:12]}",
-                    event_type="safety.input_screened",
-                    child_id=child_id,
-                    payload={"flags": flags, "screened_event": ev.event_id},
-                    created_at=_now(),
-                ))
-            self._db.commit()
+            self._write_locked(ev, flags)
         return ev
+
+    def _write_locked(self, ev: Event, flags: list[str]) -> None:
+        """Single write primitive: event + screening log + commit. Caller
+        must hold _lock."""
+        self._insert_event(ev)
+        if flags:
+            self._insert_safety_event(Event(
+                event_id=f"ev_{uuid.uuid4().hex[:12]}",
+                event_type="safety.input_screened",
+                child_id=ev.child_id,
+                payload={"flags": flags, "screened_event": ev.event_id},
+                created_at=_now(),
+            ))
+        self._db.commit()
 
     def append_safety(self, event_type: str, child_id: str, payload: dict[str, Any]) -> Event:
         """Safety Memory entry (output rejections, guard actions). Separate
@@ -154,7 +159,7 @@ class EventStore:
         """Append only if idem_key was never used — the database PRIMARY KEY
         arbitrates races, so concurrent retries cannot duplicate the fact.
         Returns None when the key already existed (idempotent no-op)."""
-        payload, _ = self._guard.screen_payload(payload)
+        payload, flags = self._guard.screen_payload(payload)
         with self._lock:
             # INSERT OR IGNORE: one atomic statement, no error transaction.
             cursor = self._db.execute(
@@ -177,6 +182,14 @@ class EventStore:
                 "UPDATE idempotency_keys SET event_id = ? WHERE idem_key = ?",
                 (ev.event_id, idem_key),
             )
+            if flags:
+                self._insert_safety_event(Event(
+                    event_id=f"ev_{uuid.uuid4().hex[:12]}",
+                    event_type="safety.input_screened",
+                    child_id=child_id,
+                    payload={"flags": flags, "screened_event": ev.event_id},
+                    created_at=_now(),
+                ))
             self._db.commit()
         return ev
 

@@ -123,11 +123,11 @@ def test_callback_shown_and_recognized_flow(engine):
         pytest.skip("this arc has no callback woven in")
     engine.record_interaction(session["session_id"], "callback_shown",
                               {"moment": moment})
-    engine.record_interaction(session["session_id"], "callback_recognized",
+    engine.record_interaction(session["session_id"], "callback_answered",
                               {"moment": moment, "response": "recognized"})
     types = [e.event_type for e in engine.store.events_for(engine.child_id)]
     assert "partner.callback_offered" in types
-    assert "partner.callback_recognized" in types
+    assert "partner.callback_answered" in types
 
 
 def test_callback_state_machine(engine):
@@ -141,16 +141,16 @@ def test_callback_state_machine(engine):
 
     # recognized before shown → hard violation
     with pytest.raises(ContractViolation):
-        engine.record_interaction(sid, "callback_recognized",
+        engine.record_interaction(sid, "callback_answered",
                                   {"moment": moment, "response": "recognized"})
 
     engine.record_interaction(sid, "callback_shown", {"moment": moment})
     # repeat shown → idempotent no-op (still exactly one offered event)
     engine.record_interaction(sid, "callback_shown", {"moment": moment})
-    engine.record_interaction(sid, "callback_recognized",
+    engine.record_interaction(sid, "callback_answered",
                               {"moment": moment, "response": "recognized"})
     # repeat answer → idempotent no-op (still exactly one recognized)
-    engine.record_interaction(sid, "callback_recognized",
+    engine.record_interaction(sid, "callback_answered",
                               {"moment": moment, "response": "ignored"})
 
     events = [e for e in engine.store.events_for(engine.child_id)
@@ -158,7 +158,7 @@ def test_callback_state_machine(engine):
     assert sum(1 for e in events
                if e.event_type == "partner.callback_offered") == 1
     answered = [e for e in events
-                if e.event_type == "partner.callback_recognized"]
+                if e.event_type == "partner.callback_answered"]
     assert len(answered) == 1
     assert answered[0].payload["response"] == "recognized"  # first answer wins
 
@@ -168,7 +168,7 @@ def test_callback_moment_mismatch_rejected(engine):
     if session.get("callback_moment") is None:
         pytest.skip("this arc has no callback woven in")
     with pytest.raises(ContractViolation):
-        engine.record_interaction(session["session_id"], "callback_recognized",
+        engine.record_interaction(session["session_id"], "callback_answered",
                                   {"moment": "虚构时刻", "response": "recognized"})
 
 
@@ -178,14 +178,18 @@ def test_bad_launch_source_rejected(engine):
 
 
 def test_session_api_endpoints():
+    import re
+
     from fastapi.testclient import TestClient
 
     from demo.web import app
     client = TestClient(app)
     with client:
+        # source is server-issued: the client presents an entry id
+        page = client.get("/player", params={"child": "vc_curious"})
+        entry_id = re.search(r'const ENTRY_ID = "([^"]+)"', page.text).group(1)
         resp = client.post("/api/v1/session/start",
-                           data={"child": "vc_curious",
-                                 "launch_source": "child_mode"})
+                           data={"child": "vc_curious", "entry_id": entry_id})
         assert resp.status_code == 200
         session = resp.json()
         validate("runtime-json", session)
@@ -208,11 +212,45 @@ def test_session_api_endpoints():
                                      "choice_id": "bogus"})})
         assert resp.status_code == 422
         resp = client.post("/api/v1/doudou/request",
-                           data={"child": "vc_curious"})
+                           data={"child": "vc_curious", "session_id": sid})
         assert resp.json() == {"ok": True}
-        resp = client.get("/player", params={"child": "vc_curious"})
+
+
+def test_session_start_rejects_unknown_entry():
+    from fastapi.testclient import TestClient
+
+    from demo.web import app
+    client = TestClient(app)
+    with client:
+        resp = client.post("/api/v1/session/start",
+                           data={"child": "vc_curious",
+                                 "entry_id": "entry_forged"})
+        assert resp.status_code == 403
+        # a client can no longer claim child_mode directly
+        resp = client.post("/api/v1/session/start",
+                           data={"child": "vc_curious",
+                                 "launch_source": "child_mode"})
+        assert resp.status_code == 422  # entry_id missing
+
+
+def test_preview_entry_yields_parent_preview_session():
+    import re
+
+    from fastapi.testclient import TestClient
+
+    from demo.web import app, engines
+    client = TestClient(app)
+    with client:
+        page = client.get("/preview", params={"child": "vc_curious"})
+        entry_id = re.search(r'const ENTRY_ID = "([^"]+)"', page.text).group(1)
+        resp = client.post("/api/v1/session/start",
+                           data={"child": "vc_curious", "entry_id": entry_id})
         assert resp.status_code == 200
-        assert "豆豆兔" in resp.text
+        sid = resp.json()["session_id"]
+        events = [e for e in engines["vc_curious"].store.events_for("vc_curious")
+                  if e.event_type == "session.started"
+                  and e.payload["session_id"] == sid]
+        assert events[0].payload["launch_source"] == "parent_preview"
 
 
 def test_assets_exist_on_disk():

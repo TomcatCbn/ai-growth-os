@@ -71,7 +71,7 @@
 
 <script>
 const CHILD = "{{ child_id }}";
-const LAUNCH_SOURCE = "{{ launch_source }}";
+const ENTRY_ID = "{{ entry_id }}";
 let SESSION = null;
 const NODES = [];
 let idx = 0;
@@ -96,10 +96,12 @@ function post(url, data) {
     body: new URLSearchParams(data)});
 }
 
-function interact(nodeType, data) {
-  if (SESSION) post("/api/v1/session/interaction", {
+async function interact(nodeType, data) {
+  if (!SESSION) return {ok: false};
+  const resp = await post("/api/v1/session/interaction", {
     child: CHILD, session_id: SESSION.session_id, node_type: nodeType,
     data: JSON.stringify(data)});
+  return resp;
 }
 
 function showNode() {
@@ -118,20 +120,29 @@ function showNode() {
     doudou.classList.add("bounce");
     if (n.text.includes("还记得我们的") && SESSION && SESSION.callback_moment) {
       const moment = SESSION.callback_moment;
-      interact("callback_shown", {moment: moment});
-      for (const [label, resp] of [["记得！", "recognized"], ["不记得了", "ignored"]]) {
-        const btn = document.createElement("button");
-        btn.className = "choice-btn";
-        btn.textContent = label;
-        btn.onclick = () => {
-          interact("callback_recognized", {moment: moment, response: resp});
-          bubble.textContent = resp === "recognized"
-            ? "哇！你真的记得！豆豆兔太开心了！" : "没关系，豆豆兔再给你讲一次！";
-          choices.innerHTML = "";
-          nextBtn.style.display = "";
-        };
-        choices.appendChild(btn);
-      }
+      bubble.textContent = n.text + "（豆豆兔努力回想中…）";
+      // await shown BEFORE offering the answer buttons — a fast tap must
+      // never race the server state machine.
+      interact("callback_shown", {moment: moment}).then((resp) => {
+        bubble.textContent = n.text;
+        if (!resp.ok) { bubble.textContent = n.text + "（网络开小差了，再点一次试试）"; }
+        for (const [label, ans] of [["记得！", "recognized"], ["不记得了", "ignored"]]) {
+          const btn = document.createElement("button");
+          btn.className = "choice-btn";
+          btn.textContent = label;
+          btn.onclick = () => {
+            for (const b of choices.querySelectorAll("button")) b.disabled = true;
+            interact("callback_answered", {moment: moment, response: ans}).then((r2) => {
+              bubble.textContent = !r2.ok ? "（没传上去，再试一次）"
+                : ans === "recognized" ? "哇！你真的记得！豆豆兔太开心了！"
+                : "没关系，豆豆兔再给你讲一次！";
+              if (r2.ok) { choices.innerHTML = ""; nextBtn.style.display = ""; }
+              else { for (const b of choices.querySelectorAll("button")) b.disabled = false; }
+            });
+          };
+          choices.appendChild(btn);
+        }
+      });
       return;
     }
     nextBtn.style.display = "";
@@ -147,10 +158,17 @@ function showNode() {
       btn.className = "choice-btn";
       btn.textContent = opt.text;
       btn.onclick = () => {
-        interact("choice", {node_id: n.node_id, choice_id: opt.id});
-        bubble.textContent = "好呀！就这么办！";
-        choices.innerHTML = "";
-        nextBtn.style.display = "";
+        for (const b of choices.querySelectorAll("button")) b.disabled = true;
+        interact("choice", {node_id: n.node_id, choice_id: opt.id}).then((resp) => {
+          if (resp.ok) {
+            bubble.textContent = "好呀！就这么办！";
+            choices.innerHTML = "";
+            nextBtn.style.display = "";
+          } else {
+            bubble.textContent = "（没传上去，再试一次）";
+            for (const b of choices.querySelectorAll("button")) b.disabled = false;
+          }
+        });
       };
       choices.appendChild(btn);
     }
@@ -161,10 +179,18 @@ function showNode() {
     voiceInput.focus();
     voiceInput.onkeydown = (e) => {
       if (e.key === "Enter" && voiceInput.value.trim()) {
-        interact("voice", {node_id: n.node_id, answer: voiceInput.value.trim()});
-        bubble.textContent = "哇，豆豆兔记住了！";
-        voiceInput.style.display = "none";
-        nextBtn.style.display = "";
+        const answer = voiceInput.value.trim();
+        voiceInput.disabled = true;
+        interact("voice", {node_id: n.node_id, answer: answer}).then((resp) => {
+          voiceInput.disabled = false;
+          if (resp.ok) {
+            bubble.textContent = "哇，豆豆兔记住了！";
+            voiceInput.style.display = "none";
+            nextBtn.style.display = "";
+          } else {
+            bubble.textContent = "（没传上去，再说一次试试）";
+          }
+        });
       }
     };
   } else if (n.type === "reward") {
@@ -180,7 +206,7 @@ document.getElementById("start-btn").onclick = async () => {
   document.getElementById("start-overlay").style.display = "none";
   if (!SESSION) {
     const resp = await post("/api/v1/session/start",
-      {child: CHILD, launch_source: LAUNCH_SOURCE});
+      {child: CHILD, entry_id: ENTRY_ID});
     if (resp.ok) {
       SESSION = await resp.json();
       for (const seg of SESSION.segments) {
@@ -195,7 +221,8 @@ document.getElementById("start-btn").onclick = async () => {
 };
 
 document.getElementById("call-doudou").onclick = () => {
-  post("/api/v1/doudou/request", {child: CHILD, launch_source: LAUNCH_SOURCE});
+  if (SESSION) post("/api/v1/doudou/request",
+    {child: CHILD, session_id: SESSION.session_id});
   doudou.classList.remove("bounce"); void doudou.offsetWidth;
   doudou.classList.add("bounce");
   bubble.textContent = "豆豆兔来啦！我们一起玩吧！";

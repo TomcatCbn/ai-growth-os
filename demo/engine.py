@@ -341,7 +341,7 @@ class ChildEngine:
                 if data.get("choice_id") not in legal:
                     raise ContractViolation(
                         f"illegal choice_id {data.get('choice_id')}; legal: {legal}")
-        elif node_type in ("callback_shown", "callback_recognized"):
+        elif node_type in ("callback_shown", "callback_answered"):
             if data.get("moment") != session.get("callback_moment"):
                 raise ContractViolation(
                     f"callback moment mismatch for session {session_id}")

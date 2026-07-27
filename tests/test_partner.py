@@ -51,7 +51,7 @@ def test_trust_grows_with_relationship_signals_not_completion():
         "session_id": "s1", "date": "2026-07-20", "launch_source": "child_mode"})
     store.append("session.started", "c1", {
         "session_id": "s2", "date": "2026-07-21", "launch_source": "child_mode"})
-    store.append("partner.callback_recognized", "c1", {
+    store.append("partner.callback_answered", "c1", {
         "moment": "animal冒险", "response": "recognized",
         "launch_source": "child_mode", "session_id": "s2"})
     assert trust_from_events(_events(store)) == 0.25  # 0.1 return + 0.15 recognized

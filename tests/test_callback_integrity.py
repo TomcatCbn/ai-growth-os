@@ -61,7 +61,7 @@ def test_concurrent_answer_writes_first_answer_only(tmp_path):
     for t in threads:
         t.join()
     answered = [e for e in store.events_for("c1")
-                if e.event_type == "partner.callback_recognized"]
+                if e.event_type == "partner.callback_answered"]
     assert len(answered) == 1
 
 
@@ -138,7 +138,7 @@ def test_recognition_rate_capped_by_dedupe():
         store.append("partner.callback_offered", "c1", {
             "moment": "m", "session_id": sid, "launch_source": "child_mode",
             "date": "2026-07-26"})
-        store.append("partner.callback_recognized", "c1", {
+        store.append("partner.callback_answered", "c1", {
             "moment": "m", "session_id": sid, "launch_source": "child_mode",
             "response": "recognized", "date": "2026-07-26"})
     events = [vars(e) for e in store.events_for("c1")]

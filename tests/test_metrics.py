@@ -93,18 +93,20 @@ def test_adventure_continuation_same_arc_next_day():
 
 
 def test_callback_recognition_rate():
+    from datetime import UTC, datetime
     store = EventStore()
     store.append("partner.callback_offered", "c1", {
         "moment": "m1", "launch_source": "child_mode", "session_id": "s1"})
     store.append("partner.callback_offered", "c1", {
         "moment": "m2", "launch_source": "child_mode", "session_id": "s2"})
-    store.append("partner.callback_recognized", "c1", {
+    store.append("partner.callback_answered", "c1", {
         "moment": "m1", "response": "recognized",
         "launch_source": "child_mode", "session_id": "s1"})
-    store.append("partner.callback_recognized", "c1", {
+    store.append("partner.callback_answered", "c1", {
         "moment": "m2", "response": "ignored",
         "launch_source": "child_mode", "session_id": "s2"})
-    m = relationship_metrics(_events(store), as_of=date(2026, 7, 26))
+    m = relationship_metrics(_events(store),
+                             as_of=datetime.now(UTC).date())
     assert m["callback_recognition_rate"] == 0.5
 
 
